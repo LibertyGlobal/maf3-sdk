@@ -1,0 +1,19 @@
+{
+	"identifier": "com.libertyglobal.app.ContentDiscovery",
+	"name": "Content Discovery",
+	"version": "0.0.1",
+	"author": "Liberty Global",
+	"company": "Liberty Global",
+	"copyright": "Liberty Global 2014",
+	"description": "Content discovery application",
+	"categories": [
+		"video"
+	],
+	"scripts": "Javascript/init.js",
+	"images": {
+		"about": "Images/Icon.png",
+		"icon": {
+			"192x192": "Images/Icon.png"
+		}
+	}
+}
