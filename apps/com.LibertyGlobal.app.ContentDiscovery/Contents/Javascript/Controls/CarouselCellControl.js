@@ -5,7 +5,7 @@ var CarouselCellControl = new MAF.Class({
 	Extends: MAF.element.Container,
 
 	config: {
-		focus: true,
+		focus: false,
 		animation: true
 	},
 

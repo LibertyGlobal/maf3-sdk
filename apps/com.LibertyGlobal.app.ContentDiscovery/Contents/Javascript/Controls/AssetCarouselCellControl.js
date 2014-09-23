@@ -46,12 +46,12 @@ var AssetCarouselCellControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-		},		
+		}		
 	},
 
 	config: {
 		render: true,
-		focus: true
+		focus: false
 	},
 
 	initialize: function(){

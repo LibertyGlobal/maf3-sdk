@@ -1,0 +1,67 @@
+var SidebarButtonControl = new MAF.Class({
+	ClassName: 'SidebarButtonControl',
+
+	Extends: MAF.element.Container,
+
+	Protected: {
+		dispatchEvents: function(event, payload) {
+			this.parent(event, payload);
+			switch (event.type) {
+				case 'focus':
+					this.buttonText.setStyles({ opacity: 100 });
+					this.buttonRollover.show();
+					break;
+				case 'blur':
+					this.buttonText.setStyles({ opacity: 32 });
+					this.buttonRollover.hide();
+					break;
+			}
+		},
+		createContent: function() {	
+			this.buttonRollover  = new MAF.element.Image({
+				source: 'Images/sidebar_button_high_expanded.png',
+				styles:{ 
+					position:'relative',
+					visibility: 'hidden'
+				}
+			}).appendTo(this);	
+
+			this.buttonText  = new MAF.element.Text({
+				text: this.config.buttonText,
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'InterstatePro-Light',
+					fontSize: 40,
+					hOffset: 18,
+					vOffset: 10,
+					opacity: 32
+				}
+			}).appendTo(this);				
+		}
+	},
+
+	config: {
+		render: true,
+		focus: true,
+		buttonText: 'Button text'
+	},
+
+	initialize: function() {
+		this.parent();
+		this.config.buttonText = this.config.buttonText || 'Button text';		
+		this.createContent();
+		this.buttonRollover.hide();
+	},
+
+	clearFocus: function() {
+		this.buttonRollover.hide();
+	},
+
+	setFocus: function() { 
+		this.focus();
+	},
+
+	suicide: function() {
+		this.parent();
+	}
+});

@@ -24,11 +24,17 @@ var HomeScreen = new MAF.Class({
 
 	// Create your view template
 	createView: function () {
-		var view = this;
+		var view = this;		
 		
-		this.controls.sideBarContainer = new SidebarControl().appendTo(view);
+		view.controls.sideBarContainer = new SidebarControl({
+			events: {
+				onNavigateRight: function(){
+					view.hideSidebar();
+				}
+			}			
+		}).appendTo(view);
 
-		this.elements.rightContainer = new MAF.element.Container({
+		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
 				height: 1080,
 				width: 1738,
@@ -42,27 +48,18 @@ var HomeScreen = new MAF.Class({
 			focusIndex: 3,
 			itemSize: 8.3,
 			focusItemSize: 56,
+			blockFocus: true, // focus should be on the asset list
 			orientation: 'vertical',
 			opacityOffset: 0.32,
 			slideDuration: 0.2,
 			styles:{
-		 		height: view.height,
-		 		width: 'inherit',
-		 		hOffset: -5
+				height: view.height,
+				width: 'inherit',
+				hOffset: -5
 			},
 			cellCreator: function () {
 				var cell = new CarouselCellControl({
-					styles: this.getCellDimensions(),
-					events: {
-						onFocus: function () {
-							this.animate({
-							});
-						},
-						onBlur: function(){
-							this.animate({
-							});
-						}
-					}
+					styles: this.getCellDimensions()
 				});
 
 				cell.title = new MAF.element.Text({
@@ -71,7 +68,7 @@ var HomeScreen = new MAF.Class({
 						color: '#ffffff',
 						fontFamily: 'InterstatePro-Light, sans-serif',
 						fontSize: 60,						
-						paddingTop: 20,
+						paddingTop: 20
 					}
 				}).appendTo(cell);
 
@@ -79,76 +76,72 @@ var HomeScreen = new MAF.Class({
 			},
 			cellUpdater: function(cell, data){
 				cell.title.setText(data.title);
-			},
-			events: {
-				onDatasetChanged: function(){
-					this.getCurrentCell().focus();
-					this.animate({
-						opacity: 1,
-						duration: 0.2
-					});
-				}
+				view.controls.assets.changeDataset(view.shuffle(view.assets), true);
+				view.controls.assets.focus();
 			}
 		}).appendTo(this.elements.rightContainer);
 
 		view.controls.assets = new AssetCarouselControl({
 			styles:{
-		 		height: 474,
-		 		width: 'inherit',
-		 		vOffset: 296
-			},
-			cellCreator: function () {
-				var cell = new AssetCarouselCellControl({
-					//styles: this.getCellDimensions(),
-					events: {
-						onFocus: function () {
-							this.animate({
-							});
-						},
-						onBlur: function(){
-							this.animate({
-							});
-						}
-					}
-				});
-
-				cell.title = new MAF.element.Text({
-					styles: {
-						hOffset: 20,
-						color: '#ffffff',
-						fontSize: 32,
-						paddingTop: 20,
-						paddingLeft: 20
-					}
-				}).appendTo(cell);
-
-				return cell;
-			},
-			cellUpdater: function(cell, data){
-				//cell.title.setText(data.title);
+				height: 474,
+				width: 'inherit',
+				vOffset: 296
 			},
 			events: {
-				onDatasetChanged: function(){
-					// this.getCurrentCell().focus();
-					// this.animate({
-					// 	opacity: 1,
-					// 	duration: 0.2
-					// });
+				onNavigateLeft: function(){
+					view.showSidebar();
+				},
+				onNavigateUp: function(){
+					view.controls.slider.doNavigate('up');
+				},
+				onNavigateDown: function(){
+					view.controls.slider.doNavigate('down');
 				}
-			}
+			}			
 		}).appendTo(this.elements.rightContainer);
 	},
 
 	updateView: function () {
+		console.log("HomeScreen: updateView");
 		var view = this;
 		view.controls.slider.changeDataset(view.items, true);
 		view.controls.assets.changeDataset(view.assets, true);
+		view.controls.assets.setFocus();
+	},	
+
+	// todo remove temporary added to shuffle asset list
+	shuffle: function(anArray){ //v1.0
+		for(var j, x, i = anArray.length; i; j = Math.floor(Math.random() * i), x = anArray[--i], anArray[i] = anArray[j], anArray[j] = x);
+			return anArray;
 	},
 
-	// When closing the application make sure you unreference 
-	// your objects and arrays from the view
+	showSidebar: function() { 
+		console.log("HomeScreen: showSidebar");
+		var view = this;
+		view.elements.rightContainer.freeze();
+		view.elements.rightContainer.opacity = 32;
+		view.elements.rightContainer.width = 1460;
+		view.controls.sideBarContainer.expand();
+		view.controls.sideBarContainer.setFocus();
+	},
+
+	hideSidebar: function() {
+		console.log("HomeScreen: hideSidebar");
+		var view = this;
+		//view.elements.rightContainer.thaw();
+		//view.elements.rightContainer.opacity = 100;
+		view.controls.sideBarContainer.collapse();
+		view.elements.rightContainer.width = 1738;
+		view.controls.assets.setFocus();
+	},
+
 	destroyView: function () {
 		var view = this;
+		delete view.controls.sideBarContainer;
+		delete view.elements.rightContainer;
+		delete view.controls.slider;
+		delete view.controls.assets;
 		delete view.items;
+		delete view.assets;
 	}
 });

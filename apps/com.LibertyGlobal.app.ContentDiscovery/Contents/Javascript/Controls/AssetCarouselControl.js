@@ -1,15 +1,15 @@
-AssetCarouselControl = new MAF.Class({
+var AssetCarouselControl = new MAF.Class({
 	ClassName: 'AssetCarouselControl',
 
 	Extends: MAF.element.Container,
 
-	Protected: {	
+	Protected: {		
 		dispatchEvents: function(event){
 			console.log("Asset carousel dispatchEvents navigate " + event.type);
 			this.parent(event);
 			switch(event.type){
 				case 'navigate':
-					this.fire('onNavigate', event.detail, event);
+					this.doNavigate(event.detail.direction);
 					break;
 			}
 		},
@@ -17,9 +17,10 @@ AssetCarouselControl = new MAF.Class({
 		generateCells: function (){
 			this.focusContainer = new AssetCarouselCellFocusControl({
 					styles: {
-						backgroundColor: 'white',
+						backgroundImage: 'Images/asset_background_focus.png',
 						height: 474,
 						width: 843,
+						padding: 5,
 						position: 'relative',
 						display: 'inline-block'
 					}
@@ -67,19 +68,21 @@ AssetCarouselControl = new MAF.Class({
 			this.cells.push(this.asset4Container);
 		},		
 		updateCells: function(){
-			console.log("focusIndex: " + this.focusIndex);
+			//console.log("focusIndex: " + this.focusIndex);
 			var pos = 0;
 			for(var i = this.focusIndex; i<this.mainCollection.length && pos<5; i++)
 			{		
-				console.log('pos ' + pos + ", i " + i);
+				//console.log('pos ' + pos + ", i " + i);
 				this.cells[pos].changeData(this.mainCollection[i]);
 				pos++;
 			}
-			console.log('pos:' +  pos);
+			//console.log('pos:' +  pos);
+			i = 0;
 			while(pos<5)
 			{
-				this.cells[pos].changeData();
+				this.cells[pos].changeData(this.mainCollection[i]);
 				pos++;
+				i++;
 			}
 		}
 	},
@@ -95,45 +98,45 @@ AssetCarouselControl = new MAF.Class({
 		this.generateCells();
 		this.mainCollection = [];
 		this.focusIndex = 0;
-		console.log('initialize');
-		this.onNavigate.subscribeTo(this, 'onNavigate', this);
 	},	
 
 	changeDataset: function(data){
 		this.focusIndex = 0;
 		this.mainCollection = [].concat(data);		
 		this.updateCells();
-		this.fire("onDatasetChanged");
 	},
 
-	shift: function(direction){		
-		console.log('direction: ' + direction + ", index: " + this.focusIndex);
+	setFocus: function() {
+		this.focus();
+	},
+
+	doNavigate: function(direction){		
+		var handled = true;
 		if(direction){
 			switch(direction){
 				case 'left':
-					if(this.focusIndex> 0){
-						this.focusIndex--;
-						this.updateCells();
-					}
+					this.fire('onNavigateLeft');
 					break;
 				case 'right':
-					if(this.focusIndex +1 < this.mainCollection.length){
+					if(this.focusIndex +1 < this.mainCollection.length)
 						this.focusIndex ++;
-						this.updateCells();
-					}
+					else
+						this.focusIndex = 0;
+
+					this.updateCells();
+					break;
+				case 'up':
+					this.fire('onNavigateUp');
+					break;
+				case 'down':
+					this.fire('onNavigateDown');
+					break;
+				default:
+					handled = false;
 					break;
 			}
 		}
-	},
-
-	onNavigate : function(event){
-		console.log("navigate: " + event);
-		var direction = event.payload.direction;
-		// TODO prevent 'left' for sidebar
-		if(direction === 'left' || direction === 'right')
-			event.preventDefault();
-
-		this.shift(direction);
+		return handled;
 	},
 
 	suicide: function () {

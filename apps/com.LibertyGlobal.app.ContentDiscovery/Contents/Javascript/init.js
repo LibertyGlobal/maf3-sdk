@@ -2,6 +2,7 @@
 include('Javascript/Theme.js');
 include('Javascript/testdata.js');
 //include('Javascript/Services/TestService.js');
+include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/CarouselCellControl.js');
 include('Javascript/Controls/CarouselControl.js');

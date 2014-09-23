@@ -1,121 +1,9 @@
-/**
- * Metrological Application Framework 3.0 - SDK
- * Copyright (c) 2014  Metrological
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- **/
- /** 
- * @class MAF.control.CarouselControl
- * @classdesc .
- * @extends MAF.control.Container
- * * All cells are based on descendants of LGI.element.TextCarouselCellControl
- * * cellCreator() is a required method that returns a cell with no data.
- * * cellUpdater() is a required method that will update a cell with data.
- * @example new MAF.element.Grid({
- *    visibleCells: 5,
- *    focusIndex: 3,
- *    focusItemSize: 50,
- *    orientation: 'horizontal',
- *    blockFocus: 'false',
- *    slideDuration: 0.3,
- *    opacityOffset: 0,
- *    cellCreator: function () {
- *       var cell = new MAF.element.GridCell({
- *          events: {
- *             onSelect: function(event) {
- *                log('Selected', this.getDataItem());
- *             } 
- *          }
- *       });
- *
- *       cell.text = new MAF.element.Text({
- *          styles: {
- *             color: 'white'
- *          }
- *       }).appendTo(cell);
- *       return cell;
- *    },
- *    cellUpdater: function (cell, data) {
- *       cell.text.setText(data.label);
- *    }
- * }).appendTo(this);
- * @config {string} [title] The new job title.
- */
- /**
- * @cfg {Number} rows Number of cells visible for the viewer.
- * @memberof LGI.element.CarouselControl
- */
-/**
- * @cfg {Number} indicates which position is always focussed.
- * @memberof LGI.element.CarouselControl
- */
- /**
- * @cfg {Number} indicates the height/width (depending on horizontal or vertical) of the focussed item
- * @memberof LGI.element.CarouselControl
- */
-/**
- * @cfg {String} orientation Horizontal or verticale orientation of the CarouselControl.
- * @memberof LGI.element.CarouselControl
- */
-/**
- * @cfg {Boolean} this determines whether the grid can be focus at all, this is handy when you decided to control your CarouselControl with a different component.
- * @memberof LGI.element.CarouselControl
- */
-/**
- * @cfg {Number} this determines how fast the cells will be moving to a new position.
- * @memberof LGI.element.CarouselControl
- */
-/**
- * @cfg {Number} this determines the opacity difference from the focusIndex.
- * @memberof LGI.element.CarouselControl
- */
-
-/**
- * Fired when the data set of the grid has changed.
- * @event LGI.element.CarouselControl#onDatasetChanged
- */
-/**
- * Fired when state of the grid is updated/changed.
- * @event LGI.element.CarouselControl#onStateUpdated
- */
 var CarouselControl = new MAF.Class({
 	ClassName: 'CarouselControl',
 
 	Extends: MAF.element.Container,
 
 	Protected: {
-		registerEvents: function(types){
-			this.parent(['navigate'].concat(types || []));
-		},
-		dispatchEvents: function(event){
-			this.parent(event);
-			switch(event.type){
-				case 'navigate':
-					console.log("dispatchEvents navigate ");
-					this.fire('onNavigate', event.detail, event);
-					break;
-			}
-		},
-		handleFocusEvent: function (event) {
-			var payload = event.payload;
-			switch (event.type) {
-				case 'onFocus':
-					var currentCell = this.getCurrentCell();
-					if (currentCell) currentCell.focus();
-					break;
-			}
-		},
 		generateCells: function (data){
 			if(this.currentDataset.length > 0){
 				var cell,
@@ -263,7 +151,7 @@ var CarouselControl = new MAF.Class({
 		orientation: 'horizontal',
 		blockFocus: false,
 		render: true,
-		focus: true
+		focus: false
 	},
 
 	initialize: function(){
@@ -282,8 +170,6 @@ var CarouselControl = new MAF.Class({
 		this.currentDataset = null;
 		this.offsets = [];
 		this.animating = false;
-		this.onNavigate.subscribeTo(this, 'onNavigate', this);
-		this.handleFocusEvent.subscribeTo(this, ['onFocus', 'onBlur'], this);
 		this.setStyle('transform', 'translateZ(0)');
 	},
 
@@ -402,7 +288,7 @@ var CarouselControl = new MAF.Class({
 			}
 			switch(direction){
 				case 'up':
-				case 'left':
+				//case 'left':
 					if(this.cells.length > 1){
 						this.cells.unshift(this.cells.pop());
 						this.buffDataset.unshift(this.currentDataset.pop());
@@ -411,7 +297,7 @@ var CarouselControl = new MAF.Class({
 					}
 					break;
 				case 'down':
-				case 'right':
+				//case 'right':
 					if(this.cells.length > 1){
 						this.cells.push(this.cells.shift());
 						this.buffDataset.push(this.currentDataset.shift());
@@ -458,18 +344,10 @@ var CarouselControl = new MAF.Class({
 		return this.cells[(this.cells.length === 1 ) ? 0 : this.config.focusIndex];
 	},
 
-	// TODO should be private functions
-	onNavigate : function(event){
-		var direction = event.payload.direction;
-		if(this.config.blockFocus || (this.config.orientation === 'horizontal' && (direction === 'left' || direction === 'right')) || 
-			(this.config.orientation === 'vertical' && (direction === 'up' || direction === 'down'))){
-			event.preventDefault();
-		    console.log('PreventDefault');
-		}
+	doNavigate : function(direction){
 		this.shift(direction);
 	},
 
-	// TODO should be private functions
 	animateCells : function(cells, dir, parent)
 	{
 		if(cells){

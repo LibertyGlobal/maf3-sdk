@@ -1,7 +1,7 @@
 var testdata = [
 	{ 
 		id: "1",
-		title: "Breaking bad1",
+		title: "Breaking bad",
 		start: "2014-09-16T20:57:00Z",
 		end: "2014-09-16T21:57:00Z",
 		genre: "Action",
@@ -42,8 +42,8 @@ var testdata = [
 		short_sysnopsis: "The series follows four mining crews as they search for gold over the four month Yukon mining season.", 
 		sysnopsis: "Yukon Gold is a Canadian reality television series produced by Paperny Entertainment that airs on History Television. The series follows four mining crews as they search for gold over the four month Yukon mining season. Miners Ken Foy, Al McGregor, Bernie Kreft and Karl Knutson each head one of the crews. The series has been acquired in the United States by National Geographic Channel and will air in 2013.",
 		cast: "",
-		poster: "http://ia.media-imdb.com/images/M/MV5BMTQ0NjUyODg3NF5BMl5BanBnXkFtZTgwNDk2MzI2MDE@._V1__SX1857_SY927_.jpg",
-		large_image: "http://ia.media-imdb.com/images/M/MV5BNjg2MTc4MjkyNl5BMl5BanBnXkFtZTgwNjcwMjIyMjE@._V1__SX1857_SY927_.jpg",
+		poster: "http://vod.cdn.eastlink.ca/CDN/images/YukonGold_YukonGoldS1_YukonGoldS1E1010_boxart.jpg",
+		large_image: "http://wpmedia.o.canada.com/2013/03/yukon-gold-miners.jpg",
 		channel_logo: "http://ftlob.nl/wp-content/uploads/logo-NatGeo.jpg"
 	},{ 
 		id: "4",
@@ -62,33 +62,33 @@ var testdata = [
 		channel_logo: "http://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/422px-HBO_logo.svg.png"
 	},{ 
 		id: "5",
-		title: "Breaking bad5",
-		start: "2014-09-16T20:57:00Z",
-		end: "2014-09-16T21:57:00Z",
-		genre: "Action",
+		title: "Game of Thrones",
+		start: "2014-09-19T18:05:00Z",
+		end: "2014-09-19T19:05:00Z",
+		genre: "Sci-Fi & Fantasy, Drama",
 		language: "English",
 		subtitles: "Dutch",
 		rating: "12",
-		short_sysnopsis: "Breaking Bad is the story of Walter White, a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine, in order to secure his family's financial future before he dies.", 
-		sysnopsis: "Breaking Bad is an American crime drama television series created and produced by Vince Gilligan. Set and produced in Albuquerque, New Mexico, Breaking Bad is the story of Walter White, a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine, in order to secure his family's financial future before he dies, teaming with his former student, Jesse Pinkman. Heavily serialized, the series is known for positioning its characters in seemingly inextricable corners and has been labeled a contemporary western by its creator.",
-		cast: "Bryan Cranston, Anna Gunn, Aaron Paul, Dean Norris",
-		poster: "https://image.tmdb.org/t/p/w396/4yMXf3DW6oCL0lVPZaZM2GypgwE.jpg",
-		large_image: "https://image.tmdb.org/t/p/w780/bzoZjhbpriBT2N5kwgK0weUfVOX.jpg",
-		channel_logo: "http://staticfiles.rtl.nl/styles/img/logos/logo_rtl4_med_dark.png"
+		short_sysnopsis: "The series, set on the fictional continents of Westeros and Essos at the end of a decade-long summer, interweaves several plot lines.", 
+		sysnopsis: "Game of Thrones is an American fantasy drama television series created for HBO by David Benioff and D. B. Weiss. It is an adaptation of A Song of Ice and Fire, George R. R. Martin's series of fantasy novels, the first of which is titled A Game of Thrones. The series, set on the fictional continents of Westeros and Essos at the end of a decade-long summer, interweaves several plot lines. The first follows the members of several noble houses in a civil war for the Iron Throne of the Seven Kingdoms; the second covers the rising threat of the impending winter and the mythical creatures of the North; the third chronicles the attempts of the exiled last scion of the realm's deposed dynasty to reclaim the throne. Through its morally ambiguous characters, the series explores the issues of social hierarchy, religion, loyalty, corruption, sexuality, civil war, crime, and punishment.",
+		cast: "Peter Dinklage, Nikolaj Coster-Waldau, Lena Headey, Emilia Clarke, Kit Harington",
+		poster: "https://image.tmdb.org/t/p/w396/pVC9o9LLnhuPpas0B0p9spqAxNg.jpg",
+		large_image: "https://image.tmdb.org/t/p/w780/y3iZibhyEmFCrdRENGaSZHM2fSm.jpg",
+		channel_logo: "http://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/422px-HBO_logo.svg.png"
 	},{ 
 		id: "6",
-		title: "Breaking bad6",
+		title: "Manhattan",
 		start: "2014-09-16T20:57:00Z",
 		end: "2014-09-16T21:57:00Z",
-		genre: "Action",
+		genre: "Drama",
 		language: "English",
 		subtitles: "Dutch",
 		rating: "12",
 		short_sysnopsis: "Breaking Bad is the story of Walter White, a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine, in order to secure his family's financial future before he dies.", 
-		sysnopsis: "Breaking Bad is an American crime drama television series created and produced by Vince Gilligan. Set and produced in Albuquerque, New Mexico, Breaking Bad is the story of Walter White, a struggling high school chemistry teacher who is diagnosed with inoperable lung cancer at the beginning of the series. He turns to a life of crime, producing and selling methamphetamine, in order to secure his family's financial future before he dies, teaming with his former student, Jesse Pinkman. Heavily serialized, the series is known for positioning its characters in seemingly inextricable corners and has been labeled a contemporary western by its creator.",
-		cast: "Bryan Cranston, Anna Gunn, Aaron Paul, Dean Norris",
-		poster: "https://image.tmdb.org/t/p/w396/4yMXf3DW6oCL0lVPZaZM2GypgwE.jpg",
-		large_image: "https://image.tmdb.org/t/p/w780/bzoZjhbpriBT2N5kwgK0weUfVOX.jpg",
-		channel_logo: "http://2.bp.blogspot.com/-Pz3ZfUB2OE8/UD1G9OMlvpI/AAAAAAAAMX0/Zk2nh6CJwrg/s250/RTL5+logo.png"
+		sysnopsis: "Set against the backdrop of the greatest clandestine race against time in the history of science with the mission to build the world's first atomic bomb in Los Alamos, New Mexico. Flawed scientists and their families attempt to co-exist in a world where secrets and lies infiltrate every aspect of their lives.",
+		cast: "John Benjamin Hickey, Olivia Williams, Ashley Zukerman, Rachel Brosnahan, Daniel Stern",
+		poster: "https://image.tmdb.org/t/p/w396/8OIMO7apF8Jhx54vvYxrbK3wQvI.jpg",
+		large_image: "https://image.tmdb.org/t/p/w780/5Z3LQHTPYK0kNBwURQTjQomv8Go.jpg",
+		channel_logo: "http://staticfiles.rtl.nl/styles/img/logos/logo_rtl7_trans.png"
 	}
 ];
