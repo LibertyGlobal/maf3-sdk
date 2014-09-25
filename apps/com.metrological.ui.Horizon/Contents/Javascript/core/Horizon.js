@@ -59,7 +59,7 @@ var Horizon = (function (body) {
 	}).inject(container);
 
 	var subtitle = new Text({
-		label: $_('ALL APPS'),
+		label: $_('ALL_APPS'),
 		styles: {
 			hOffset: title.hOffset,
 			vOffset: title.height + title.vOffset,
@@ -115,7 +115,7 @@ var Horizon = (function (body) {
 	}
 
 	function blocked() {
-		return !showing && MAF.mediaplayer.isTVActive && MAE.blocked && !MAF.mediaplayer.currentAsset.title;
+		return !showing && MAF.mediaplayer.isTVActive && widget.getSetting('blocked') && !MAF.mediaplayer.currentAsset.title;
 	}
 
 	function updateHeader() {

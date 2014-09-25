@@ -40,10 +40,12 @@ define('MAF.control.PromptButton', function () {
 		},
 
 		changeValue: function (callback, value) {
+			var btn = this;
 			var changer = function (result) {
 					callback(result.selected.value);
+					btn.fire('onOptionSelected', result.selected || {});
 				},
-				buttons = this.getOptions().slice(0,2).map(function (b) {
+				buttons = this.getOptions().map(function (b) {
 					b.callback = changer;
 					return b;
 				});

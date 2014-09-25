@@ -283,12 +283,14 @@ var loadTemplate = (function () {
 					break;
 				case 'dialog':
 					var dialogElement = getElementById('@' + current[identifier]), 
-						currentStyle = dialogElement.style || {},
+						currentStyle = dialogElement && dialogElement.style || {},
 						focusAfterDialog = app.document.activeElement,
 						totalHeight = 0,
 						buttons = [],
 						isKeyboard = keyboardDialogs.indexOf(id) !== -1,
 						KeyboardValueManager = isKeyboard && new MAF.keyboard.KeyboardValueManager();
+
+					if (!dialogElement) return;
 
 					// Default buttons
 					switch (id) {
@@ -912,6 +914,11 @@ var loadTemplate = (function () {
 						}
 					} else {
 						switch (id) {
+							case 'facebook-login':
+								if (!ProfileManager.isFamily)
+									dialogConfig.url = 'http://facebook.com/device';
+								else
+									break;
 							case 'twitter-qrcode':
 							case 'qrcode':
 								if (id === 'twitter-qrcode' && ProfileManager.isFamily) {
@@ -1194,7 +1201,7 @@ widget.handleHostEvent = function (event) {
 			break;
 		case 'onApplicationStartupRequest':
 			data = event.getData();
-			if (MAE.tos !== false && currentAppConfig.get('tos') !== TOS) {
+			if (widget.getSetting('tos') !== false && currentAppConfig.get('tos') !== TOS) {
 				showEutos(data.id, data.params);
 			} else {
 				ApplicationManager.load(data.id);
