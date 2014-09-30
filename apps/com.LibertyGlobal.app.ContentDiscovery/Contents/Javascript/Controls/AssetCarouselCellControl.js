@@ -5,14 +5,23 @@ var AssetCarouselCellControl = new MAF.Class({
 
 	Protected: {	
 		generateContents: function (){
-			this.Poster = new MAF.element.Image({
+			this.PosterContainer = new MAF.element.Container({
 				styles: {
 					height: 304,
 					width: 215,
 					position: 'relative',
-					display: 'inline-block'
+					display: 'inline-block',
+					backgroundColor: '#b2bfcb',
+					padding: 2
 				}
 			}).appendTo(this);
+			this.Poster = new MAF.element.Image({
+				styles: {
+					height: 300,
+					width: 211
+				}
+			}).appendTo(this.PosterContainer);
+
 			this.Title = new MAF.element.Text({
 				styles: {
 					color: '#cecece',
@@ -62,10 +71,11 @@ var AssetCarouselCellControl = new MAF.Class({
 	changeData: function(data){		
 		if(data !== undefined)
 		{			
-			this.Title.setText(data.title);
-			this.Poster.setSource(data.poster);
+			this.Title.setText(data.video.title);
+			this.Poster.setSource(data.video.imageLink.href);
 			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-			this.Channel.setSource(data.channel_logo);
+			//TODO retrieve logo's 
+			//this.Channel.setSource(data.channel_logo);
 		}
 		else
 		{

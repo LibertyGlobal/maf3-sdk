@@ -8,11 +8,11 @@ var SidebarButtonControl = new MAF.Class({
 			this.parent(event, payload);
 			switch (event.type) {
 				case 'focus':
-					this.buttonText.setStyles({ opacity: 100 });
+					this.buttonText.setStyles({ opacity: 1.0 });
 					this.buttonRollover.show();
 					break;
 				case 'blur':
-					this.buttonText.setStyles({ opacity: 32 });
+					this.buttonText.setStyles({ opacity: 0.32 });
 					this.buttonRollover.hide();
 					break;
 			}
@@ -34,7 +34,7 @@ var SidebarButtonControl = new MAF.Class({
 					fontSize: 40,
 					hOffset: 18,
 					vOffset: 10,
-					opacity: 32
+					opacity: 0.32
 				}
 			}).appendTo(this);				
 		}

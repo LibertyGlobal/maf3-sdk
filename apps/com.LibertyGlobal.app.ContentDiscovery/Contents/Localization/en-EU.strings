@@ -1,6 +1,9 @@
-"Home_Asset_Focus_Genre" = "Genre: ";
-"Home_Asset_Focus_Reminder" = "Press OK to add Reminder";
+"MainScreen_Asset_Focus_Genre" = "Genre: ";
+"MainScreen_Asset_Focus_Reminder" = "Press OK to add Reminder";
 "Sidebar_SwitchProfileButton" = "Switch Profile";
 "Sidebar_EditProfileButton" = "Edit Profile";
 "Sidebar_AboutAppButton" = "About this app";
 "Sidebar_ExitButton" = "Exit";
+"MenuItem_Movies_Preference_Text" = "Movies / Drama";
+"MenuItem_Movies_MainMenu_Text" = "Movies / Drama";
+"MenuItem_Movies_Data_Filter" = "speelfilm,drama";

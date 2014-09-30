@@ -4,7 +4,14 @@ var AssetCarouselCellFocusControl = new MAF.Class({
 	Extends: MAF.element.Container,
 
 	Protected: {	
-		generateContents: function (){				
+		generateContents: function (){	
+			this.futureContainer = new MAF.element.Container({
+				styles: {	
+					height: 'inherit',
+					width: 'inherit',
+					padding: 4		
+				}
+			}).appendTo(this);			
 			this.Poster = new MAF.element.Image({
 				styles: {
 					height: 464,
@@ -12,7 +19,7 @@ var AssetCarouselCellFocusControl = new MAF.Class({
 					position: 'relative',
 					display: 'inline'
 				}
-			}).appendTo(this);				
+			}).appendTo(this.futureContainer);				
 			this.Title = new MAF.element.Text({
 				styles: {
 					color: '#000000',
@@ -72,6 +79,13 @@ var AssetCarouselCellFocusControl = new MAF.Class({
 					hOffset: 346
 				}
 			}).appendTo(this);
+
+			// this.currentContainer = new MAF.element.Container({
+			// 	styles: {	
+			// 		height: 'inherit',
+			// 		width: 'inherit'		
+			// 	}
+			// }).appendTo(this);	
 		}		
 	},
 
@@ -88,12 +102,23 @@ var AssetCarouselCellFocusControl = new MAF.Class({
 	changeData: function(data){		
 		if(data !== undefined)
 		{		
-			this.Poster.setSource(data.poster);	
-			this.Title.setText(data.title);			
-			this.Genre.setText($_('Home_Asset_Focus_Genre') + data.genre);
-			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-			this.Synopsis.setText(data.short_sysnopsis);
-			this.Reminder.setText($_('Home_Asset_Focus_Reminder'));
+			// debugger;
+			// if(moment(data.start) > moment())
+			// {
+				// this.futureContainer.show();
+				// this.currentContainer.hide();
+				this.Poster.setSource(data.video.imageLink.href);	
+				this.Title.setText(data.video.title);			
+				this.Genre.setText($_('MainScreen_Asset_Focus_Genre') + data.video.category);
+				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
+				this.Synopsis.setText(data.video.synopsis);
+				this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+			// }
+			// else
+			// {
+			// 	this.futureContainer.hide();
+			// 	this.currentContainer.show();
+			// }
 		}
 		else
 		{

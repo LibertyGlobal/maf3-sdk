@@ -9,7 +9,10 @@ var AssetCarouselControl = new MAF.Class({
 			this.parent(event);
 			switch(event.type){
 				case 'navigate':
-					this.doNavigate(event.detail.direction);
+					if(event.detail)
+					{
+						this.doNavigate(event.detail.direction);
+					}
 					break;
 			}
 		},
@@ -108,6 +111,18 @@ var AssetCarouselControl = new MAF.Class({
 
 	setFocus: function() {
 		this.focus();
+	},
+
+	disable: function() {
+		this.setStyles({
+			opacity: 0.3
+		});
+	},
+
+	enable: function() {
+		this.setStyles({
+			opacity: 1
+		});
 	},
 
 	doNavigate: function(direction){		
