@@ -5,7 +5,7 @@ var os = require('os'),
 	compression = require('compression'),
 	bodyParser = require('body-parser'),
 	app = express(),
-	port = process.env.NODE_PORT || 8080;
+	port = process.env.NODE_PORT || 8081;
 
 var IP = (function () {
 	var cached;

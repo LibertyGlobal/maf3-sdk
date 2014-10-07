@@ -5,7 +5,6 @@ var MenuCarouselControl = new MAF.Class({
 
 	Protected: {		
 		dispatchEvents: function(event){
-			console.log("Asset carousel dispatchEvents navigate " + event.type);
 			this.parent(event);
 			switch(event.type){
 				case 'navigate':
@@ -48,7 +47,7 @@ var MenuCarouselControl = new MAF.Class({
 				styles: {
 					height: 92,
 					width: 'inherit',
-					vOffset: 495,
+					vOffset: 510,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25					

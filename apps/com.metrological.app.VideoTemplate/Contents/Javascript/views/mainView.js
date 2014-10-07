@@ -9,6 +9,7 @@ var mainView = new MAF.Class({
 		var view = this;
 		view.parent(); // Call super class constructor
 		MAF.mediaplayer.init(); // Initialize mediaplayer
+		MAF.mediaplayer.setViewportBounds(100, 100, 500, 500);
 	},
 
 	// Create your view template

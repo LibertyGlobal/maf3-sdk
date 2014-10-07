@@ -24,8 +24,8 @@ var SidebarControl = new MAF.Class({
 			this.collapsedprofileHighlightImage = new MAF.element.Image({
 			source: 'Images/sidebar_profile_image_high.png',
 			styles: {
-				hOffset: 1,
-				vOffset: 27,
+				hOffset: 65,
+				vOffset: 65,
 				position: 'relative',
 				display: 'inline-block'
 				}
@@ -36,16 +36,16 @@ var SidebarControl = new MAF.Class({
 			styles: {				
 				position: 'relative',
 				display: 'inline',
-				hOffset: 36,
-				vOffset: -68
+				hOffset: -29,
+				vOffset: 27
 			}
 			}).appendTo(this.collapsedContainer);
 
 			this.collapsedButton = new MAF.element.Image({
 			source: 'Images/sidebar_collapsed_button.png',
 			styles: {
-				hOffset: 38,
-				vOffset: 210,
+				hOffset: 100,
+				vOffset: 214,
 				position: 'absolute'				
 			}
 			}).appendTo(this.collapsedContainer);
@@ -60,8 +60,8 @@ var SidebarControl = new MAF.Class({
 			this.expandedprofileHighlightImage = new MAF.element.Image({
 			source: 'Images/sidebar_profile_image_high_expanded.png',
 			styles: {
-				hOffset: 3,
-				vOffset: 27,
+				hOffset: 85,
+				vOffset: 65,
 				position: 'relative',
 				display: 'inline-block'
 				}
@@ -70,8 +70,8 @@ var SidebarControl = new MAF.Class({
 			this.expandedprofileImage = new MAF.element.Image({
 			source: 'Images/sidebar_profile_image.png',
 			styles: {
-				hOffset: -340,
-				vOffset: -11,
+				hOffset: -260,
+				vOffset: 27,
 				position: 'relative'
 			}
 			}).appendTo(this.expandedContainer);
@@ -95,8 +95,8 @@ var SidebarControl = new MAF.Class({
 				},
 				styles: {
 					marginBottom: 10,	
-					vOffset: 40,				
-					hOffset: 23,
+					vOffset: 85,				
+					hOffset: 100,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -122,8 +122,8 @@ var SidebarControl = new MAF.Class({
 				},
 				styles: {	
 					marginBottom: 10,
-					vOffset: 40,			
-					hOffset: 23,
+					vOffset: 85,			
+					hOffset: 100,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -149,8 +149,8 @@ var SidebarControl = new MAF.Class({
 				},
 				styles: {	
 					marginBottom: 10,
-					vOffset: 40,				
-					hOffset: 23,
+					vOffset: 85,				
+					hOffset: 100,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -175,8 +175,8 @@ var SidebarControl = new MAF.Class({
 				},
 				styles: {
 					marginBottom: 10,
-					vOffset: 40,				
-					hOffset: 23,
+					vOffset: 85,				
+					hOffset: 100,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -197,7 +197,7 @@ var SidebarControl = new MAF.Class({
 
 	expand: function() {
 		this.setStyles({
-			width: 460,
+			width: 580,
 			height:1080,
 			margin: 0,
 			padding: 0,
@@ -215,7 +215,7 @@ var SidebarControl = new MAF.Class({
 
 	collapse: function() {
 		this.setStyles({
-			width: 182,
+			width: 240,
 			height:1080,
 			margin: 0,
 			padding: 0,

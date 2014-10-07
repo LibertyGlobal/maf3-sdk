@@ -1,6 +1,6 @@
 Config.common = {
-	apiUrl: 'http://lgi.io/kraken/v2/schedule/',
-	apiRegion: 'NL',
+	channelApiUrl: 'http://www.horizon.tv/oesp/api/NL/nld/web/channels',
+	channelList: [],
 	menuItems: [
 		{ 
 			preferenceLabel: $_('MenuItem_Movies_Preference_Text'), 
@@ -72,6 +72,6 @@ Config.common = {
 			data: [], 
 			isVisible: true,
 			itemType: 'category'
-		},
+		}
 	]
 };

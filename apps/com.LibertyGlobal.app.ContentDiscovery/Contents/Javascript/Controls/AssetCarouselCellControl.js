@@ -31,7 +31,8 @@ var AssetCarouselCellControl = new MAF.Class({
 					height: 30,
 					width: 215,
 					position: 'relative',
-					display: 'inline-block'
+					display: 'inline-block',
+					truncation: 'end'
 				}
 			}).appendTo(this);
 			this.StartEnd = new MAF.element.Text({
@@ -40,7 +41,7 @@ var AssetCarouselCellControl = new MAF.Class({
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 28,
 					height: 30,
-					vOffset: 16,
+					vOffset: 10,
 					width: 215,
 					position: 'relative',
 					display: 'inline-block'
@@ -48,9 +49,9 @@ var AssetCarouselCellControl = new MAF.Class({
 			}).appendTo(this);
 			this.Channel = new MAF.element.Image({
 				styles: {
-					height: 30,
-					vOffset: 22,
-					opacity: 0.7,					
+					maxHeight: 40,
+					maxWidth: 200,					
+					vOffset: 18,				
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -74,8 +75,23 @@ var AssetCarouselCellControl = new MAF.Class({
 			this.Title.setText(data.video.title);
 			this.Poster.setSource(data.video.imageLink.href);
 			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-			//TODO retrieve logo's 
-			//this.Channel.setSource(data.channel_logo);
+			
+			if(Config.common.channelList.length>0)
+			{
+				for (var i = 0; i < Config.common.channelList.length; i++) {
+	        		if (Config.common.channelList[i].channelNumber === data.channel.logicalPosition) {
+	        			if(Config.common.channelList[i].stationSchedules!==null && Config.common.channelList[i].stationSchedules.length > 0) {
+	        				for (var j = 0; j< Config.common.channelList[i].stationSchedules[0].station.images.length; j++) {
+	        					if(Config.common.channelList[i].stationSchedules[0].station.images[j].assetType === "station-logo-medium")
+	        					{
+	        						this.Channel.setSource(Config.common.channelList[i].stationSchedules[0].station.images[j].url);
+	        						break;
+	        					}
+	        				}
+	        			}					
+	        		}
+        		}
+            }
 		}
 		else
 		{

@@ -9,7 +9,7 @@ var MenuCarouselCellControl = new MAF.Class({
 				styles: {
 						width: 'inherit',
 						color: '#ffffff',
-						fontFamily: 'InterstatePro-Light, sans-serif',
+						fontFamily: 'InterstatePro-ExtraLight',
 						fontSize: 60,						
 						paddingTop: 20
 					}

@@ -1,9 +1,30 @@
+// Preferences page
+"MenuItem_Movies_Preference_Text" = "Movies / Drama";
+"MenuItem_Arts_Preference_Text" = "Arts / Culture";
+"MenuItem_News_Preference_Text" = "News";
+"MenuItem_Children_Preference_Text" = "Children";
+"MenuItem_Social_Preference_Text" = "Social";
+"MenuItem_Sports_Preference_Text" = "Sports";
+"MenuItem_Show_Preference_Text" = "Show";
+"MenuItem_Music_Preference_Text" = "Music";
+"MenuItem_Education_Preference_Text" = "Education";
+
+// Main page
+"MenuItem_Movies_MainMenu_Text" = "Movies / Drama";
+"MenuItem_Arts_MainMenu_Text" = "Arts";
+"MenuItem_News_MainMenu_Text" = "News";
+"MenuItem_Children_MainMenu_Text" = "Children";
+"MenuItem_Social_MainMenu_Text" = "Social";
+"MenuItem_Sports_MainMenu_Text" = "Sports";
+"MenuItem_Show_MainMenu_Text" = "Show";
+"MenuItem_Music_MainMenu_Text" = "Music";
+"MenuItem_Education_MainMenu_Text" = "Education";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add Reminder";
+"MainScreen_Asset_Focus_OkView" = "Press OK to view";
+
+// Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";
 "Sidebar_EditProfileButton" = "Edit Profile";
 "Sidebar_AboutAppButton" = "About this app";
 "Sidebar_ExitButton" = "Exit";
-"MenuItem_Movies_Preference_Text" = "Movies / Drama";
-"MenuItem_Movies_MainMenu_Text" = "Movies / Drama";
-"MenuItem_Movies_Data_Filter" = "speelfilm,drama";

@@ -7,60 +7,61 @@ var MainScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 
-		ContentDataRetriever.collectData(this.dataLoaded, view);
+		// retrieve channels for icons
+		new Request({
+			url: Config.common.channelApiUrl,
+			onComplete: function (request) {
+			if (request.status === 200)
+				channelList = JSON.parse(request.response);
+				if(channelList.channels != null)
+				{
+					Config.common.channelList = channelList.channels;
+				}
+			}
+		}).send();
+
+		var retriever = new ContentDataRetriever();
+		retriever.collectData(this.dataLoaded, view);
 		view.items = Config.common.menuItems;
-
-		// LGI.Guide.config.APIURL = Config.common.apiUrl;
-		// LGI.Guide.config.region = Config.common.apiRegion;
-		// var startDateTime = moment().utc().format('YYYY-MM-DDTHH:mm') + "Z";
-		// var endDateTime = moment().utc().add('hours', 2).format('YYYY-MM-DDTHH:mm') + "Z";
-		// console.log('time frame1: ' + startDateTime + ', ' + endDateTime);
-		// LGI.Guide.Broadcast.create()
-		// 	.limit(256)
-		// 	.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.IMI, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
-		// 			LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CHANNEL_NAME,
-		// 			LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.DIRECTORS,
-		// 			LGI.Guide.Broadcast.WRITERS, LGI.Guide.Broadcast.BPM, LGI.Guide.Broadcast.POPULARITY,
-		// 			LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
-		// 	.filter(LGI.Guide.Broadcast.START.greaterThan(startDateTime))				
-		// 	.filter(LGI.Guide.Broadcast.END.lessThan(endDateTime))
-		// 	.sort(LGI.Guide.Broadcast.START)
-		// 	.findOne(function(response){
-		// 		// view.items.forEach(function(item){
-		// 		// 	item.data = response;
-		// 		// }, this);
-		// 	});
-
-// console.log("onMenuChanged: " + selectedMenuItem);
-// 					var startDateTime = moment().format('YYYY-MM-DDTHH:mm') + "Z";
-// 					var endDateTime = moment().add('hours', 2).format('YYYY-MM-DDTHH:mm') + "Z";
-// 					LGI.Guide.Broadcast.create()
-// 						.limit(256)
-// 						.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.IMI, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
-// 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CHANNEL_NAME,
-// 							LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.DIRECTORS,
-// 							LGI.Guide.Broadcast.WRITERS, LGI.Guide.Broadcast.BPM, LGI.Guide.Broadcast.POPULARITY,
-// 							LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
-// 						//.filter(LGI.Guide.Broadcast.START.greaterThan(startDateTime))				
-// 						.filter(LGI.Guide.Broadcast.END.lessThan(endDateTime))
-// 						.sort(LGI.Guide.Broadcast.START)
-// 						.findOne(function(response){ 
-// 							view.assets = response;
-// 		        			view.controls.assetCarousel.changeDataset(view.assets, true);
-// 						});
+		// view.items.forEach(function(menuItem, u){
+		// 			menuItem.data = testdata;
+		// 		}, this);
 	},
 
-	dataLoaded: function(view) {
-		console.log("HomeScreen: dataLoaded");
-		// view.controls.verticalMenu.changeDataset(Config.common.menuItems);
-		// view.controls.assetCarousel.changeDataset(Config.common.menuItems[0]);
-		// view.controls.assetCarousel.setFocus();
+	dataLoaded: function(view) {		
+		view.controls.verticalMenu.changeDataset(Config.common.menuItems);
+		view.controls.assetCarousel.changeDataset(Config.common.menuItems[0].data);
+		view.controls.assetCarousel.setFocus();
 	},
 
     // Create your view template
 	createView: function () {
 		var view = this;		
-		
+		view.elements.backgroundImageNormal = new MAF.element.Image({
+			source: 'Images/background_main.jpg',
+		}).appendTo(view);
+
+		view.elements.backgroundImageLive = new MAF.element.Image({
+			source: 'Images/background_main_live.png',
+		}).appendTo(view);
+		view.elements.backgroundImageLive.hide();
+
+		// view.elements.console = new MAF.element.TextField({
+		// 	totalLines: 7,
+		// 	visibleLines: 7,
+		// 	styles: {
+		// 		color: '#000000',
+		// 		fontFamily: 'UPCDigital-Regular',
+		// 		fontSize: 26,
+		// 		vOffset: 30,
+		// 		hOffset: 1200,
+		// 		height:240,
+		// 		width: 464,
+		// 		wrap: true,
+		// 		truncation: 'end'
+		// 	}
+		// }).appendTo(view); 
+
 		view.controls.sideBarContainer = new SidebarControl({
 			events: {
 				onNavigateRight: function(){
@@ -72,7 +73,7 @@ var MainScreen = new MAF.Class({
 		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
 				height: 1080,
-				width: 1738,
+				width: 1680,
 				position: 'relative',
 				display: 'inline-block'
 			}
@@ -82,22 +83,35 @@ var MainScreen = new MAF.Class({
 			styles:{
 				height: view.height,
 				width: 'inherit',
-		 		hOffset: -5
+				hOffset: 5
 			},
 			events: {
-				onMenuChanged: function(selectedMenuItem){
-					view.controls.assetCarousel.changeDataset(selectedMenuItem.data);					
+				onMenuChanged: function(eventData){
+					view.controls.assetCarousel.changeDataset(eventData.payload.selectedMenuItem.data);					
 				}				
 			}		
 		}).appendTo(this.elements.rightContainer);
 
 		view.controls.assetCarousel = new AssetCarouselControl({
 			styles:{
-				height: 474,
+				height: 498,
 				width: 'inherit',
-				vOffset: 296
+				vOffset: 296,
+				hOffset: 10
 			},
 			events: {
+				onAssetChanged: function(eventData) {
+					if(eventData.payload.isLiveAsset===true)
+					{
+						view.elements.backgroundImageLive.show();
+						view.elements.backgroundImageNormal.hide();
+					}
+					else
+					{
+						view.elements.backgroundImageLive.hide();
+						view.elements.backgroundImageNormal.show();
+					}
+				},
 				onNavigateLeft: function(){
 					view.showSidebar();
 				},
@@ -112,17 +126,11 @@ var MainScreen = new MAF.Class({
 	},
 
 	updateView: function () {
-		var view = this;
-		view.controls.verticalMenu.changeDataset(Config.common.menuItems);
-		view.controls.assetCarousel.changeDataset(Config.common.menuItems[0].data);
-		view.controls.assetCarousel.setFocus();
+		// var view = this;
+		// view.controls.verticalMenu.changeDataset(Config.common.menuItems);
+		// view.controls.assetCarousel.changeDataset(Config.common.menuItems[0].data);
+		// view.controls.assetCarousel.setFocus();
 	},	
-
-	// todo remove temporary added to shuffle asset list
-	shuffle: function(anArray){ //v1.0
-		for(var j, x, i = anArray.length; i; j = Math.floor(Math.random() * i), x = anArray[--i], anArray[i] = anArray[j], anArray[j] = x);
-			return anArray;
-	},
 
 	showSidebar: function() { 
 		console.log("HomeScreen: showSidebar");
@@ -130,7 +138,9 @@ var MainScreen = new MAF.Class({
 		view.elements.rightContainer.freeze();
 		view.controls.verticalMenu.disable();
 		view.controls.assetCarousel.disable();
-		view.elements.rightContainer.width = 1460;	
+		view.elements.rightContainer.width = 1340;	
+		view.elements.backgroundImageLive.hide();
+		view.elements.backgroundImageNormal.show();
 		view.controls.sideBarContainer.expand();
 		view.controls.sideBarContainer.setFocus();
 	},
@@ -142,7 +152,13 @@ var MainScreen = new MAF.Class({
 		view.controls.verticalMenu.enable();
 		view.controls.assetCarousel.enable();
 		view.controls.sideBarContainer.collapse();
-		view.elements.rightContainer.width = 1738;
+		if(view.controls.assetCarousel.isLive===true)
+		{
+			view.elements.backgroundImageLive.show();
+			view.elements.backgroundImageNormal.hide();
+			console.log("onAssetChanged: live asset");
+		}
+		view.elements.rightContainer.width = 1680;
 		view.controls.assetCarousel.setFocus();
 	},
 

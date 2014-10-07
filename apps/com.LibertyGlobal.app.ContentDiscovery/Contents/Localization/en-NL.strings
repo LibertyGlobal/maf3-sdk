@@ -21,6 +21,7 @@
 "MenuItem_Education_MainMenu_Text" = "Education";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add Reminder";
+"MainScreen_Asset_Focus_OkView" = "Press OK to view";
 
 // Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";

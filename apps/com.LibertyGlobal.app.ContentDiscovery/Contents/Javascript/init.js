@@ -1,5 +1,6 @@
 // Theme
 include('Javascript/Theme.js');
+include('Javascript/testdata.js');
 
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
@@ -9,7 +10,8 @@ include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/MenuCarouselCellControl.js');
 include('Javascript/Controls/MenuCarouselControl.js');
 include('Javascript/Controls/AssetCarouselCellControl.js');
-include('Javascript/Controls/AssetCarouselCellFocusControl.js');
+include('Javascript/Controls/AssetCarouselCellCurrentFocusControl.js');
+include('Javascript/Controls/AssetCarouselCellFutureFocusControl.js');
 include('Javascript/Controls/AssetCarouselControl.js');
 
 include('Javascript/Services/ContentData.js');
