@@ -9,8 +9,6 @@ var AssetCarouselCellControl = new MAF.Class({
 				styles: {
 					height: 304,
 					width: 215,
-					position: 'relative',
-					display: 'inline-block',
 					backgroundColor: '#b2bfcb',
 					padding: 2
 				}
@@ -27,11 +25,9 @@ var AssetCarouselCellControl = new MAF.Class({
 					color: '#cecece',
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 28,
-					vOffset: 15,
+					vOffset: 310,
 					height: 30,
 					width: 215,
-					position: 'relative',
-					display: 'inline-block',
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -41,19 +37,15 @@ var AssetCarouselCellControl = new MAF.Class({
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 28,
 					height: 30,
-					vOffset: 10,
-					width: 215,
-					position: 'relative',
-					display: 'inline-block'
+					vOffset: 345,
+					width: 215
 				}
 			}).appendTo(this);
 			this.Channel = new MAF.element.Image({
 				styles: {
 					maxHeight: 40,
 					maxWidth: 200,					
-					vOffset: 18,				
-					position: 'relative',
-					display: 'inline-block'
+					vOffset: 395
 				}
 			}).appendTo(this);
 		}		
@@ -70,35 +62,47 @@ var AssetCarouselCellControl = new MAF.Class({
 	},
 
 	changeData: function(data){		
-		if(data !== undefined)
+		if(data !== null)
 		{			
-			this.Title.setText(data.video.title);
-			this.Poster.setSource(data.video.imageLink.href);
-			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-			
-			if(Config.common.channelList.length>0)
+			if(data.video !== null)
 			{
-				for (var i = 0; i < Config.common.channelList.length; i++) {
-	        		if (Config.common.channelList[i].channelNumber === data.channel.logicalPosition) {
-	        			if(Config.common.channelList[i].stationSchedules!==null && Config.common.channelList[i].stationSchedules.length > 0) {
-	        				for (var j = 0; j< Config.common.channelList[i].stationSchedules[0].station.images.length; j++) {
-	        					if(Config.common.channelList[i].stationSchedules[0].station.images[j].assetType === "station-logo-medium")
-	        					{
-	        						this.Channel.setSource(Config.common.channelList[i].stationSchedules[0].station.images[j].url);
-	        						break;
-	        					}
-	        				}
-	        			}					
-	        		}
-        		}
-            }
+				this.Title.setText(data.video.title);
+				// TODO https doesn't work on the live box. check with ML why
+				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
+				this.PosterContainer.show();
+				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
+			
+				if(Config.common.channelList.length>0)
+				{
+					for (var i = 0; i < Config.common.channelList.length; i++) {
+						if (Config.common.channelList[i].channelNumber === data.channel.logicalPosition) {
+							if(Config.common.channelList[i].stationSchedules!==null && Config.common.channelList[i].stationSchedules.length > 0) {
+								for (var j = 0; j< Config.common.channelList[i].stationSchedules[0].station.images.length; j++) {
+									if(Config.common.channelList[i].stationSchedules[0].station.images[j].assetType === "station-logo-medium")
+									{
+										this.Channel.setSource(Config.common.channelList[i].stationSchedules[0].station.images[j].url);
+										this.Channel.show();
+										break;
+									}
+								}
+							}					
+						}
+					}
+				}
+			}
+			else
+			{
+				console.log("video null: " + data.id);	
+			}
 		}
 		else
 		{
 			this.Title.setText('');	
 			this.Poster.setSource('');
+			this.PosterContainer.hide();
 			this.StartEnd.setText('');	
 			this.Channel.setSource('');
+			this.Channel.hide();
 		}
 	},
 

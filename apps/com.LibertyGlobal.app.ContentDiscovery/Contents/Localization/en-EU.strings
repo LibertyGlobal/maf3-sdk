@@ -8,6 +8,9 @@
 "MenuItem_Show_Preference_Text" = "Show";
 "MenuItem_Music_Preference_Text" = "Music";
 "MenuItem_Education_Preference_Text" = "Education";
+"MenuItem_Trending_Preference_Text" = "Trending";
+"MenuItem_Recommendations_Preference_Text" = "Recommendations";
+"MenuItem_Shuffle_Preference_Text" = "Shuffle";
 
 // Main page
 "MenuItem_Movies_MainMenu_Text" = "Movies / Drama";
@@ -19,12 +22,27 @@
 "MenuItem_Show_MainMenu_Text" = "Show";
 "MenuItem_Music_MainMenu_Text" = "Music";
 "MenuItem_Education_MainMenu_Text" = "Education";
+"MenuItem_Trending_MainMenu_Text" = "Trending";
+"MenuItem_Recommendations_MainMenu_Text" = "Recommendations";
+"MenuItem_Shuffle_MainMenu_Text" = "Shuffle";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add Reminder";
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
+"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s mins.";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
+"MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";
+"MainScreen_Asset_Focus_LoadingSubTitle" = " ";
+
+// InfoScreen
+"InfoScreen_Asset_Duration_Text" = "Duration:";
+"InfoScreen_Asset_Genre_Text" = "Genre:";
+"InfoScreen_Asset_Language_Text" = "Language:";
+"InfoScreen_Asset_Rating_Text" = "Rating:";
 
 // Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";
 "Sidebar_EditProfileButton" = "Edit Profile";
 "Sidebar_AboutAppButton" = "About this app";
 "Sidebar_ExitButton" = "Exit";
+
+

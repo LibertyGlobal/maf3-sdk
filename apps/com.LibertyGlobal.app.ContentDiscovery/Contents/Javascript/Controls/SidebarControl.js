@@ -6,11 +6,22 @@ var SidebarControl = new MAF.Class({
 	Protected: {
 		dispatchEvents: function(event){
 			this.parent(event);
-			switch (event.detail.direction) {
-				case 'right':
-					this.fire("onNavigateRight");
-					break;								
+			console.log(event.type);
+			switch(event.type)
+			{
+				case "navigate":
+					switch (event.detail.direction) {
+						case 'right':
+							this.fire("onNavigateRight");
+						break;								
+					}
+				break;
+				case "select":
+					console.log(this.focussedButton);
+					this.fire('onSelect', { action: this.focussedButton });
+				break;
 			}
+			
 		},
 		createContent: function() {	
 			var sidebarControl = this;
@@ -86,6 +97,7 @@ var SidebarControl = new MAF.Class({
 								event.stopPropagation();
 								break;
 							case 'down':
+								sidebarControl.focussedButton = "edit";
 								sidebarControl.editProfileButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -108,11 +120,13 @@ var SidebarControl = new MAF.Class({
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'up':
+								sidebarControl.focussedButton = "switch";
 								sidebarControl.switchProfileButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
 								break;
 							case 'down':
+								sidebarControl.focussedButton = "about";
 								sidebarControl.aboutAppButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -135,11 +149,13 @@ var SidebarControl = new MAF.Class({
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'up':
+								sidebarControl.focussedButton = "edit";
 								sidebarControl.editProfileButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
 								break;
 							case 'down':
+								sidebarControl.focussedButton = "exit";
 								sidebarControl.exitButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -162,6 +178,7 @@ var SidebarControl = new MAF.Class({
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'up':
+								sidebarControl.focussedButton = "about";
 								sidebarControl.aboutAppButton.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -193,9 +210,12 @@ var SidebarControl = new MAF.Class({
 		this.parent();
 		this.createContent();
 		this.collapse();
+		this.isCollapsed = true;
+		this.focussedButton = "switch";
 	},
 
 	expand: function() {
+		this.isCollapsed = false;
 		this.setStyles({
 			width: 580,
 			height:1080,
@@ -210,10 +230,12 @@ var SidebarControl = new MAF.Class({
 		this.editProfileButton.clearFocus();
 		this.aboutAppButton.clearFocus();
 		this.exitButton.clearFocus();
-		this.expandedContainer.show();		
+		this.expandedContainer.show();	
+		this.setFocus();	
 	},
 
 	collapse: function() {
+		this.isCollapsed = true;
 		this.setStyles({
 			width: 240,
 			height:1080,
@@ -228,6 +250,7 @@ var SidebarControl = new MAF.Class({
 	},
 
 	setFocus: function() { 
+		this.focussedButton = "switch";
 		this.switchProfileButton.setFocus();
 	},
 

@@ -47,7 +47,7 @@ var MenuCarouselControl = new MAF.Class({
 				styles: {
 					height: 92,
 					width: 'inherit',
-					vOffset: 510,
+					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25					
@@ -57,7 +57,7 @@ var MenuCarouselControl = new MAF.Class({
 				styles: {
 					height: 92,
 					width: 'inherit',
-					vOffset: 495,
+					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25
@@ -67,7 +67,7 @@ var MenuCarouselControl = new MAF.Class({
 				styles: {
 					height: 92,
 					width: 'inherit',
-					vOffset: 495,
+					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.05
@@ -76,11 +76,11 @@ var MenuCarouselControl = new MAF.Class({
 		},		
 		updateCells: function(){			
 			this.menu3Container.changeData(this.mainCollection[0]);
-			this.menu4Container.changeData(this.mainCollection[1]);
-			this.menu5Container.changeData(this.mainCollection[2]);
-			this.menu6Container.changeData(this.mainCollection[3]);
-			this.menu1Container.changeData(this.mainCollection[4]);
-			this.menu2Container.changeData(this.mainCollection[5]);
+			this.menu4Container.changeData((this.mainCollection.length>1) ? this.mainCollection[1] : null);
+			this.menu5Container.changeData((this.mainCollection.length>2) ? this.mainCollection[2] : null);
+			this.menu6Container.changeData((this.mainCollection.length>3) ? this.mainCollection[3] : null);
+			this.menu1Container.changeData((this.mainCollection.length>5) ? this.mainCollection[this.mainCollection.length-2] : null);
+			this.menu2Container.changeData((this.mainCollection.length>4) ? this.mainCollection[this.mainCollection.length-1] : null);
 			this.fire('onMenuChanged', { selectedMenuItem: this.mainCollection[0] });
 		}
 	},
@@ -121,7 +121,7 @@ var MenuCarouselControl = new MAF.Class({
 		this.menu3Container.setStyles({ opacity: 1 });
 	},
 
-	doNavigate: function(direction){		
+	doNavigate: function(direction){
 		if(direction){
 			switch(direction){
 				case 'up':

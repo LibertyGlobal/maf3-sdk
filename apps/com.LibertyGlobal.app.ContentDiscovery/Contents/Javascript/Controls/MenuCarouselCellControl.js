@@ -28,7 +28,7 @@ var MenuCarouselCellControl = new MAF.Class({
 	},
 
 	changeData: function(data){		
-		if(data !== undefined)
+		if(data !== null)
 		{			
 			this.MenuText.setText(data.mainMenuLabel);
 		}

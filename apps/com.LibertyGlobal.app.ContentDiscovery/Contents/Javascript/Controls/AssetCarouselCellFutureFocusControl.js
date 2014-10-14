@@ -107,17 +107,20 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 	},
 
 	changeData: function(data){		
-		if(data !== undefined)
+		if(data !== null)
 		{		
-			this.Poster.setSource(data.video.imageLink.href);	
-			this.Title.setText(data.video.title);			
-			this.Genre.setText($_('MainScreen_Asset_Focus_Genre'));
-			var genreText = data.video.category.substring(data.video.category.indexOf("/") + 1);
-			genreText = genreText.replace("/", ", ");
-			this.GenreValue.setText(genreText);
-			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-			this.Synopsis.setText(data.video.synopsis);
-			this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+			if(data.video !== null)
+			{
+				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));	
+				this.Title.setText(data.video.title);	
+				this.Genre.setText($_('MainScreen_Asset_Focus_Genre'));
+				var genreText = data.video.category.substring(data.video.category.indexOf("/") + 1);
+				genreText = genreText.replace("/", ", ");
+				this.GenreValue.setText(genreText);
+				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
+				this.Synopsis.setText(data.video.synopsis);
+				this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+			}
 		}
 		else
 		{

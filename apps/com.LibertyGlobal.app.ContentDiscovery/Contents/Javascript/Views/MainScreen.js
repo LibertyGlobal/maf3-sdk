@@ -3,9 +3,10 @@ var MainScreen = new MAF.Class({
 	Extends: MAF.system.FullscreenView,
 
 	// Add array of items on constructor of the class
-	initialize: function () {
+	initialize: function () {	 
 		var view = this;
 		view.parent();
+		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);	
 
 		// retrieve channels for icons
 		new Request({
@@ -13,7 +14,7 @@ var MainScreen = new MAF.Class({
 			onComplete: function (request) {
 			if (request.status === 200)
 				channelList = JSON.parse(request.response);
-				if(channelList.channels != null)
+				if(channelList.channels !== null)
 				{
 					Config.common.channelList = channelList.channels;
 				}
@@ -21,51 +22,78 @@ var MainScreen = new MAF.Class({
 		}).send();
 
 		var retriever = new ContentDataRetriever();
-		retriever.collectData(this.dataLoaded, view);
+		retriever.collectData(this.menuItemDataLoaded, view);
 		view.items = Config.common.menuItems;
 		// view.items.forEach(function(menuItem, u){
-		// 			menuItem.data = testdata;
-		// 		}, this);
+		// menuItem.data = testdata;
+		// }, this);
 	},
 
-	dataLoaded: function(view) {		
-		view.controls.verticalMenu.changeDataset(Config.common.menuItems);
-		view.controls.assetCarousel.changeDataset(Config.common.menuItems[0].data);
-		view.controls.assetCarousel.setFocus();
+	onInfoButtonPress: function(event) {	
+		switch(event.type)
+		{
+			case "onWidgetKeyPress":
+				if(event.payload !== undefined)	
+				{
+					if(event.payload.keyCode === 457) // info button
+					{
+						if(this.controls.sideBarContainer.isCollapsed === true)
+						{						
+							var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
+							MAF.application.loadView('view-InfoScreen', { 
+								"assetId": selectedAsset.id });
+						}
+					}
+				}
+			break;
+		}
+	},
+
+	menuItemDataLoaded: function(menuItem, view) {
+		if(menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel)
+		{
+			console.log("displaying data for: " + menuItem.mainMenuLabel);
+			view.controls.assetCarousel.changeDataset(Config.common.menuItems[0]);
+			view.controls.assetCarousel.setFocus();
+		}
 	},
 
     // Create your view template
 	createView: function () {
 		var view = this;		
 		view.elements.backgroundImageNormal = new MAF.element.Image({
-			source: 'Images/background_main.jpg',
+			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
 		view.elements.backgroundImageLive = new MAF.element.Image({
-			source: 'Images/background_main_live.png',
+			source: 'Images/background_main_live.png'
 		}).appendTo(view);
 		view.elements.backgroundImageLive.hide();
-
-		// view.elements.console = new MAF.element.TextField({
-		// 	totalLines: 7,
-		// 	visibleLines: 7,
-		// 	styles: {
-		// 		color: '#000000',
-		// 		fontFamily: 'UPCDigital-Regular',
-		// 		fontSize: 26,
-		// 		vOffset: 30,
-		// 		hOffset: 1200,
-		// 		height:240,
-		// 		width: 464,
-		// 		wrap: true,
-		// 		truncation: 'end'
-		// 	}
-		// }).appendTo(view); 
 
 		view.controls.sideBarContainer = new SidebarControl({
 			events: {
 				onNavigateRight: function(){
 					view.hideSidebar();
+				},
+				onSelect: function(eventData){
+					if(view.controls.sideBarContainer.isCollapsed === false)
+					{
+						switch(eventData.payload.action)
+						{
+							case "switch":
+								// TODO
+							break;
+							case "edit":
+								// TODO
+							break;
+							case "about":
+								MAF.application.loadView('view-AppInfoScreen');
+							break;
+							case "exit":
+								MAF.application.exit();
+							break;
+						}
+					}
 				}
 			}			
 		}).appendTo(view);
@@ -87,7 +115,10 @@ var MainScreen = new MAF.Class({
 			},
 			events: {
 				onMenuChanged: function(eventData){
-					view.controls.assetCarousel.changeDataset(eventData.payload.selectedMenuItem.data);					
+					if(eventData.payload.selectedMenuItem.dataLoading !== true)
+					{
+						view.controls.assetCarousel.changeDataset(eventData.payload.selectedMenuItem);					
+					}
 				}				
 			}		
 		}).appendTo(this.elements.rightContainer);
@@ -120,16 +151,22 @@ var MainScreen = new MAF.Class({
 				},
 				onNavigateDown: function(){
 					view.controls.verticalMenu.doNavigate('down');
+				},
+				onAssetSelect: function(eventData){
+
+					if(view.controls.sideBarContainer.isCollapsed === true)
+					{
+						// TODO should be replaced by closing app and viewing asset or storing reminder
+						MAF.application.loadView('view-InfoScreen', { 
+							"assetId": eventData.payload.asset.id });
+					}
 				}
 			}			
 		}).appendTo(this.elements.rightContainer);
 	},
 
 	updateView: function () {
-		// var view = this;
-		// view.controls.verticalMenu.changeDataset(Config.common.menuItems);
-		// view.controls.assetCarousel.changeDataset(Config.common.menuItems[0].data);
-		// view.controls.assetCarousel.setFocus();
+		this.controls.verticalMenu.changeDataset(Config.common.menuItems);
 	},	
 
 	showSidebar: function() { 
@@ -164,6 +201,7 @@ var MainScreen = new MAF.Class({
 
 	destroyView: function () {
 		var view = this;
+		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
 		delete view.controls.sideBarContainer;
 		delete view.elements.rightContainer;
 		delete view.controls.verticalMenu;

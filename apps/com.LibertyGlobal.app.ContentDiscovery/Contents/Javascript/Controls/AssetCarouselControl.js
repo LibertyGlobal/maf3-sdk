@@ -13,10 +13,22 @@ var AssetCarouselControl = new MAF.Class({
 						this.doNavigate(event.detail.direction);
 					}
 					break;
+				case 'select':
+						this.fire("onAssetSelect", { asset: this.mainCollection[this.focusIndex] });
+					break;
 			}
 		},
 
 		generateCells: function (){
+			this.emptyFocusContainer = new AssetCarouselCellEmptyFocusControl({
+					styles: {
+						backgroundImage: 'Images/asset_background_future_focus.png',
+						backgroundColor: '#FFFFFF',
+						height: 474,
+						width: 843,
+						padding: 5
+					}
+				}).appendTo(this);			
 			this.futureFocusContainer = new AssetCarouselCellFutureFocusControl({
 					styles: {
 						backgroundImage: 'Images/asset_background_future_focus.png',
@@ -74,27 +86,47 @@ var AssetCarouselControl = new MAF.Class({
 			this.cells.push(this.asset4Container);
 		},	
 		displayFocussed: function(focussedData){
-			if(moment() > moment(focussedData.start))
+			this.emptyFocusContainer.hide();
+			this.futureFocusContainer.hide();
+			this.currentFocusContainer.hide();	
+			this.futureFocusContainer.changeData(null);
+			this.currentFocusContainer.changeData(null);
+			if(focussedData!==null)
 			{
-				this.futureFocusContainer.hide();
-				this.currentFocusContainer.show();
-				this.currentFocusContainer.changeData(focussedData);
-				this.isLive = true;
-				this.fire('onAssetChanged', { isLiveAsset: true });
+				if(moment() > moment(focussedData.start))
+				{
+					this.fire('onAssetChanged', { isLiveAsset: true });					
+					this.currentFocusContainer.show();
+					this.currentFocusContainer.changeData(focussedData);
+					this.isLive = true;					
+				}
+				else
+				{
+					this.fire('onAssetChanged', { isLiveAsset: false });
+					this.futureFocusContainer.show();					
+					this.futureFocusContainer.changeData(focussedData);
+					this.isLive = false;						
+				}
 			}
 			else
 			{
-				this.futureFocusContainer.show();
-				this.currentFocusContainer.hide();	
-				this.futureFocusContainer.changeData(focussedData);
-				this.isLive = false;
-				this.fire('onAssetChanged', { isLiveAsset: false });	
+				this.emptyFocusContainer.show();
+				this.emptyFocusContainer.changeData("empty", this.menuItemText);
 			}
 		},
 		updateCells: function(){
-			var pos = 0; // unfocussed cells			
-			for(var i = this.focusIndex; i<this.mainCollection.length && pos<4; i++)
-			{		
+			for(var i = 0; i<this.cells.length; i++)
+			{
+				this.cells[i].changeData(null);
+			}
+			this.displayFocussed(null);
+
+			var pos = 0; // unfocussed cells
+			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length-1;		
+			//console.log("maxItems: " + maxItems);
+			for(i = this.focusIndex; i<this.mainCollection.length && pos<maxItems; i++)
+			{
+				//console.log("1: " + i + ", " + pos);
 				if(i===this.focusIndex){
 					this.displayFocussed(this.mainCollection[i]);
 				}
@@ -105,10 +137,11 @@ var AssetCarouselControl = new MAF.Class({
 				}				
 			}
 			
-			// if not all cells filled, start at beginning
+			// if not all cells filled, start at beginning			
 			i = 0;
-			while(pos<4)
+			while(pos<maxItems)
 			{
+				//console.log("2: " + i + ", " + pos);
 				this.cells[pos].changeData(this.mainCollection[i]);
 				pos++;
 				i++;
@@ -126,13 +159,22 @@ var AssetCarouselControl = new MAF.Class({
 		this.cells = [];
 		this.generateCells();
 		this.mainCollection = [];
+		this.menuItemText = "";
 		this.focusIndex = 0;
 		this.isLive = false;
+		this.futureFocusContainer.hide();
+		this.currentFocusContainer.hide();	
+		this.emptyFocusContainer.changeData("loading", null);
+		for(var i = 0; i<this.cells.length; i++)
+		{
+			this.cells[i].changeData(null);
+		}
 	},	
 
-	changeDataset: function(data){
+	changeDataset: function(menuItem){
 		this.focusIndex = 0;
-		this.mainCollection = [].concat(data);		
+		this.mainCollection = [].concat(menuItem.data);		
+		this.menuItemText = menuItem.mainMenuLabel;
 		this.updateCells();
 	},
 

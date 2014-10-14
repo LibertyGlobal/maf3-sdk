@@ -9,7 +9,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				source: 'Images/asset_background_current_focus.png',
 				styles: {
 					vOffset: 370,
-					hOffset: 0,
+					hOffset: 0
 				}
 			}).appendTo(this);			
 			this.Title = new MAF.element.Text({
@@ -51,24 +51,24 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.ProgressContainer = new MAF.element.Container({
-			    styles: {
-			        backgroundColor: '#898989',
-			        vOffset: 377,
-			        height: 10,
-			        hOffset: 11,
-			        width: 811
-			    }
+				styles: {
+					backgroundColor: '#898989',
+					vOffset: 377,
+					height: 10,
+					hOffset: 11,
+					width: 811
+				}
 			}).appendTo(this);
 			this.ProgressIndicator = new MAF.element.Container({
-			    styles: {
-			        backgroundColor: '#FFFFFF',
-			        vOffset: 377,
-			        height: 10,
-			        hOffset: 11,
-                    borderStyle: 'solid',
-                    borderWidth: 1,
-                    borderColor: '#898989'
-			    }
+				styles: {
+					backgroundColor: '#FFFFFF',
+					vOffset: 377,
+					height: 10,
+					hOffset: 11,
+					borderStyle: 'solid',
+					borderWidth: 1,
+					borderColor: '#898989'
+				}
 			}).appendTo(this);
 		}		
 	},
@@ -81,33 +81,34 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	initialize: function(){
 		this.parent();
 		this.generateContents();
-		
+		MAF.mediaplayer.init(); 
+		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 	},
 
 	changeData: function(data){		
-		if(data !== undefined)
+		if(data !== null)
 		{		
-			MAF.mediaplayer.init(); 
-			MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
-		    //MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
-		    
-		    var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));		    
-		    this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
-			this.Title.setText(data.video.title);			
-			this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
-			this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
+			if(data.video !== null)
+			{
+				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
+				var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));
+				this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
+				this.Title.setText(data.video.title);			
+				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
+				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
+			}
 		}
 		else
 		{
-			MAF.mediaplayer.stop();
 			this.Title.setText('');	
 			this.StartEnd.setText('');	
 			this.OkView.setText('');
+			this.ProgressIndicator.setStyle("width", 0);
 		}
 	},
 
 	suicide: function () {
 		this.parent();
-		MAF.mediaplayer.stop();
+		MAF.mediaplayer.control.stop();
 	}
 });
