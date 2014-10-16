@@ -1,4 +1,5 @@
 Config.common = {
+	programDurationDisplayThreshold: 50,
 	contentTimeWindow: 90,
 	channelApiUrl: 'http://www.horizon.tv/oesp/api/NL/nld/web/channels',
 	channelList: [],
@@ -107,7 +108,8 @@ Config.common = {
 			categoryFilters: 'muziek', 
 			data: [],
 			dataLoading: false,
-			isVisible: true
+			isVisible: true,
+			itemType: 'category'
 		},
 		{ 
 			preferenceLabel: $_('MenuItem_Education_Preference_Text'), 

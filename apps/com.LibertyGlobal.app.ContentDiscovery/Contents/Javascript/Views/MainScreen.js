@@ -22,11 +22,8 @@ var MainScreen = new MAF.Class({
 		}).send();
 
 		var retriever = new ContentDataRetriever();
-		retriever.collectData(this.menuItemDataLoaded, view);
+		retriever.loadMenuData(Config.common.menuItems[0], this.menuItemDataLoaded, view);
 		view.items = Config.common.menuItems;
-		// view.items.forEach(function(menuItem, u){
-		// menuItem.data = testdata;
-		// }, this);
 	},
 
 	onInfoButtonPress: function(event) {	
@@ -53,8 +50,15 @@ var MainScreen = new MAF.Class({
 		if(menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel)
 		{
 			console.log("displaying data for: " + menuItem.mainMenuLabel);
-			view.controls.assetCarousel.changeDataset(Config.common.menuItems[0]);
+			view.controls.assetCarousel.changeDataset(menuItem);
 			view.controls.assetCarousel.setFocus();
+		}
+		else
+		{
+			console.log("menu changed, restart loading data: " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
+			view.controls.assetCarousel.setLoading();
+			var retriever = new ContentDataRetriever();
+			retriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], view.menuItemDataLoaded, view);
 		}
 	},
 
@@ -115,10 +119,9 @@ var MainScreen = new MAF.Class({
 			},
 			events: {
 				onMenuChanged: function(eventData){
-					if(eventData.payload.selectedMenuItem.dataLoading !== true)
-					{
-						view.controls.assetCarousel.changeDataset(eventData.payload.selectedMenuItem);					
-					}
+					view.controls.assetCarousel.setLoading();
+					var retriever = new ContentDataRetriever();
+					retriever.loadMenuData(eventData.payload.selectedMenuItem, view.menuItemDataLoaded, view);
 				}				
 			}		
 		}).appendTo(this.elements.rightContainer);

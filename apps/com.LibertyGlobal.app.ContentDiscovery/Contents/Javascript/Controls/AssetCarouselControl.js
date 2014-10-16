@@ -162,14 +162,19 @@ var AssetCarouselControl = new MAF.Class({
 		this.menuItemText = "";
 		this.focusIndex = 0;
 		this.isLive = false;
+		this.setLoading();
+	},	
+
+	setLoading: function() {
 		this.futureFocusContainer.hide();
-		this.currentFocusContainer.hide();	
+		this.currentFocusContainer.hide();
+		this.emptyFocusContainer.show();	
 		this.emptyFocusContainer.changeData("loading", null);
 		for(var i = 0; i<this.cells.length; i++)
 		{
 			this.cells[i].changeData(null);
 		}
-	},	
+	},
 
 	changeDataset: function(menuItem){
 		this.focusIndex = 0;
