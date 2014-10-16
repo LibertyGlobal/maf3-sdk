@@ -232,5 +232,12 @@ var AssetCarouselControl = new MAF.Class({
 		this.mainCollection = null;
 		this.cells = null;
 		this.parent();	
+		delete this.currentFocusContainer;
+		delete this.futureFocusContainer;
+		delete this.emptyFocusContainer;
+		delete this.asset1Container;
+		delete this.asset2Container;
+		delete this.asset3Container;
+		delete this.asset4Container;
 	}
 });

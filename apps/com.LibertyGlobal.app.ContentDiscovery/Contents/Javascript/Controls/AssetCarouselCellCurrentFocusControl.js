@@ -79,8 +79,10 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	},
 
 	initialize: function(){
+		this.timerId;
 		this.parent();
 		this.generateContents();
+		this.displayData = null;
 		MAF.mediaplayer.init(); 
 		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 	},
@@ -88,6 +90,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	changeData: function(data){		
 		if(data !== null)
 		{		
+			this.displayData = data;
 			if(data.video !== null)
 			{
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
@@ -96,19 +99,38 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				this.Title.setText(data.video.title);			
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
 				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
+				var view = this;
+				this.stopProgressInterval(this.timerId);
+				this.timerId = setInterval(function() {
+					if(view.displayData!==null)
+					{
+						var currentPercentage = ((moment() - moment(view.displayData.start)) / (moment(view.displayData.end) - moment(view.displayData.start)));
+						view.ProgressIndicator.setStyle("width", (811 * currentPercentage));
+					}
+				}, Config.common.progressBarUpdateFreq);
 			}
 		}
 		else
 		{
+			this.displayData = null;
 			this.Title.setText('');	
 			this.StartEnd.setText('');	
 			this.OkView.setText('');
 			this.ProgressIndicator.setStyle("width", 0);
+			this.stopProgressInterval();
+		}
+	},
+
+	stopProgressInterval: function() {
+		if(this.timerId)	{
+			clearInterval(this.timerId);
+			this.timerId = null;
 		}
 	},
 
 	suicide: function () {
 		this.parent();
 		MAF.mediaplayer.control.stop();
+		this.stopProgressInterval();
 	}
 });

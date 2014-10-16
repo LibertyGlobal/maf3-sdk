@@ -1,5 +1,6 @@
 Config.common = {
 	programDurationDisplayThreshold: 50,
+	progressBarUpdateFreq: 10000,
 	contentTimeWindow: 90,
 	channelApiUrl: 'http://www.horizon.tv/oesp/api/NL/nld/web/channels',
 	channelList: [],
