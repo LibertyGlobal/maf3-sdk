@@ -23,7 +23,7 @@ var MainScreen = new MAF.Class({
 
 		var retriever = new ContentDataRetriever();
 		retriever.loadMenuData(Config.common.menuItems[0], this.menuItemDataLoaded, view);
-		view.items = Config.common.menuItems;
+		view.items = Config.common.menuItems;		
 	},
 
 	onInfoButtonPress: function(event) {	
@@ -169,7 +169,10 @@ var MainScreen = new MAF.Class({
 	},
 
 	updateView: function () {
-		this.controls.verticalMenu.changeDataset(Config.common.menuItems);
+		if(this.controls.verticalMenu.mainCollection.length<=0)
+		{
+			this.controls.verticalMenu.changeDataset(Config.common.menuItems);
+		}
 	},	
 
 	showSidebar: function() { 

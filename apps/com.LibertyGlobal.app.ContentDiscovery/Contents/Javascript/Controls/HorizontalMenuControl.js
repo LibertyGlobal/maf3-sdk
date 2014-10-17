@@ -10,15 +10,9 @@ var HorizontalMenuControl = new MAF.Class({
 			switch(event.type)
 			{
 				case "navigate":
-					switch (event.detail.direction) {
-						case 'left':
-							this.fire("onNavigateRight");
-						break;
-						case 'right':
-							this.fire("onNavigateRight");
-						break;	
+					switch (event.detail.direction) {	
 						case 'down':
-							this.fire("onNavigateRight");
+							this.fire("onNavigateDown");
 						break;							
 					}
 				break;
@@ -32,12 +26,12 @@ var HorizontalMenuControl = new MAF.Class({
 		createContent: function() {	
 			var horizontalMenuControl = this;						
 			this.button1 = new HorizontalMenuButtonControl({
-				buttonText: $_('InfoScreen_Menu_SetReminder'),
+				buttonText: this.config.button1Text,
 				events: {
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'right':								
-								horizontalMenuControl.focussedButton = "edit";
+								horizontalMenuControl.focussedButton = 2;
 								horizontalMenuControl.button2.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -46,27 +40,28 @@ var HorizontalMenuControl = new MAF.Class({
 					}
 				},
 				styles: {
-					marginBottom: 10,	
-					vOffset: 85,				
-					hOffset: 100,
+					margin: 0,
+					paddingTop: 3,
+					width: 261,
+					height: 72,
 					position: 'relative',
 					display: 'inline-block'
 				}
-			}).appendTo(this.expandedContainer);
+			}).appendTo(this);
 
 			this.button2 = new HorizontalMenuButtonControl({
-				buttonText: $_('InfoScreen_Menu_Share'),
+				buttonText: this.config.button2Text,
 				events: {
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'left':
-								horizontalMenuControl.focussedButton = "switch";
+								horizontalMenuControl.focussedButton = 1;
 								horizontalMenuControl.button1.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
 								break;
 							case 'right':
-								horizontalMenuControl.focussedButton = "fullSynopsis";
+								horizontalMenuControl.focussedButton = 3;
 								horizontalMenuControl.button3.setFocus();
 								event.preventDefault();
 								event.stopPropagation();
@@ -75,13 +70,14 @@ var HorizontalMenuControl = new MAF.Class({
 					}
 				},
 				styles: {	
-					marginBottom: 10,
-					vOffset: 85,			
-					hOffset: 100,
+					margin: 0,
+					paddingTop: 3,
+					width: 261,
+					height: 72,
 					position: 'relative',
 					display: 'inline-block'
 				}
-			}).appendTo(this.expandedContainer);
+			}).appendTo(this);
 
 			this.button3 = new HorizontalMenuButtonControl({
 				buttonText: this.config.button3Text,
@@ -89,12 +85,8 @@ var HorizontalMenuControl = new MAF.Class({
 					onNavigate: function(event){
 						switch (event.payload.direction) {
 							case 'left':
-								horizontalMenuControl.focussedButton = "share";
+								horizontalMenuControl.focussedButton = 2;
 								horizontalMenuControl.button2.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
-							case 'right':
 								event.preventDefault();
 								event.stopPropagation();
 								break;
@@ -102,20 +94,21 @@ var HorizontalMenuControl = new MAF.Class({
 					}
 				},
 				styles: {
-					marginBottom: 10,
-					vOffset: 85,				
-					hOffset: 100,
+					margin: 0,
+					paddingTop: 3,
+					width: 261,
+					height: 72,
 					position: 'relative',
 					display: 'inline-block'
 				}
-			}).appendTo(this.expandedContainer);			
+			}).appendTo(this);			
 		}
 	},
 
 	config: {
 		render: true,
 		focus: false,
-		showBackground: true.
+		showBackground: true,
 		button1Visible: true,
 		button2Visible: true,
 		button3Visible: true,
@@ -136,18 +129,18 @@ var HorizontalMenuControl = new MAF.Class({
 		{
 			this.setStyle("backgroundImage", "Images/horizontal_menu_background.png");
 		}
+		this.config.button1Text = this.config.button1Text;	
+		this.config.button2Text = this.config.button2Text;	
+		this.config.button3Text = this.config.button3Text;	
+		this.createContent();
 		this.config.button1Visible ? this.button1.show() : this.button1.hide();
 		this.config.button2Visible ? this.button2.show() : this.button2.hide();
-		this.config.button3Visible ? this.button3.show() : this.button3.hide();
-		this.createContent();
-		this.button1.clearFocus();
-		this.button2.clearFocus();
-		this.button3.clearFocus();
-		this.focussedButton = "switch";
+		this.config.button3Visible ? this.button3.show() : this.button3.hide();		
+		this.focussedButton = 1;
 	},	
 
 	setFocus: function() { 
-		this.focussedButton = "switch";
+		this.focussedButton = 1;
 		this.button1.setFocus();
 	},
 

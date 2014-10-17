@@ -107,10 +107,6 @@ var AssetCarouselCellControl = new MAF.Class({
 	},
 
 	suicide: function () {
-		delete this.Title;
-		delete this.Poster;
-		delete this.StartEnd;
-		delete this.Channel;
 		this.parent();
 	}
 });

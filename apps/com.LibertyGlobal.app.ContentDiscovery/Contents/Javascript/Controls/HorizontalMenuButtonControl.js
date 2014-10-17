@@ -9,52 +9,55 @@ var HorizontalMenuButtonControl = new MAF.Class({
 			switch (event.type) {
 				case 'focus':
 					this.buttonText.setStyles({ opacity: 1.0 });
-					this.buttonRollover.show();
+					this.rolloverContainer.setStyles({ 
+							borderStyle: 'solid'							 
+						});
 					break;
 				case 'blur':
 					this.buttonText.setStyles({ opacity: 0.32 });
-					this.buttonRollover.hide();
+					this.rolloverContainer.setStyles({ 
+							borderStyle: 'none'							 
+						});
 					break;
 			}
 		},
 		createContent: function() {	
-			this.buttonRollover  = new MAF.element.Image({
-				source: 'Images/sidebar_button_high_expanded.png',
-				styles:{ 
-					position:'relative',
-					visibility: 'hidden'
-				}
-			}).appendTo(this);	
-
 			this.buttonText  = new MAF.element.Text({
 				text: this.config.buttonText,
 				styles: {
+					width: 261,
+					height: 66,
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-Light',
-					fontSize: 33,
+					fontSize: 26,
 					hOffset: 20,
 					vOffset: 16,
 					opacity: 0.32
 				}
-			}).appendTo(this);				
+			}).appendTo(this);
+
+			this.rolloverContainer  = new MAF.element.Container({
+				styles:{ 
+					width: 261,
+					height: 66,
+					borderWidth:3,
+					borderColor:'#FFFFFF',
+					marginTop:3
+				}
+			}).appendTo(this);	
 		}
 	},
 
 	config: {
 		render: true,
 		focus: true,
-		buttonText: 'Button text'
+		buttonText: ""
 	},
 
 	initialize: function() {
 		this.parent();
-		this.config.buttonText = this.config.buttonText || 'Button text';		
+		this.config.buttonText = this.config.buttonText;		
 		this.createContent();
-		this.buttonRollover.hide();
-	},
-
-	clearFocus: function() {
-		this.buttonRollover.hide();
 	},
 
 	setFocus: function() { 

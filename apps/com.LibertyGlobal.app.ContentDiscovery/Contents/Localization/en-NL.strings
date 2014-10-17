@@ -38,6 +38,10 @@
 "InfoScreen_Asset_Genre_Text" = "Genre:";
 "InfoScreen_Asset_Language_Text" = "Language:";
 "InfoScreen_Asset_Rating_Text" = "Rating:";
+"InfoScreen_Button_Set_Reminder_Text" = "Set Reminder";
+"InfoScreen_Button_Share_Text" = "Share";
+"InfoScreen_Button_Full_Synopsis_Text" = "Full Synopsis";
+"InfoScreen_Cast_Text" = "CAST";
 
 // Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";

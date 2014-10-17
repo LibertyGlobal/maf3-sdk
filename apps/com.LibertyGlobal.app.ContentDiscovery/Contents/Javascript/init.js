@@ -9,12 +9,17 @@ include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/MenuCarouselCellControl.js');
 include('Javascript/Controls/MenuCarouselControl.js');
+include('Javascript/Controls/HorizontalMenuButtonControl.js');
+include('Javascript/Controls/HorizontalMenuControl.js');
+include('Javascript/Controls/CoverBarControl.js');
+include('Javascript/Controls/CoverBarItemControl.js');
+include('Javascript/Controls/CoverBarItemFocusControl.js');
+include('Javascript/Controls/AssetDetailControl.js');
 include('Javascript/Controls/AssetCarouselCellControl.js');
 include('Javascript/Controls/AssetCarouselCellEmptyFocusControl.js');
 include('Javascript/Controls/AssetCarouselCellCurrentFocusControl.js');
 include('Javascript/Controls/AssetCarouselCellFutureFocusControl.js');
 include('Javascript/Controls/AssetCarouselControl.js');
-include('Javascript/Controls/AssetDetailControl.js');
 
 include('Javascript/Services/ContentDataRetriever.js');
 

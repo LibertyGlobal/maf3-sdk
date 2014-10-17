@@ -196,17 +196,7 @@ var AssetDetailControl = new MAF.Class({
 	changeData: function(data){		
 		if(data !== null)
 		{	
-			this.Prop1Text.setText('');
-			this.Prop1Value.setText('');
-			this.Prop2Text.setText('');
-			this.Prop2Value.setText('');
-			this.Prop3Text.setText('');
-			this.Prop3Value.setText('');
-			this.Prop4Text.setText('');
-			this.Prop4Value.setText('');
-			this.Prop5Text.setText('');
-			this.Prop5Value.setText('');
-
+			this.clearData();
 			if(data.video !== null)
 			{
 				// TODO https doesn't work on the live box. check with ML why
@@ -252,6 +242,27 @@ var AssetDetailControl = new MAF.Class({
 				console.log("video null: " + data.id);	
 			}
 		}
+		else
+		{
+			this.clearData();
+		}
+	},
+
+	clearData: function () {
+		this.PosterContainer.hide();
+		this.Channel.hide();
+		this.Prop1Text.setText('');
+		this.Prop1Value.setText('');
+		this.Prop2Text.setText('');
+		this.Prop2Value.setText('');
+		this.Prop3Text.setText('');
+		this.Prop3Value.setText('');
+		this.Prop4Text.setText('');
+		this.Prop4Value.setText('');
+		this.Prop5Text.setText('');
+		this.Prop5Value.setText('');
+		this.Title.setText("");
+		this.Synopsis.setText("");
 	},
 
 	suicide: function () {

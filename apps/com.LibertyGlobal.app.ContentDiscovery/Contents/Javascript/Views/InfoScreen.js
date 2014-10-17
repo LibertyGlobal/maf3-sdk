@@ -7,6 +7,18 @@ var InfoScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		this.updateData(view);
+		view.casts = [
+			{ actor: "Gabriel Macht", name: "Harvey Specter", image: "http://ia.media-imdb.com/images/M/MV5BNzA2ODkwMjc3MV5BMl5BanBnXkFtZTcwOTc4ODYwNA@@._V1_SX214_CR0,0,214,317_AL_.jpg" },
+			{ actor: "Patrick J. Adams", name: "Mike Ross", image: "http://ia.media-imdb.com/images/M/MV5BMjE1MzM2MjI4NF5BMl5BanBnXkFtZTgwNDQ5ODkyMDE@._V1_SY317_CR20,0,214,317_AL_.jpg" },
+			{ actor: "Rick Hoffman", name: "Louis Litt", image: "http://ia.media-imdb.com/images/M/MV5BMTY2NTUxNjg0M15BMl5BanBnXkFtZTcwNDM2ODg1Ng@@._V1_SY317_CR95,0,214,317_AL_.jpg" },
+			{ actor: "Meghan Markle", name: "Rachel Zane", image: "http://ia.media-imdb.com/images/M/MV5BMjExNzU3ODY3NF5BMl5BanBnXkFtZTcwMjI0MzM0OA@@._V1_SY317_CR47,0,214,317_AL_.jpg" },
+			{ actor: "Sarah Rafferty", name: "Donna Paulsen", image: "http://ia.media-imdb.com/images/M/MV5BMjEwOTIzMDM3OV5BMl5BanBnXkFtZTcwNTk3MjMyOQ@@._V1_SY317_CR2,0,214,317_AL_.jpg" },
+			{ actor: "Gina Torres", name: "Jessica Pearson", image: "http://ia.media-imdb.com/images/M/MV5BNzcwNTc5OTAxMF5BMl5BanBnXkFtZTcwODIyNTI4Nw@@._V1_SY317_CR2,0,214,317_AL_.jpg" },
+			{ actor: "Amanda Schull", name: "Katrina Bennett", image: "http://ia.media-imdb.com/images/M/MV5BMjI3NDk3NTQ2NV5BMl5BanBnXkFtZTcwNTAyODY4Nw@@._V1_SX214_CR0,0,214,317_AL_.jpg" },
+			{ actor: "Max Topplin", name: "Harold Jakowski", image: "http://ia.media-imdb.com/images/M/MV5BNTM2NjIyMTk2Nl5BMl5BanBnXkFtZTcwMjY4NDUxNw@@._V1_SX214_CR0,0,214,317_AL_.jpg" },
+			{ actor: "David Costabile", name: "Daniel Hardman", image: "http://ia.media-imdb.com/images/M/MV5BMTU2NTg3MjE0OV5BMl5BanBnXkFtZTcwNDE4NDE1Mg@@._V1_SY317_CR16,0,214,317_AL_.jpg" },
+			{ actor: "Abigail Spencer", name: "Dana Scott", image: "http://ia.media-imdb.com/images/M/MV5BMTc1MTUxMDkxNV5BMl5BanBnXkFtZTgwMTUzOTg5MDE@._V1_SY317_CR20,0,214,317_AL_.jpg" }
+		];
 	},
 
 	updateData: function(view) {	
@@ -21,6 +33,8 @@ var InfoScreen = new MAF.Class({
 			if(response.length>0)
 			{
 				view.controls.assetDetails.changeData(response[0]);
+				view.controls.horizontalMenu.show();
+				view.controls.horizontalMenu.setFocus();
 			}
 		});
 	},
@@ -52,11 +66,58 @@ var InfoScreen = new MAF.Class({
 				hOffset: 50
 			}			
 		}).appendTo(this.elements.rightContainer);
+		view.controls.assetDetails.clearData();
+
+		view.controls.horizontalMenu = new HorizontalMenuControl({
+			button1Text: $_('InfoScreen_Button_Set_Reminder_Text'),
+			button2Text: $_('InfoScreen_Button_Share_Text'),
+			button3Text: $_('InfoScreen_Button_Full_Synopsis_Text'),
+			styles:{
+				height: 72,
+				width: 900,
+				vOffset: 476,
+				hOffset: 340
+			},
+			events: {
+				onNavigateDown: function(){
+					view.controls.coverBar.setFocus();
+				}	
+			}		
+		}).appendTo(this.elements.rightContainer);
+		view.controls.horizontalMenu.hide();
+
+		view.elements.coverBarTitle = new MAF.element.Text({
+			data: $_('InfoScreen_Cast_Text'),
+			styles: {
+				color: '#cecece',
+				fontFamily: 'InterstatePro-ExtraLight, sans-serif',
+				fontSize: 33.3,
+				height: 50,
+				vOffset: 600,
+				hOffset: 50
+			}
+		}).appendTo(this.elements.rightContainer);
+
+		view.controls.coverBar = new CoverBarControl({
+			styles:{
+				height: 380,
+				width: 'inherit',
+				vOffset: 645,
+				hOffset: 45
+			},
+			events: {
+				onNavigateUp: function(){
+					view.controls.horizontalMenu.setFocus();
+				}	
+			}
+		}).appendTo(this.elements.rightContainer);
 	},
 
 	updateView: function () {
 		var view = this;
+		view.controls.assetDetails.clearData();
 		this.updateData(view);
+		view.controls.coverBar.changeDataset(view.casts);
 	},	
 
 	destroyView: function () {
