@@ -53,9 +53,11 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					hOffset: 455,
+					hOffset: 490,
 					vOffset: 100,
-					width: 220
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
 				}
 			}).appendTo(this);
 
@@ -65,7 +67,7 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					vOffset: 140,
+					vOffset: 135,
 					hOffset: 290,
 					opacity: 0.59,
 					width: 155
@@ -77,9 +79,11 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					hOffset: 455,
-					vOffset: 140,
-					width: 220
+					hOffset: 490,
+					vOffset: 135,
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
 				}
 			}).appendTo(this);
 
@@ -89,7 +93,7 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					vOffset: 180,
+					vOffset: 170,
 					hOffset: 290,
 					opacity: 0.59,
 					width: 155
@@ -101,9 +105,11 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					hOffset: 455,
-					vOffset: 180,
-					width: 220
+					hOffset: 490,
+					vOffset: 170,
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
 				}
 			}).appendTo(this);
 
@@ -113,7 +119,7 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					vOffset: 220,
+					vOffset: 205,
 					hOffset: 290,
 					opacity: 0.59,
 					width: 155
@@ -125,9 +131,11 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					hOffset: 455,
-					vOffset: 220,
-					width: 220
+					hOffset: 490,
+					vOffset: 205,
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
 				}
 			}).appendTo(this);
 
@@ -137,7 +145,7 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					vOffset: 260,
+					vOffset: 240,
 					hOffset: 290,
 					opacity: 0.59,
 					width: 155
@@ -149,20 +157,87 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
 					height: 30,
-					hOffset: 455,
-					vOffset: 260,
-					width: 220
+					hOffset: 490,
+					vOffset: 240,
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
+				}
+			}).appendTo(this);
+
+			this.Prop6Text = new MAF.element.Text({
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'UPCDigital-Regular',
+					fontSize: 26,
+					height: 30,
+					vOffset: 275,
+					hOffset: 290,
+					opacity: 0.59,
+					width: 155
+				}
+			}).appendTo(this);
+			this.Prop6Value = new MAF.element.Text({
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'UPCDigital-Regular',
+					fontSize: 26,
+					height: 30,
+					hOffset: 490,
+					vOffset: 275,
+					width: 220,
+					wrap: true,					
+					truncation: 'end'
 				}
 			}).appendTo(this);
 
 			this.Channel = new MAF.element.Image({
 				styles: {
-					maxHeight: 40,
-					maxWidth: 200,					
+					maxWidth: 180,					
 					vOffset: 330,
-					hOffset: 290
+					hOffset: 290,
+					maxHeight: 50
 				}
 			}).appendTo(this);
+
+			this.ImdbContainer = new MAF.element.Container({
+				styles: {
+					maxWidth: 180,					
+					vOffset: 330,
+					hOffset: 490,
+					height: 50,
+					width: 220
+				}
+			}).appendTo(this);
+			this.ImdbContainer.hide();
+
+			this.ImdbLogo = new MAF.element.Image({
+				source: 'Images/imdb_logo.png',
+				styles: {
+					marginTop: 7	
+				}
+			}).appendTo(this.ImdbContainer);
+
+			this.ImdbRating = new MAF.element.Text({
+				styles: {
+					color: '#e2bc38',
+					fontFamily: 'InterstatePro-Light',
+					fontSize: 28,
+					hOffset: 85,
+					marginTop: 7
+				}
+			}).appendTo(this.ImdbContainer);
+
+			this.ImdbText = new MAF.element.Text({
+				data: $_('InfoScreen_Imdb_Text'),
+				styles: {
+					color: '#e2bc38',
+					fontFamily: 'InterstatePro-Light',
+					fontSize: 16,
+					hOffset: 135,
+					marginTop: 18					
+				}
+			}).appendTo(this.ImdbContainer);
 
 			this.Synopsis = new MAF.element.TextField({
 				totalLines: 6,
@@ -171,12 +246,13 @@ var AssetDetailControl = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
-					vOffset: 100,
-					hOffset: 705,
-					height:250,
+					vOffset: 100,					
+					hOffset: 746,
+					height: 250,
 					width: 520,
-					wrap: true,
 					opacity: 0.59,
+					wrap: true,	
+					lineHeight: '35px',				
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -213,11 +289,16 @@ var AssetDetailControl = new MAF.Class({
 				genreText = genreText.replace("/", ", ");
 				this.Prop2Value.setText(genreText);
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
-				this.Prop3Value.setText("TODO");
+				this.Prop3Value.setText("Value 3");
 				this.Prop4Text.setText($_('InfoScreen_Asset_Rating_Text'));
 				this.Prop4Value.setText(data.video.ageRating);
-				this.Prop5Text.setText("TODO:");
-				this.Prop5Value.setText("TODO:");
+				this.Prop5Text.setText("Text 5:");
+				this.Prop5Value.setText("Value 5");
+				this.Prop6Text.setText("Text 6:");
+				this.Prop6Value.setText("Value 6");
+
+				this.ImdbRating.setText("8.9");
+				this.ImdbContainer.show();
 			
 				if(Config.common.channelList.length>0)
 				{
@@ -250,6 +331,7 @@ var AssetDetailControl = new MAF.Class({
 
 	clearData: function () {
 		this.PosterContainer.hide();
+		this.ImdbContainer.hide();
 		this.Channel.hide();
 		this.Prop1Text.setText('');
 		this.Prop1Value.setText('');
@@ -261,8 +343,10 @@ var AssetDetailControl = new MAF.Class({
 		this.Prop4Value.setText('');
 		this.Prop5Text.setText('');
 		this.Prop5Value.setText('');
+		this.Prop6Text.setText('');
+		this.Prop6Value.setText('');
 		this.Title.setText("");
-		this.Synopsis.setText("");
+		this.Synopsis.setText("");		
 	},
 
 	suicide: function () {

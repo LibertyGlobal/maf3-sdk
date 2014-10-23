@@ -29,7 +29,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu2Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 40,
 					position: 'relative',
 					display: 'inline-block'
@@ -39,7 +39,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu3Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 80,
 					position: 'relative',
 					display: 'inline-block'
@@ -49,7 +49,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu4Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 120,
 					position: 'relative',
 					display: 'inline-block'
@@ -59,7 +59,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu5Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 160,
 					position: 'relative',
 					display: 'inline-block'
@@ -69,7 +69,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu6Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 200,
 					position: 'relative',
 					display: 'inline-block'
@@ -79,7 +79,7 @@ var CoverBarControl = new MAF.Class({
 			this.menu7Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
-					width: 204,
+					width: 209,
 					hOffset: 240,
 					position: 'relative',
 					display: 'inline-block'

@@ -42,6 +42,7 @@
 "InfoScreen_Button_Share_Text" = "Share";
 "InfoScreen_Button_Full_Synopsis_Text" = "Full Synopsis";
 "InfoScreen_Cast_Text" = "CAST";
+"InfoScreen_Imdb_Text" = "/10";
 
 // Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";
