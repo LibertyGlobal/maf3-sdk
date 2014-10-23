@@ -8,13 +8,11 @@ var CoverBarItemFocusControl = new MAF.Class({
 			this.parent(event, payload);
 			switch (event.type) {
 				case 'focus':
-				console.log("buttonfocus");
 					this.PosterBorderContainer.setStyles({ 
 							borderStyle: 'solid'							 
 						});
 					break;
 				case 'blur':
-				console.log("buttonhide");
 					this.PosterBorderContainer.setStyles({ 
 							borderStyle: 'none'
 						});
@@ -74,6 +72,7 @@ var CoverBarItemFocusControl = new MAF.Class({
 	initialize: function(){
 		this.parent();
 		this.generateContents();
+		this.PosterContainer.hide();
 	},
 
 	changeData: function(data){		

@@ -41,13 +41,14 @@ var CoverBarItemControl = new MAF.Class({
 
 	config: {
 		render: true,
-		focus: false,
+		focus: false
 	},
 
 	initialize: function() {
 		this.parent();
 		this.config.buttonText = this.config.buttonText;		
 		this.createContent();
+		this.PosterContainer.hide();
 	},
 
 	changeData: function(data){		

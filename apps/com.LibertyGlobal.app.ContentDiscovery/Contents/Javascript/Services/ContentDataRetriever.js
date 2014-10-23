@@ -14,7 +14,7 @@ function ContentDataRetriever() {
 		.findOne(function(response){ 
 			parseData(menuItem, response, futureAssets);
 		});
-	}
+	};
 
 	this.loadMenuData = function(menuItem, callback, callbackParams){
 		callbackAfterLoaded = callback;

@@ -176,7 +176,6 @@ var MainScreen = new MAF.Class({
 	},	
 
 	showSidebar: function() { 
-		console.log("HomeScreen: showSidebar");
 		var view = this;
 		view.elements.rightContainer.freeze();
 		view.controls.verticalMenu.disable();
@@ -189,7 +188,6 @@ var MainScreen = new MAF.Class({
 	},
 
 	hideSidebar: function() {
-		console.log("HomeScreen: hideSidebar");
 		var view = this;
 		view.elements.rightContainer.thaw();
 		view.controls.verticalMenu.enable();
@@ -199,7 +197,6 @@ var MainScreen = new MAF.Class({
 		{
 			view.elements.backgroundImageLive.show();
 			view.elements.backgroundImageNormal.hide();
-			console.log("onAssetChanged: live asset");
 		}
 		view.elements.rightContainer.width = 1680;
 		view.controls.assetCarousel.setFocus();

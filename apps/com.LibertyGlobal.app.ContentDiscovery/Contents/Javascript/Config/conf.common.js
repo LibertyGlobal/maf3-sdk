@@ -41,14 +41,6 @@ Config.common = {
 			isVisible: true,
 			itemType: 'shuffle'
 		},
-		// TODO Series{ 
-		// 	preferenceLabel: $_('MenuItem_Series_Preference_Text'), 
-		// 	mainMenuLabel: $_('MenuItem_Series_MainMenu_Text'), 
-		// 	categoryFilters: '&qt;drama/drama&qt;,', 
-		// 	data: [],
-		// 	isVisible: true,
-		// 	itemType: 'category'
-		// },
 		{ 
 			preferenceLabel: $_('MenuItem_Sports_Preference_Text'), 
 			mainMenuLabel: $_('MenuItem_Sports_MainMenu_Text'), 

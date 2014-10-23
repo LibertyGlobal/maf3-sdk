@@ -109,9 +109,12 @@ var CoverBarControl = new MAF.Class({
 	},	
 
 	changeDataset: function(data){
-		this.focusIndex = 0;
-		this.mainCollection = [].concat(data);		
-		this.updateCells();
+		if(data!== null)
+		{			
+			this.focusIndex = 0;
+			this.mainCollection = [].concat(data);		
+			this.updateCells();
+		}
 	},
 
 	setFocus: function() {
