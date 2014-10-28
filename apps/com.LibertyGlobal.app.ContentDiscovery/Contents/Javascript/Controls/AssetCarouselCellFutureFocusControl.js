@@ -60,6 +60,17 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					truncation: 'end'
 				}
 			}).appendTo(this);
+			this.Channel = new MAF.element.Image({
+				aspect: 'auto',
+				styles: {
+					vOffset: 90,
+					hOffset: 610,					
+					height: 40,
+					width: 180,
+					hAlign: 'right',
+					right: 40
+				}
+			}).appendTo(this);
 			this.StartEnd = new MAF.element.Text({
 				styles: {
 					color: '#000000',
@@ -120,6 +131,12 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Synopsis.setText(data.video.synopsis);
 				this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				if(logoUrl!=="")
+				{
+					this.Channel.setSource(logoUrl);
+					this.Channel.show();
+				}
 			}
 		}
 		else

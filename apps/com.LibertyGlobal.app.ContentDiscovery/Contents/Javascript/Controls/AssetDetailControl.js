@@ -44,7 +44,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 100,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop1Value = new MAF.element.Text({
@@ -70,7 +70,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 135,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop2Value = new MAF.element.Text({
@@ -96,7 +96,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 170,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop3Value = new MAF.element.Text({
@@ -122,7 +122,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 205,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop4Value = new MAF.element.Text({
@@ -148,7 +148,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 240,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop5Value = new MAF.element.Text({
@@ -174,7 +174,7 @@ var AssetDetailControl = new MAF.Class({
 					vOffset: 275,
 					hOffset: 290,
 					opacity: 0.59,
-					width: 155
+					width: 180
 				}
 			}).appendTo(this);
 			this.Prop6Value = new MAF.element.Text({
@@ -192,11 +192,14 @@ var AssetDetailControl = new MAF.Class({
 			}).appendTo(this);
 
 			this.Channel = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
-					maxWidth: 180,					
-					vOffset: 330,
+					//maxWidth: 180,					
+					vOffset: 340,
 					hOffset: 290,
-					maxHeight: 50
+					//maxHeight: 50,
+					height: 30,
+					width: 180
 				}
 			}).appendTo(this);
 
@@ -256,12 +259,17 @@ var AssetDetailControl = new MAF.Class({
 					truncation: 'end'
 				}
 			}).appendTo(this);
+			if(this.config.showSynopsis!==true)
+			{
+				this.Synopsis.hide();
+			}
 		}		
 	},
 
 	config: {
 		render: true,
-		focus: false
+		focus: false,
+		showSynopsis: true
 	},
 
 	initialize: function(){
@@ -275,13 +283,25 @@ var AssetDetailControl = new MAF.Class({
 			this.clearData();
 			if(data.video !== null)
 			{
-				// TODO https doesn't work on the live box. check with ML why
-				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
-				this.PosterContainer.show();
+				var categories = Config.common.InfoScreenMovieSerieCategory.split(',');
+				if (categories.indexOf(data.video.category.substring(0, data.video.category.indexOf("/"))) > -1) {
+					// movies/series info screen
+					this.ImdbRating.setText("8.9"); // TODO
+					this.ImdbContainer.show();
 
+					this.Prop6Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
+					this.Prop6Value.setText(data.video.year);
+				}
+				else
+				{
+					this.Prop6Text.setText("");
+					this.Prop6Value.setText("");
+					this.ImdbContainer.hide();			
+				}
+			
+				// both linear and movies / series info screen
 				this.Title.setText(data.video.title);
-				this.Synopsis.setText(data.video.synopsis);
-				
+
 				this.Prop1Text.setText($_('InfoScreen_Asset_Duration_Text'));
 				this.Prop1Value.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Prop2Text.setText($_('InfoScreen_Asset_Genre_Text'));
@@ -289,33 +309,23 @@ var AssetDetailControl = new MAF.Class({
 				genreText = genreText.replace("/", ", ");
 				this.Prop2Value.setText(genreText);
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
-				this.Prop3Value.setText("Value 3");
-				this.Prop4Text.setText($_('InfoScreen_Asset_Rating_Text'));
-				this.Prop4Value.setText(data.video.ageRating);
-				this.Prop5Text.setText("Text 5:");
-				this.Prop5Value.setText("Value 5");
-				this.Prop6Text.setText("Text 6:");
-				this.Prop6Value.setText("Value 6");
+				this.Prop3Value.setText("TODO Value 3");
+				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
+				this.Prop4Value.setText("TODO Value 4");
+				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
+				this.Prop5Value.setText(data.video.ageRating);
 
-				this.ImdbRating.setText("8.9");
-				this.ImdbContainer.show();
-			
-				if(Config.common.channelList.length>0)
+				// TODO https doesn't work on the live box. check with ML why
+				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
+				this.PosterContainer.show();
+				
+				this.Synopsis.setText(data.video.synopsis);
+
+				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				if(logoUrl!=="")
 				{
-					for (var i = 0; i < Config.common.channelList.length; i++) {
-						if (Config.common.channelList[i].channelNumber === data.channel.logicalPosition) {
-							if(Config.common.channelList[i].stationSchedules!==null && Config.common.channelList[i].stationSchedules.length > 0) {
-								for (var j = 0; j< Config.common.channelList[i].stationSchedules[0].station.images.length; j++) {
-									if(Config.common.channelList[i].stationSchedules[0].station.images[j].assetType === "station-logo-medium")
-									{
-										this.Channel.setSource(Config.common.channelList[i].stationSchedules[0].station.images[j].url);
-											this.Channel.show();
-										break;
-									}
-								}
-							}					
-						}
-					}
+					this.Channel.setSource(logoUrl);
+					this.Channel.show();
 				}
 			}
 			else
@@ -345,8 +355,8 @@ var AssetDetailControl = new MAF.Class({
 		this.Prop5Value.setText('');
 		this.Prop6Text.setText('');
 		this.Prop6Value.setText('');
-		this.Title.setText("");
-		this.Synopsis.setText("");		
+		this.Title.setText('');
+		this.Synopsis.setText('');		
 	},
 
 	suicide: function () {

@@ -42,9 +42,10 @@ var AssetCarouselCellControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Channel = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
-					maxHeight: 40,
-					maxWidth: 200,					
+					height: 30,
+					width: 200,
 					vOffset: 395
 				}
 			}).appendTo(this);
@@ -72,23 +73,12 @@ var AssetCarouselCellControl = new MAF.Class({
 				this.PosterContainer.show();
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 			
-				if(Config.common.channelList.length>0)
+				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				if(logoUrl!=="")
 				{
-					for (var i = 0; i < Config.common.channelList.length; i++) {
-						if (Config.common.channelList[i].channelNumber === data.channel.logicalPosition) {
-							if(Config.common.channelList[i].stationSchedules!==null && Config.common.channelList[i].stationSchedules.length > 0) {
-								for (var j = 0; j< Config.common.channelList[i].stationSchedules[0].station.images.length; j++) {
-									if(Config.common.channelList[i].stationSchedules[0].station.images[j].assetType === "station-logo-medium")
-									{
-										this.Channel.setSource(Config.common.channelList[i].stationSchedules[0].station.images[j].url);
-										this.Channel.show();
-										break;
-									}
-								}
-							}					
-						}
-					}
-				}
+					this.Channel.setSource(logoUrl);
+					this.Channel.show();
+				}				
 			}
 			else
 			{

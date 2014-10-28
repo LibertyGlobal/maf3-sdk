@@ -6,20 +6,22 @@ var InfoScreen = new MAF.Class({
 	initialize: function () {
 		var view = this;
 		view.parent();
+		view.assetId = this.persist.assetId;
 		this.updateData(view);
-		view.casts = [];
-		// view.casts = [
-		// { actor: "Gabriel Macht", name: "Harvey Specter", image: "https://image.tmdb.org/t/p/w396/15Q2drYXxNIf0Kzy55HQGJsLY7L.jpg" },
-		// { actor: "Patrick J. Adams", name: "Mike Ross", image: "https://image.tmdb.org/t/p/w396/sBfavftAvY08ZvUnhDtCjA8XdlY.jpg" },
-		// { actor: "Rick Hoffman", name: "Louis Litt", image: "https://image.tmdb.org/t/p/w396/d1B41muPxihy4YXsWRiXKfpzq0y.jpg" },
-		// { actor: "Meghan Markle", name: "Rachel Zane", image: "https://image.tmdb.org/t/p/w396/vCYRriV2w19TBoRWn65Bo8vKy0l.jpg" },
-		// { actor: "Sarah Rafferty", name: "Donna Paulsen", image: "https://image.tmdb.org/t/p/w396/3rTFrSH0Tt401RjeMijgYcgW1b3.jpg" },
-		// { actor: "Gina Torres", name: "Jessica Pearson", image: "https://image.tmdb.org/t/p/w396/z43hy1X1vRD26vNDh0lzxg1rcBl.jpg" },
-		// { actor: "Amanda Schull", name: "Katrina Bennett", image: "https://image.tmdb.org/t/p/w396/uVyoAKYP4HzUawgnjOWN3MwDrYK.jpg" },
-		// { actor: "Max Topplin", name: "Harold Jakowski", image: "https://image.tmdb.org/t/p/w396/2QoRYXRrVgGphIM6V91VrObQMLF.jpg" },
-		// { actor: "David Costabile", name: "Daniel Hardman", image: "https://image.tmdb.org/t/p/w396/j0WailErU7LN1X82zrHgFsp5yOX.jpg" },
-		// { actor: "Vanessa Ray", name: "Jenny Griffith", image: "https://image.tmdb.org/t/p/w396/aum4cBjWAcRruNYggXBxari4Gom.jpg" }
-		// ];
+		
+		//view.casts = [];
+		view.casts = [
+		{ actor: "Gabriel Macht", name: "Harvey Specter", image: "http://image.tmdb.org/t/p/w396/15Q2drYXxNIf0Kzy55HQGJsLY7L.jpg" },
+		{ actor: "Patrick J. Adams", name: "Mike Ross", image: "http://image.tmdb.org/t/p/w396/sBfavftAvY08ZvUnhDtCjA8XdlY.jpg" },
+		{ actor: "Rick Hoffman", name: "Louis Litt", image: "http://image.tmdb.org/t/p/w396/d1B41muPxihy4YXsWRiXKfpzq0y.jpg" },
+		{ actor: "Meghan Markle", name: "Rachel Zane", image: "http://image.tmdb.org/t/p/w396/vCYRriV2w19TBoRWn65Bo8vKy0l.jpg" },
+		{ actor: "Sarah Rafferty", name: "Donna Paulsen", image: "http://image.tmdb.org/t/p/w396/3rTFrSH0Tt401RjeMijgYcgW1b3.jpg" },
+		{ actor: "Gina Torres", name: "Jessica Pearson", image: "http://image.tmdb.org/t/p/w396/z43hy1X1vRD26vNDh0lzxg1rcBl.jpg" },
+		{ actor: "Amanda Schull", name: "Katrina Bennett", image: "http://image.tmdb.org/t/p/w396/uVyoAKYP4HzUawgnjOWN3MwDrYK.jpg" },
+		{ actor: "Max Topplin", name: "Harold Jakowski", image: "http://image.tmdb.org/t/p/w396/2QoRYXRrVgGphIM6V91VrObQMLF.jpg" },
+		{ actor: "David Costabile", name: "Daniel Hardman", image: "http://image.tmdb.org/t/p/w396/j0WailErU7LN1X82zrHgFsp5yOX.jpg" },
+		{ actor: "Vanessa Ray", name: "Jenny Griffith", image: "http://image.tmdb.org/t/p/w396/aum4cBjWAcRruNYggXBxari4Gom.jpg" }
+		];
 	},
 
 	updateData: function(view) {	
@@ -27,9 +29,9 @@ var InfoScreen = new MAF.Class({
 		.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, LGI.Guide.Broadcast.END, 
 			LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.CHANNEL,
 			LGI.Guide.Broadcast.POPULARITY, LGI.Guide.Broadcast.SEASON, LGI.Guide.Broadcast.EPISODE, 
-			LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY,
+			LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY, 'video.year',
 			LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
-		.filter(LGI.Guide.Broadcast.ID.equalTo(this.persist.assetId))
+		.filter(LGI.Guide.Broadcast.ID.equalTo(view.assetId))
 		.findOne(function(response){ 
 			if(response.length>0)
 			{
@@ -85,7 +87,16 @@ var InfoScreen = new MAF.Class({
 					{
 						view.controls.coverBar.setFocus();
 					}
-				}	
+				},
+				onSelect: function(eventData) {
+					switch(eventData.payload.action)
+					{
+						case 3:
+							MAF.application.loadView('view-FullSynopsis', { 
+								"assetId": view.assetId });
+						break;
+					}
+				}
 			}		
 		}).appendTo(this.elements.rightContainer);
 		view.controls.horizontalMenu.hide();
@@ -122,6 +133,7 @@ var InfoScreen = new MAF.Class({
 	updateView: function () {
 		var view = this;
 		view.controls.assetDetails.clearData();
+		view.assetId = this.persist.assetId;
 		this.updateData(view);
 		if(view.casts.length>0)
 		{
@@ -132,5 +144,10 @@ var InfoScreen = new MAF.Class({
 	},	
 
 	destroyView: function () {
+		delete this.controls.coverBar;
+		delete this.controls.assetDetails;
+		delete this.controls.horizontalMenu;
+		delete this.controls.sideBarContainer;
+		delete this.casts;
 	}
 });

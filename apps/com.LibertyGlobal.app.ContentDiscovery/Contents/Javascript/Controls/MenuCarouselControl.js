@@ -137,6 +137,12 @@ var MenuCarouselControl = new MAF.Class({
 
 	suicide: function () {
 		this.mainCollection = null;
+		delete this.menu1Container;
+		delete this.menu2Container;
+		delete this.menu3Container;
+		delete this.menu4Container;
+		delete this.menu5Container;
+		delete this.menu6Container;
 		this.parent();	
 	}
 });

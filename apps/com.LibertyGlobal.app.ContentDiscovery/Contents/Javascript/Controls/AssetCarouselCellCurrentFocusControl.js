@@ -50,6 +50,17 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 					hOffset: 307
 				}
 			}).appendTo(this);
+			this.Channel = new MAF.element.Image({
+				aspect: 'auto',
+				styles: {
+					vOffset: 446,
+					hOffset: 620,
+					height: 40,
+					width: 180,
+					hAlign: 'right',
+					right: 30
+				}
+			}).appendTo(this);
 			this.ProgressContainer = new MAF.element.Container({
 				styles: {
 					backgroundColor: '#898989',
@@ -99,6 +110,14 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				this.Title.setText(data.video.title);			
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
 				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
+
+				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				if(logoUrl!=="")
+				{
+					this.Channel.setSource(logoUrl);
+					this.Channel.show();
+				}
+
 				var view = this;
 				this.stopProgressInterval(this.timerId);
 				this.timerId = setInterval(function() {

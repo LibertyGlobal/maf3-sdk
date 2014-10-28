@@ -17,7 +17,7 @@ var CoverBarControl = new MAF.Class({
 		},
 
 		generateCells: function (){
-			this.menu1Container = new CoverBarItemFocusControl({
+			this.cover1Container = new CoverBarItemFocusControl({
 				styles: {
 					height: 380,
 					width: 214,
@@ -25,8 +25,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu1Container);
-			this.menu2Container = new CoverBarItemControl({
+			this.cells.push(this.cover1Container);
+			this.cover2Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -35,8 +35,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu2Container);
-			this.menu3Container = new CoverBarItemControl({
+			this.cells.push(this.cover2Container);
+			this.cover3Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -45,8 +45,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu3Container);
-			this.menu4Container = new CoverBarItemControl({
+			this.cells.push(this.cover3Container);
+			this.cover4Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -55,8 +55,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu4Container);
-			this.menu5Container = new CoverBarItemControl({
+			this.cells.push(this.cover4Container);
+			this.cover5Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -65,8 +65,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu5Container);
-			this.menu6Container = new CoverBarItemControl({
+			this.cells.push(this.cover5Container);
+			this.cover6Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -75,8 +75,8 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu6Container);
-			this.menu7Container = new CoverBarItemControl({
+			this.cells.push(this.cover6Container);
+			this.cover7Container = new CoverBarItemControl({
 				styles: {
 					height: 380,
 					width: 209,
@@ -85,7 +85,7 @@ var CoverBarControl = new MAF.Class({
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.cells.push(this.menu7Container);
+			this.cells.push(this.cover7Container);
 		},		
 		updateCells: function(){	
 			for(i =0; i<this.cells.length; i++)
@@ -118,7 +118,7 @@ var CoverBarControl = new MAF.Class({
 	},
 
 	setFocus: function() {
-		this.menu1Container.focus();
+		this.cover1Container.focus();
 	},
 
 	doNavigate: function(direction){
@@ -141,6 +141,13 @@ var CoverBarControl = new MAF.Class({
 	suicide: function () {
 		delete this.mainCollection;
 		delete this.cells;
+		delete this.cover1Container;
+		delete this.cover2Container;
+		delete this.cover3Container;
+		delete this.cover4Container;
+		delete this.cover5Container;
+		delete this.cover6Container;
+		delete this.cover7Container;
 		this.parent();	
 	}
 });

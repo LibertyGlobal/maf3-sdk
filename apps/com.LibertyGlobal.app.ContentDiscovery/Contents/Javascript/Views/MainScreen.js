@@ -91,7 +91,7 @@ var MainScreen = new MAF.Class({
 								// TODO
 							break;
 							case "about":
-								MAF.application.loadView('view-AppInfoScreen');
+								//MAF.application.loadView('view-AppInfoScreen');
 							break;
 							case "exit":
 								MAF.application.exit();

@@ -3,6 +3,7 @@ Config.common = {
 	progressBarUpdateFreq: 10000,
 	contentTimeWindow: 90,
 	channelApiUrl: 'http://www.horizon.tv/oesp/api/NL/nld/web/channels',
+	InfoScreenMovieSerieCategory: 'speelfilm',
 	channelList: [],
 	menuItems: [		
 		{ 

@@ -144,5 +144,8 @@ var HorizontalMenuControl = new MAF.Class({
 
 	suicide: function() {
 		this.parent();
+		delete this.button1;
+		delete this.button2;
+		delete this.button3;
 	}
 });

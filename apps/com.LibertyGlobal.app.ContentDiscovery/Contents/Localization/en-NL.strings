@@ -1,3 +1,7 @@
+// General
+"Back_Button_Text" = "< Back to home";
+"Page_Indicator_Text" = " Page %s of %s";
+
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Movies / Drama";
 "MenuItem_Arts_Preference_Text" = "Arts / Culture";
@@ -37,7 +41,9 @@
 "InfoScreen_Asset_Duration_Text" = "Duration:";
 "InfoScreen_Asset_Genre_Text" = "Genre:";
 "InfoScreen_Asset_Language_Text" = "Language:";
+"InfoScreen_Asset_Subtitles_Text" = "Subtitles:";
 "InfoScreen_Asset_Rating_Text" = "Rating:";
+"InfoScreen_Asset_Year_Produced_Text" = "Year produced:";
 "InfoScreen_Button_Set_Reminder_Text" = "Set Reminder";
 "InfoScreen_Button_Share_Text" = "Share";
 "InfoScreen_Button_Full_Synopsis_Text" = "Full Synopsis";
