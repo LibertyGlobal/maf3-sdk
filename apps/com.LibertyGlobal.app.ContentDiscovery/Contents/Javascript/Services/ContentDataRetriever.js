@@ -2,20 +2,6 @@ function ContentDataRetriever() {
 	var callbackAfterLoaded;
 	var callbackAfterLoadedParams;
 
-	this.loadMenuDataExtended = function(menuItem, callback, callbackParams){
-		LGI.Guide.Broadcast.create()
-		.limit(10)
-		.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
-			LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL,
-			LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
-		.filter(LGI.Guide.Broadcast.START.greaterThan(currentTime))					
-		.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
-		.sort(LGI.Guide.Broadcast.START)
-		.findOne(function(response){ 
-			parseData(menuItem, response, futureAssets);
-		});
-	};
-
 	this.loadMenuData = function(menuItem, callback, callbackParams){
 		callbackAfterLoaded = callback;
 		callbackAfterLoadedParams = callbackParams;	
