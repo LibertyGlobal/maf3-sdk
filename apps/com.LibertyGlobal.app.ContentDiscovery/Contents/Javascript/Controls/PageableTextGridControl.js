@@ -23,9 +23,9 @@ var PageableTextGridControl = new MAF.Class({
 						return $_('Page_Indicator_Text', [parseInt(curpage, 10) + 1, pagecount]);
 					}
 				}
-		  	}).appendTo(this);
+			}).appendTo(this);
 
-		  	this.pageLeft = new MAF.element.Image({
+			this.pageLeft = new MAF.element.Image({
 				styles: {
 					width: 96,
 					height: 54,
@@ -55,7 +55,7 @@ var PageableTextGridControl = new MAF.Class({
 					height: this.height - 80,
 					wrap: true
 				}
-	  		}).appendTo(this);
+			}).appendTo(this);
 			this.textGrid.attachAccessories(this.pageIndicator);
 		},
 		updateText: function(text){			

@@ -63,10 +63,10 @@ var FullSynopsis = new MAF.Class({
 				hOffset: 340,
 				width: 1100,
 				height: 400				
-			},		
+			}		
 		}).appendTo(this.elements.rightContainer);
 
-  		view.controls.backButton = new ButtonControl({
+		view.controls.backButton = new ButtonControl({
 			buttonText: $_('Back_Button_Text'),
 			styles:{
 				vOffset: 915,
