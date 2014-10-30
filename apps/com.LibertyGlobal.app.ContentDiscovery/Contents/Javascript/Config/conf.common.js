@@ -2,6 +2,7 @@ Config.common = {
 	programDurationDisplayThreshold: 50,
 	progressBarUpdateFreq: 10000,
 	contentTimeWindow: 90,
+	//broadcastApiUrl: 'http://api.uat.appdev.io/kraken/v2/schedule/',
 	channelApiUrl: 'http://www.horizon.tv/oesp/api/NL/nld/web/channels',
 	InfoScreenMovieSerieCategory: 'speelfilm',
 	channelList: [],

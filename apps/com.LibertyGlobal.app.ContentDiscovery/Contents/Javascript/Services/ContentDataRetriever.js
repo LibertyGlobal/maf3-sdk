@@ -6,7 +6,7 @@ function ContentDataRetriever() {
 		callbackAfterLoaded = callback;
 		callbackAfterLoadedParams = callbackParams;	
 
-		console.log("start loading: " + menuItem.mainMenuLabel);
+		//console.log("start loading: " + menuItem.mainMenuLabel);
 		menuItem.dataLoading = true;
 		var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm') + "Z";
 		var timeWindowEndTime = moment().utc().add('minutes', Config.common.contentTimeWindow).format('YYYY-MM-DDTHH:mm') + "Z";
@@ -60,11 +60,53 @@ function ContentDataRetriever() {
 				allAssets.push(activeAssets[i]);
 			}			
 		}
-		allAssets = allAssets.concat(futureAssets);
-		allAssets.sort(function(a,b) { return moment(a.start) - moment(b.start); } );
+		allAssets = allAssets.concat(futureAssets);		
+		allAssets.sort(function(a,b) { return (moment(a.start) - moment(b.start)) || (a.video.title.localeCompare(b.video.title)); });
+		allAssets = removeDuplicates(allAssets);
+
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;	
-		console.log("data loaded: " + menuItem.mainMenuLabel);	
+		//console.log("data loaded: " + menuItem.mainMenuLabel);	
 		callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
+	};
+
+	var removeDuplicates = function(allAssets)
+	{
+		var allAssetsFiltered = [];
+		var skipped = 0;
+		var skipNext = false;
+		for (var i = allAssets.length - 1; i >= 0; i--) {			
+			if(i-1>0)
+			{
+				if(skipNext!==true)
+				{
+					if(allAssets[i].start === allAssets[i-1].start && 
+						allAssets[i].end === allAssets[i-1].end &&
+						allAssets[i].video.title === allAssets[i-1].video.title)
+					{
+						if(allAssets[i].channel.name.toUpperCase().indexOf("HD") >= 0)
+						{
+							allAssetsFiltered.unshift(allAssets[i]);
+						}
+						else
+						{
+							allAssetsFiltered.unshift(allAssets[i-1]);
+						}
+						skipNext = true;
+						skipped++;
+					}
+					else
+					{
+						allAssetsFiltered.unshift(allAssets[i]);
+					}
+				}
+				else
+				{
+					skipNext = false;
+				}
+			}
+		}
+		//console.log("Duplicate items skipped: " + skipped);
+		return allAssetsFiltered;
 	};
 }

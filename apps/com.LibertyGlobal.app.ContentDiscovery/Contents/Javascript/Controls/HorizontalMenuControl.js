@@ -16,7 +16,7 @@ var HorizontalMenuControl = new MAF.Class({
 					}
 				break;
 				case "select":
-					this.fire('onSelect', { action: this.focussedButton });
+					this.fire('onButtonSelect', { action: this.focussedButton });
 				break;
 			}
 			

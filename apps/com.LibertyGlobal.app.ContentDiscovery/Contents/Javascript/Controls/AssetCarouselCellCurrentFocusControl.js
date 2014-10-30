@@ -90,12 +90,10 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	},
 
 	initialize: function(){
-		this.timerId;
 		this.parent();
 		this.generateContents();
 		this.displayData = null;
 		MAF.mediaplayer.init(); 
-		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 	},
 
 	changeData: function(data){		
@@ -103,7 +101,8 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		{		
 			this.displayData = data;
 			if(data.video !== null)
-			{
+			{				
+				MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
 				var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));
 				this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
@@ -119,7 +118,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				}
 
 				var view = this;
-				this.stopProgressInterval(this.timerId);
+				this.stopProgressInterval();
 				this.timerId = setInterval(function() {
 					if(view.displayData!==null)
 					{

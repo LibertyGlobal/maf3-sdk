@@ -1,6 +1,5 @@
 // Theme
 include('Javascript/Theme.js');
-//include('Javascript/testdata.js');
 
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
@@ -26,12 +25,14 @@ include('Javascript/Controls/AssetCarouselControl.js');
 include('Javascript/Services/ContentDataRetriever.js');
 
 include('Javascript/Views/Helpers/ChannelHelper.js');
+include('Javascript/Views/Helpers/NotificationHelper.js');
 include('Javascript/Views/AppInfoScreen.js');
 include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
 include('Javascript/Views/FullSynopsis.js');
 
 Config.load();
+//LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
 
 // Init application with view config
 MAF.application.init({

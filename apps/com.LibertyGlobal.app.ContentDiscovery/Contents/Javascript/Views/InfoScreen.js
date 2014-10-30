@@ -7,6 +7,7 @@ var InfoScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		view.assetId = this.persist.assetId;
+		view.asset = null;
 		this.updateData(view);
 		
 		//view.casts = [];
@@ -35,6 +36,7 @@ var InfoScreen = new MAF.Class({
 		.findOne(function(response){ 
 			if(response.length>0)
 			{
+				view.asset = response[0];
 				view.controls.assetDetails.changeData(response[0]);
 				view.controls.horizontalMenu.show();
 				view.controls.horizontalMenu.setFocus();
@@ -88,9 +90,12 @@ var InfoScreen = new MAF.Class({
 						view.controls.coverBar.setFocus();
 					}
 				},
-				onSelect: function(eventData) {
+				onButtonSelect: function(eventData) {
 					switch(eventData.payload.action)
 					{
+						case 1:
+							setNotification($_('Notification_Text', [view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition]), view.asset.start);
+						break;
 						case 3:
 							MAF.application.loadView('view-FullSynopsis', { 
 								"assetId": view.assetId });
@@ -141,7 +146,7 @@ var InfoScreen = new MAF.Class({
 			view.controls.coverBar.show();
 			view.elements.coverBarTitle.show();
 		}
-	},	
+	},
 
 	destroyView: function () {
 		delete this.controls.coverBar;
@@ -149,5 +154,6 @@ var InfoScreen = new MAF.Class({
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;
 		delete this.casts;
+		delete this.asset;
 	}
 });

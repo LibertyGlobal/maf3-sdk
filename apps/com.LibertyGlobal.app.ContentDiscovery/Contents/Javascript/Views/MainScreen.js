@@ -21,8 +21,6 @@ var MainScreen = new MAF.Class({
 			}
 		}).send();
 
-		var retriever = new ContentDataRetriever();
-		retriever.loadMenuData(Config.common.menuItems[0], this.menuItemDataLoaded, view);
 		view.items = Config.common.menuItems;		
 	},
 
@@ -49,13 +47,14 @@ var MainScreen = new MAF.Class({
 	menuItemDataLoaded: function(menuItem, view) {
 		if(menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel)
 		{
-			console.log("displaying data for: " + menuItem.mainMenuLabel);
+			//console.log("displaying data for: " + menuItem.mainMenuLabel);
 			view.controls.assetCarousel.changeDataset(menuItem);
 			view.controls.assetCarousel.setFocus();
+			view.showBackground(view, view.controls.assetCarousel.isLive);
 		}
 		else
 		{
-			console.log("menu changed, restart loading data: " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
+			//console.log("menu changed, restart loading data: " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
 			view.controls.assetCarousel.setLoading();
 			var retriever = new ContentDataRetriever();
 			retriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], view.menuItemDataLoaded, view);
@@ -135,16 +134,7 @@ var MainScreen = new MAF.Class({
 			},
 			events: {
 				onAssetChanged: function(eventData) {
-					if(eventData.payload.isLiveAsset===true)
-					{
-						view.elements.backgroundImageLive.show();
-						view.elements.backgroundImageNormal.hide();
-					}
-					else
-					{
-						view.elements.backgroundImageLive.hide();
-						view.elements.backgroundImageNormal.show();
-					}
+					view.showBackground(view, eventData.payload.isLiveAsset);
 				},
 				onNavigateLeft: function(){
 					view.showSidebar();
@@ -156,12 +146,14 @@ var MainScreen = new MAF.Class({
 					view.controls.verticalMenu.doNavigate('down');
 				},
 				onAssetSelect: function(eventData){
-
 					if(view.controls.sideBarContainer.isCollapsed === true)
 					{
-						// TODO should be replaced by closing app and viewing asset or storing reminder
-						MAF.application.loadView('view-InfoScreen', { 
-							"assetId": eventData.payload.asset.id });
+						if(eventData.payload.asset!==null)
+						{
+							// TODO should be replaced by closing app and viewing asset or storing reminder
+							MAF.application.loadView('view-InfoScreen', { 
+								"assetId": eventData.payload.asset.id });
+						}
 					}
 				}
 			}			
@@ -173,7 +165,21 @@ var MainScreen = new MAF.Class({
 		{
 			this.controls.verticalMenu.changeDataset(Config.common.menuItems);
 		}
-	},	
+	},
+
+	showBackground: function(view, isLive)
+	{
+		if(isLive===true)
+		{
+			view.elements.backgroundImageLive.show();
+			view.elements.backgroundImageNormal.hide();
+		}
+		else
+		{
+			view.elements.backgroundImageLive.hide();
+			view.elements.backgroundImageNormal.show();
+		}
+	},
 
 	showSidebar: function() { 
 		var view = this;

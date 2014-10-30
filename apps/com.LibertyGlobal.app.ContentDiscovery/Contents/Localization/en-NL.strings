@@ -1,6 +1,7 @@
 // General
 "Back_Button_Text" = "< Back to home";
 "Page_Indicator_Text" = " Page %s of %s";
+"Notification_Text" = "REMINDER: '%s' is about to start, switch to channel %s(%s) to watch";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Movies / Drama";
@@ -34,6 +35,7 @@
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
 "MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s mins.";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
+"MainScreen_Asset_Focus_ShowLaterContent_Button" = "";
 "MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";
 
@@ -56,4 +58,56 @@
 "Sidebar_AboutAppButton" = "About this app";
 "Sidebar_ExitButton" = "Exit";
 
+// Welcome screen
+"WelcomeScreen_Title" = "";
+"WelcomeScreen_Text" = "";
+"WelcomeScreen_SetProfile_Button" = "";
+"WelcomeScreen_Skip_Button" = "";
 
+// Preferences
+"PreferencesScreen_Title" = "";
+"PreferencesScreen_MenuItems_Title" = "";
+"PreferencesScreen_ConnectFacebook_Button" = "";
+"PreferencesScreen_ConnectTwitter_Button" = "";
+"PreferencesScreen_ContentTime_Title" = "";
+"PreferencesScreen_ContentTime_SubTitle" = "";
+"PreferencesScreen_ContentTime_30min_Text" = "";
+"PreferencesScreen_ContentTime_60min_Text" = "";
+"PreferencesScreen_ContentTime_90min_Text" = "";
+"PreferencesScreen_ContentTime_Footer" = "";
+"PreferencesScreen_Close_Button" = "";
+
+// Facebook login
+"FacebookScreen_Title" = "";
+"FacebookScreen_LineBefore_Text" = "";
+"FacebookScreen_LineAfter_Text" = "";
+"FacebookScreen_Back_Button" = "";
+
+// Twitter login
+"TwitterScreen_Title" = "";
+"TwitterScreen_LineBefore_Text" = "";
+"TwitterScreen_LineAfter_Text" = "";
+"TwitterScreen_Back_Button" = "";
+
+// App Info screen
+"AppInfoScreen_Title" = "";
+"AppInfoScreen_Text" = "";
+"AppInfoScreen_Back_Button" = "";
+
+// Share screen
+"ShareScreen_Title" = "";
+"ShareScreen_EmptyMessage_Text" = "";
+"ShareScreen_ExcludeFacebook_Button" = "";
+"ShareScreen_ExcludeTwitter_Button" = "";
+"ShareScreen_ClearAll_Button" = "";
+"ShareScreen_Send_Button" = "";
+
+// Cast info screen
+"CastInfoScreen_DateOfBirth_Text" = "";
+"CastInfoScreen_PlaceOfBirth_Text" = "";
+"CastInfoScreen_FullBiography_Button" = "";
+"CastInfoScreen_AlsoKnownFor_Text" = "";
+"CastInfoScreen_Back_Button" = "";
+
+// Cast full biography screen
+"CastFullBiographyScreen_Back_Button" = "";
