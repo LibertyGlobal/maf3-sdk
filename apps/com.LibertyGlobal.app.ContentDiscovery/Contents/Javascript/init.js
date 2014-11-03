@@ -30,6 +30,7 @@ include('Javascript/Views/AppInfoScreen.js');
 include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
 include('Javascript/Views/FullSynopsis.js');
+include('Javascript/Views/EmptyScreen.js');
 
 Config.load();
 //LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
@@ -41,6 +42,7 @@ MAF.application.init({
 		{ id: 'view-InfoScreen', viewClass: InfoScreen },
 		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
 		{ id: 'view-AppInfoScreen', viewClass: AppInfoScreen },
+		{ id: 'view-EmptyScreen', viewClass: EmptyScreen },
 		{ id: 'view-About', viewClass: MAF.views.AboutBox } // Use standard About view
 	],
 	defaultViewId: 'view-MainScreen',

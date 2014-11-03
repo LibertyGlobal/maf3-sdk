@@ -7,6 +7,7 @@ var InfoScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		view.assetId = this.persist.assetId;
+		view.isLive = false;
 		view.asset = null;
 		this.updateData(view);
 		
@@ -37,7 +38,13 @@ var InfoScreen = new MAF.Class({
 			if(response.length>0)
 			{
 				view.asset = response[0];
+				view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
 				view.controls.assetDetails.changeData(response[0]);
+
+				(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text')
+							: view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+				view.controls.horizontalMenu.updateButtonText();
+
 				view.controls.horizontalMenu.show();
 				view.controls.horizontalMenu.setFocus();
 			}
@@ -94,7 +101,15 @@ var InfoScreen = new MAF.Class({
 					switch(eventData.payload.action)
 					{
 						case 1:
-							setNotification($_('Notification_Text', [view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition]), view.asset.start);
+							if(view.isLive)
+							{
+								MAF.application.loadView('view-EmptyScreen', { 
+									"channelNr": view.asset.channel.logicalPosition });
+							}
+							else
+							{
+								setNotification($_('Notification_Text', [view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition]), view.asset.start);
+							}
 						break;
 						case 3:
 							MAF.application.loadView('view-FullSynopsis', { 

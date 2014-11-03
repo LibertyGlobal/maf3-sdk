@@ -38,31 +38,75 @@ function ContentDataRetriever() {
 					.sort(LGI.Guide.Broadcast.START)
 					.findOne(function(response2){ 
 						var activeAssets = response2;
-						parseData(menuItem, activeAssets, futureAssets);
+						parseData(menuItem, activeAssets, futureAssets, true, true, false);
 					});				
 				});
 			break;
 			case 'trending':
+				// retrieve all currently playing trending
+				LGI.Guide.Broadcast.create()
+					.limit(500)
+					.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
+						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
+						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+					.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))				
+					.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+					.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+					.sort(LGI.Guide.Broadcast.POPULARITY, 'desc')
+					.findOne(function(response){ 
+						var activeAssets = response;
+						parseData(menuItem, activeAssets, null, false, true, false);
+				});
+			break;
 			case 'recommendations':
-			case 'shuffle':
 				menuItem.data = [];
 				menuItem.dataLoading = false;	
 				callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
 			break;
+			case 'shuffle':
+				// retrieve all currently playing trending
+				LGI.Guide.Broadcast.create()
+					.limit(500)
+					.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
+						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
+						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+					.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))				
+					.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+					.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+					.sort(LGI.Guide.Broadcast.START)
+					.findOne(function(response){ 
+						var activeAssets = response;
+						parseData(menuItem, activeAssets, null, false, true, true);
+				});
+			break;
 		}		
 	};
 
-	var parseData = function(menuItem, activeAssets, futureAssets){		
-		var allAssets = [];		
-		for (var i = 0; i < activeAssets.length; i++) {			
-			if(((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) > Config.common.programDurationDisplayThreshold)
+	var parseData = function(menuItem, activeAssets, futureAssets, sortAssets, uniqueAssets, shuffleAssets){		
+		var allAssets = [];	
+		for (var i = 0; i < activeAssets.length; i++) {		
+			console.log("item '"+ activeAssets[i].video.title + "' skipped: " + ((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold);	
+			if(((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold)
 			{
 				allAssets.push(activeAssets[i]);
 			}			
 		}
-		allAssets = allAssets.concat(futureAssets);		
-		allAssets.sort(function(a,b) { return (moment(a.start) - moment(b.start)) || (a.video.title.localeCompare(b.video.title)); });
-		allAssets = removeDuplicates(allAssets);
+		if(futureAssets !== null)
+		{
+			allAssets = allAssets.concat(futureAssets);
+		}
+		if(sortAssets === true)
+		{
+			allAssets.sort(function(a,b) { return (moment(a.start) - moment(b.start)) || (a.video.title.localeCompare(b.video.title)); });
+		}
+		if(uniqueAssets === true)
+		{
+			allAssets = removeDuplicates(allAssets);
+		}
+		if(shuffleAssets === true)
+		{
+			allAssets = shuffleAssets(allAssets);
+		}
 
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;	
@@ -106,7 +150,23 @@ function ContentDataRetriever() {
 				}
 			}
 		}
-		//console.log("Duplicate items skipped: " + skipped);
+		console.log("Duplicate items skipped: " + skipped);
 		return allAssetsFiltered;
+	};
+
+	var shuffleArray = function(array)
+	{
+		var currentIndex = array.length, temporaryValue, randomIndex ;
+
+		while (0 !== currentIndex) {
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
 	};
 }

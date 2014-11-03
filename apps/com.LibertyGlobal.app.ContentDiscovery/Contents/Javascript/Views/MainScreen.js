@@ -30,7 +30,7 @@ var MainScreen = new MAF.Class({
 			case "onWidgetKeyPress":
 				if(event.payload !== undefined)	
 				{
-					if(event.payload.keyCode === 457) // info button
+					if(event.payload.keyCode === 457 || event.payload.keyCode === 36) // info button or home button on keyboard
 					{
 						if(this.controls.sideBarContainer.isCollapsed === true)
 						{						
@@ -93,7 +93,7 @@ var MainScreen = new MAF.Class({
 								//MAF.application.loadView('view-AppInfoScreen');
 							break;
 							case "exit":
-								MAF.application.exit();
+								MAF.HostEventManager.send("exitToDock"); 
 							break;
 						}
 					}
@@ -150,9 +150,15 @@ var MainScreen = new MAF.Class({
 					{
 						if(eventData.payload.asset!==null)
 						{
-							// TODO should be replaced by closing app and viewing asset or storing reminder
-							MAF.application.loadView('view-InfoScreen', { 
-								"assetId": eventData.payload.asset.id });
+							if(view.controls.assetCarousel.isLive===true)
+							{
+								MAF.application.loadView('view-EmptyScreen', { 
+									"channelNr": eventData.payload.asset.channel.logicalPosition });
+							}
+							else
+							{
+								setNotification($_('Notification_Text', [eventData.payload.asset.video.title, eventData.payload.asset.channel.name, eventData.payload.asset.channel.logicalPosition]), eventData.payload.asset.start);
+							}
 						}
 					}
 				}
@@ -163,8 +169,9 @@ var MainScreen = new MAF.Class({
 	updateView: function () {
 		if(this.controls.verticalMenu.mainCollection.length<=0)
 		{
-			this.controls.verticalMenu.changeDataset(Config.common.menuItems);
+			this.controls.verticalMenu.changeDataset(Config.common.menuItems);			
 		}
+		this.controls.assetCarousel.updateVideo();
 	},
 
 	showBackground: function(view, isLive)

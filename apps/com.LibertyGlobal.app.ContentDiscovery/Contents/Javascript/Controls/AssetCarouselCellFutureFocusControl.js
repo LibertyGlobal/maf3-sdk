@@ -9,12 +9,12 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				styles: {	
 					height: 'inherit',
 					width: 'inherit',
-					padding: 4		
+					padding: 5		
 				}
 			}).appendTo(this);			
 			this.Poster = new MAF.element.Image({
 				styles: {
-					height: 466,
+					height: 465,
 					width: 313,
 					position: 'relative',
 					display: 'inline'

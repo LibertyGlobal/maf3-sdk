@@ -64,6 +64,10 @@ var HorizontalMenuButtonControl = new MAF.Class({
 		this.focus();
 	},
 
+	updateText: function() {
+		this.buttonText.data = this.config.buttonText;
+	},
+
 	suicide: function() {
 		this.parent();
 	}

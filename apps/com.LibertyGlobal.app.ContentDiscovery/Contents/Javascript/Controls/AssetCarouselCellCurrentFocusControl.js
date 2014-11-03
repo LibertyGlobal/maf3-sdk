@@ -139,6 +139,10 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		}
 	},
 
+	updateVideo: function(){
+		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
+	},
+
 	stopProgressInterval: function() {
 		if(this.timerId)	{
 			clearInterval(this.timerId);

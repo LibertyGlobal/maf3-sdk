@@ -1,5 +1,5 @@
 Config.common = {
-	programDurationDisplayThreshold: 50,
+	programDurationDisplayThreshold: 85,
 	progressBarUpdateFreq: 10000,
 	contentTimeWindow: 90,
 	//broadcastApiUrl: 'http://api.uat.appdev.io/kraken/v2/schedule/',
@@ -19,7 +19,7 @@ Config.common = {
 		{ 
 			preferenceLabel: $_('MenuItem_Trending_Preference_Text'), 
 			mainMenuLabel: $_('MenuItem_Trending_MainMenu_Text'), 
-			categoryFilters: '',
+			categoryFilters: 'speelfilm,nieuws,show,sport,kids,muziek,kunst,maatschappelijk,educatie',
 			data: [],
 			dataLoading: false,
 			isVisible: true,

@@ -183,6 +183,14 @@ var AssetCarouselControl = new MAF.Class({
 		this.updateCells();
 	},
 
+	updateVideo: function() {
+		console.log("visible: " + this.currentFocusContainer.visible);
+		if(this.currentFocusContainer.visible)
+		{
+			this.currentFocusContainer.updateVideo();
+		}
+	},
+
 	setFocus: function() {
 		this.focus();
 	},

@@ -194,10 +194,8 @@ var AssetDetailControl = new MAF.Class({
 			this.Channel = new MAF.element.Image({
 				aspect: 'auto',
 				styles: {
-					//maxWidth: 180,					
 					vOffset: 340,
 					hOffset: 290,
-					//maxHeight: 50,
 					height: 30,
 					width: 180
 				}

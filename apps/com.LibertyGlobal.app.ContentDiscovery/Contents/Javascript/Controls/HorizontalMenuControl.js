@@ -142,6 +142,15 @@ var HorizontalMenuControl = new MAF.Class({
 		this.button1.setFocus();
 	},
 
+	updateButtonText: function() {
+		this.button1.config.buttonText = this.config.button1Text;	
+		this.button2.config.buttonText = this.config.button2Text;	
+		this.button3.config.buttonText = this.config.button3Text;
+		this.button1.updateText();
+		this.button2.updateText();
+		this.button3.updateText();
+	},
+
 	suicide: function() {
 		this.parent();
 		delete this.button1;
