@@ -123,10 +123,8 @@ var AssetCarouselControl = new MAF.Class({
 
 			var pos = 0; // unfocussed cells
 			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length-1;		
-			//console.log("maxItems: " + maxItems);
 			for(i = this.focusIndex; i<this.mainCollection.length && pos<maxItems; i++)
 			{
-				//console.log("1: " + i + ", " + pos);
 				if(i===this.focusIndex){
 					this.displayFocussed(this.mainCollection[i]);
 				}
@@ -141,7 +139,6 @@ var AssetCarouselControl = new MAF.Class({
 			i = 0;
 			while(pos<maxItems)
 			{
-				//console.log("2: " + i + ", " + pos);
 				this.cells[pos].changeData(this.mainCollection[i]);
 				pos++;
 				i++;
@@ -184,7 +181,6 @@ var AssetCarouselControl = new MAF.Class({
 	},
 
 	updateVideo: function() {
-		console.log("visible: " + this.currentFocusContainer.visible);
 		if(this.currentFocusContainer.visible)
 		{
 			this.currentFocusContainer.updateVideo();

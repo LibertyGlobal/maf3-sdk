@@ -73,16 +73,12 @@ var AssetCarouselCellControl = new MAF.Class({
 				this.PosterContainer.show();
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 			
-				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
 				{
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();
 				}				
-			}
-			else
-			{
-				console.log("video null: " + data.id);	
 			}
 		}
 		else
@@ -98,5 +94,10 @@ var AssetCarouselCellControl = new MAF.Class({
 
 	suicide: function () {
 		this.parent();
+		delete this.PosterContainer;
+		delete this.Poster;
+		delete this.Title;
+		delete this.StartEnd;
+		delete this.Channel;
 	}
 });

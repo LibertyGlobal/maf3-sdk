@@ -7,21 +7,9 @@ var MainScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);	
-
-		// retrieve channels for icons
-		new Request({
-			url: Config.common.channelApiUrl,
-			onComplete: function (request) {
-			if (request.status === 200)
-				channelList = JSON.parse(request.response);
-				if(channelList.channels !== null)
-				{
-					Config.common.channelList = channelList.channels;
-				}
-			}
-		}).send();
-
-		view.items = Config.common.menuItems;		
+		view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		ChannelHandler.initialize();
+		MenuHandler.initialize();
 	},
 
 	onInfoButtonPress: function(event) {	
@@ -44,24 +32,26 @@ var MainScreen = new MAF.Class({
 		}
 	},
 
-	menuItemDataLoaded: function(menuItem, view) {
+	onProfileLoaded: function(event) {
+		MenuHandler.reloadFromProfile();
+		this.reloadMenu(this);
+	},
+
+	onMenuItemDataLoaded: function(menuItem, view) {
 		if(menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel)
 		{
-			//console.log("displaying data for: " + menuItem.mainMenuLabel);
 			view.controls.assetCarousel.changeDataset(menuItem);
 			view.controls.assetCarousel.setFocus();
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		}
 		else
 		{
-			//console.log("menu changed, restart loading data: " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
 			view.controls.assetCarousel.setLoading();
 			var retriever = new ContentDataRetriever();
-			retriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], view.menuItemDataLoaded, view);
+			retriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], view.onMenuItemDataLoaded, view);
 		}
 	},
 
-    // Create your view template
 	createView: function () {
 		var view = this;		
 		view.elements.backgroundImageNormal = new MAF.element.Image({
@@ -84,13 +74,12 @@ var MainScreen = new MAF.Class({
 						switch(eventData.payload.action)
 						{
 							case "switch":
-								// TODO
+								MAF.HostEventManager.send("changeProfile"); 
 							break;
 							case "edit":
-								// TODO
+								view.showPopup(view, "preferences");
 							break;
 							case "about":
-								//MAF.application.loadView('view-AppInfoScreen');
 							break;
 							case "exit":
 								MAF.HostEventManager.send("exitToDock"); 
@@ -120,7 +109,7 @@ var MainScreen = new MAF.Class({
 				onMenuChanged: function(eventData){
 					view.controls.assetCarousel.setLoading();
 					var retriever = new ContentDataRetriever();
-					retriever.loadMenuData(eventData.payload.selectedMenuItem, view.menuItemDataLoaded, view);
+					retriever.loadMenuData(eventData.payload.selectedMenuItem, view.onMenuItemDataLoaded, view);
 				}				
 			}		
 		}).appendTo(this.elements.rightContainer);
@@ -157,21 +146,94 @@ var MainScreen = new MAF.Class({
 							}
 							else
 							{
-								setNotification($_('Notification_Text', [eventData.payload.asset.video.title, eventData.payload.asset.channel.name, eventData.payload.asset.channel.logicalPosition]), eventData.payload.asset.start);
+								setNotification(eventData.payload.asset.video.title, 
+										eventData.payload.asset.channel.name, 
+										eventData.payload.asset.channel.logicalPosition, 
+										eventData.payload.asset.start);
 							}
 						}
 					}
 				}
 			}			
 		}).appendTo(this.elements.rightContainer);
+
+		view.elements.popup = new MAF.element.Container({
+			styles: {
+				height: 'inherit',
+				width: 'inherit'
+			}
+		}).appendTo(view);
+
+		view.elements.fullscreenPopup = new MAF.element.Container({
+			styles: {
+				height: 'inherit',
+				width: 'inherit',
+				backgroundColor: "#000000",
+				opacity: 0.5 
+			}
+		}).appendTo(view.elements.popup);		
+		view.elements.fullscreenPopupBackground = new MAF.element.Container({
+			styles: {
+				hOffset: 122,
+				vOffset: 108,
+				width: 1676,
+				height: 863,
+				backgroundImage: 'Images/background_popup.jpg'
+			}
+		}).appendTo(view.elements.popup);
+		view.elements.preferencesView = new PreferencesScreen({
+			styles: {
+				height: 'inherit',
+				width: 'inherit'
+			},
+			events: {
+				onPreferencesClosed: function(eventData) {
+					view.closePopup(view);
+					view.reloadMenu(view);
+				}
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+		view.elements.preferencesView.hide();
+		view.elements.popup.hide();
 	},
 
 	updateView: function () {
-		if(this.controls.verticalMenu.mainCollection.length<=0)
+		this.reloadMenu(this);
+	},
+
+	reloadMenu: function(view)
+	{
+		if(view.controls.verticalMenu.mainCollection.length<=0)
 		{
-			this.controls.verticalMenu.changeDataset(Config.common.menuItems);			
+			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());			
 		}
-		this.controls.assetCarousel.updateVideo();
+		view.controls.assetCarousel.updateVideo();
+	},
+
+	showPopup: function(view, popupName)
+	{
+		view.elements.popup.show();	
+		switch(popupName)
+		{
+			case "welcome":
+			break;
+			case "preferences":
+				view.elements.preferencesView.show();
+				view.elements.preferencesView.setFocus();
+			break;
+			case "facebook":
+
+			break;
+			case "twitter": 
+
+			break;
+		}
+	},
+
+	closePopup: function(view)
+	{
+		view.elements.preferencesView.hide();
+		view.elements.popup.hide();	
 	},
 
 	showBackground: function(view, isLive)
@@ -217,12 +279,14 @@ var MainScreen = new MAF.Class({
 
 	destroyView: function () {
 		var view = this;
-		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
+		view.onInfoButtonPress.unsubscribeFrom(MAF.application, 'onWidgetKeyPress');
+		view.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		ChannelHandler.cleanUp();
+		MenuHandler.cleanUp();
 		delete view.controls.sideBarContainer;
 		delete view.elements.rightContainer;
 		delete view.controls.verticalMenu;
 		delete view.controls.assetCarousel;
-		delete view.items;
 		delete view.assets;
 	}
 });

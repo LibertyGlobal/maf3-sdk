@@ -67,12 +67,12 @@ var FullSynopsis = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 
 		view.controls.backButton = new ButtonControl({
-			buttonText: $_('Back_Button_Text'),
+			buttonText: $_('FullSynopsisScreem_Back_Button'),
 			styles:{
 				vOffset: 915,
 				hOffset: 340,
 				width: 379,
-				height: 78				
+				height: 66			
 			},
 			events: {
 				onButtonNavigate: function(eventData) {

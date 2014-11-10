@@ -9,9 +9,15 @@ var ButtonControl = new MAF.Class({
 			switch (event.type) {
 				case 'focus':
 					this.buttonImage.setSource("Images/button_focus.png");
+					this.buttonText.setStyles({
+						color: '#706abf'
+					});			
 					break;
 				case 'blur':
-					this.buttonImage.setSource("Images/button.png");
+					this.buttonImage.setSource("Images/button.png");	
+					this.buttonText.setStyles({
+						color: '#c0bcc5'
+					});	
 					break;
 				case 'navigate':
 					this.fire('onButtonNavigate', { direction: event.detail.direction });
@@ -27,20 +33,20 @@ var ButtonControl = new MAF.Class({
 		},
 		createContent: function() {	
 			this.buttonImage = new MAF.element.Image({
-				source: 'Images/button.png',
+				source: "Images/button_small.png",
 				styles: {
 					width: 379,
-					height: 78
+					heigth: 66
 				}
 			}).appendTo(this);
 			
 			this.buttonText  = new MAF.element.Text({
 				text: this.config.buttonText,
 				theme: false,
-				styles: {
+				styles: {	
 					color: '#706abf',
 					fontFamily: 'InterstatePro-Light',
-					fontSize: 30,
+					fontSize: 30,				
 					hAlign: 'center',
 					vAlign: 'center'
 				}
@@ -51,13 +57,13 @@ var ButtonControl = new MAF.Class({
 	config: {
 		render: true,
 		focus: true,
-		buttonText: ""
+		buttonText: "",
 	},
 
-	initialize: function() {
+	initialize: function() {		
 		this.parent();
 		this.config.buttonText = this.config.buttonText;		
-		this.createContent();
+		this.createContent();		
 	},
 
 	setFocus: function() { 

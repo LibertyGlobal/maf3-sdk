@@ -319,16 +319,12 @@ var AssetDetailControl = new MAF.Class({
 				
 				this.Synopsis.setText(data.video.synopsis);
 
-				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
 				{
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();
 				}
-			}
-			else
-			{
-				console.log("video null: " + data.id);	
 			}
 		}
 		else

@@ -1,7 +1,9 @@
 // General
-"Back_Button_Text" = "< Back to home";
-"Page_Indicator_Text" = " Page %s of %s";
+"App_Title" = "Watson";
+"App_Description" = "Find what's on TV now in a personalised way.";
 "Notification_Text" = "REMINDER: '%s' is about to start, switch to channel %s(%s) to watch";
+"Notification1_Text" = "REMINDER: '%s' is about to start";
+"Notification2_Text" = "Switch to channel '%s'(%s) to watch";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Movies / Drama";
@@ -13,6 +15,7 @@
 "MenuItem_Show_Preference_Text" = "Show";
 "MenuItem_Music_Preference_Text" = "Music";
 "MenuItem_Education_Preference_Text" = "Education";
+// items below should not be options on the preferences screen
 "MenuItem_Trending_Preference_Text" = "Trending";
 "MenuItem_Recommendations_Preference_Text" = "Recommendations";
 "MenuItem_Shuffle_Preference_Text" = "Shuffle";
@@ -31,11 +34,11 @@
 "MenuItem_Recommendations_MainMenu_Text" = "Recommendations";
 "MenuItem_Shuffle_MainMenu_Text" = "Shuffle";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
-"MainScreen_Asset_Focus_Reminder" = "Press OK to add Reminder";
+"MainScreen_Asset_Focus_Reminder" = "Press OK to add a reminder";
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
-"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s mins.";
+"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s.";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
-"MainScreen_Asset_Focus_ShowLaterContent_Button" = "";
+"MainScreen_Asset_Focus_ShowLaterContent_Button" = "Look for content further ahead";
 "MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";
 
@@ -55,60 +58,65 @@
 
 // Sidebar
 "Sidebar_SwitchProfileButton" = "Switch Profile";
-"Sidebar_EditProfileButton" = "Edit Profile";
+"Sidebar_EditProfileButton" = "Profile Settings";
 "Sidebar_AboutAppButton" = "About this app";
 "Sidebar_ExitButton" = "Exit";
 
 // Welcome screen
-"WelcomeScreen_Title" = "";
-"WelcomeScreen_Text" = "";
-"WelcomeScreen_SetProfile_Button" = "";
-"WelcomeScreen_Skip_Button" = "";
+"WelcomeScreen_Title" = "Welcome to the Watson app";
+"WelcomeScreen_Text" = "This app can help you to find programmes and movies that are about to start, or have just begun. If you create a profile the app can personalise the suggestions it provides and allow you to personalise the app.";
+"WelcomeScreen_SetProfile_Button" = "Set Profile";
+"WelcomeScreen_Skip_Button" = "Skip";
 
 // Preferences
-"PreferencesScreen_Title" = "";
-"PreferencesScreen_MenuItems_Title" = "";
-"PreferencesScreen_ConnectFacebook_Button" = "";
-"PreferencesScreen_ConnectTwitter_Button" = "";
-"PreferencesScreen_ContentTime_Title" = "";
-"PreferencesScreen_ContentTime_SubTitle" = "";
-"PreferencesScreen_ContentTime_30min_Text" = "";
-"PreferencesScreen_ContentTime_60min_Text" = "";
-"PreferencesScreen_ContentTime_90min_Text" = "";
-"PreferencesScreen_ContentTime_Footer" = "";
-"PreferencesScreen_Close_Button" = "";
+"PreferencesScreen_Title" = "Preferences";
+"PreferencesScreen_MenuItems_Title" = "Menu items";
+"PreferencesScreen_ConnectFacebook_Button" = "Connect to Facebook";
+"PreferencesScreen_ConnectTwitter_Button" = "Connect to Twitter";
+"PreferencesScreen_ContentTime_Title" = "Time window*";
+"PreferencesScreen_ContentTime_SubTitle" = "Anything that has started or will start within:";
+"PreferencesScreen_ContentTime_30min_Text" = "30 min";
+"PreferencesScreen_ContentTime_60min_Text" = "1 hour";
+"PreferencesScreen_ContentTime_90min_Text" = "1,5 hours";
+"PreferencesScreen_ContentTime_Footer" = "*The time window is linked to the start time of the programmes only.";
+"PreferencesScreen_Close_Button" = "Done";
 
 // Facebook login
-"FacebookScreen_Title" = "";
-"FacebookScreen_LineBefore_Text" = "";
-"FacebookScreen_LineAfter_Text" = "";
-"FacebookScreen_Back_Button" = "";
+"FacebookScreen_Title" = "Facebook login";
+"FacebookScreen_LineBefore_Text" = "Go to facebook.com/devices and fill out the following code:";
+"FacebookScreen_LineAfter_Text" = "Once you have done that, this app should automatically bring you to the next page.";
+"FacebookScreen_Back_Button" = "Cancel";
 
 // Twitter login
-"TwitterScreen_Title" = "";
+"TwitterScreen_Title" = "Twitter login";
 "TwitterScreen_LineBefore_Text" = "";
 "TwitterScreen_LineAfter_Text" = "";
-"TwitterScreen_Back_Button" = "";
+"TwitterScreen_Back_Button" = "Cancel";
 
 // App Info screen
-"AppInfoScreen_Title" = "";
-"AppInfoScreen_Text" = "";
-"AppInfoScreen_Back_Button" = "";
+"AppInfoScreen_Title" = "App info";
+"AppInfoScreen_Text" = "This app has been created by Liberty Global";
+"AppInfoScreen_Back_Button" = "Back to home";
 
 // Share screen
 "ShareScreen_Title" = "";
-"ShareScreen_EmptyMessage_Text" = "";
-"ShareScreen_ExcludeFacebook_Button" = "";
-"ShareScreen_ExcludeTwitter_Button" = "";
-"ShareScreen_ClearAll_Button" = "";
-"ShareScreen_Send_Button" = "";
+"ShareScreen_EmptyMessage_Text" = "I'm currently watching %s";
+"ShareScreen_ExcludeFacebook_Button" = "Exclude Facebook";
+"ShareScreen_ExcludeTwitter_Button" = "Exclude Twitter";
+"ShareScreen_ClearAll_Button" = "Clear all";
+"ShareScreen_Send_Button" = "Send";
+"ShareScreen_Back_Button" = "Back to home";
 
 // Cast info screen
-"CastInfoScreen_DateOfBirth_Text" = "";
-"CastInfoScreen_PlaceOfBirth_Text" = "";
-"CastInfoScreen_FullBiography_Button" = "";
-"CastInfoScreen_AlsoKnownFor_Text" = "";
-"CastInfoScreen_Back_Button" = "";
+"CastInfoScreen_DateOfBirth_Text" = "Date of birth:";
+"CastInfoScreen_PlaceOfBirth_Text" = "Place of birth:";
+"CastInfoScreen_FullBiography_Button" = "Full Biography";
+"CastInfoScreen_AlsoKnownFor_Text" = "ALSO KNOWN FOR";
+"CastInfoScreen_Back_Button" = "Back to home";
 
 // Cast full biography screen
-"CastFullBiographyScreen_Back_Button" = "";
+"CastFullBiographyScreen_Back_Button" = "Back to home";
+
+// Full synopsis screen
+"FullSynopsisScreen_Pagination" = "Page %s of %s";
+"FullSynopsisScreem_Back_Button" = "Back to home";

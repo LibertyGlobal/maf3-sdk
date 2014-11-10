@@ -6,7 +6,6 @@ var SidebarControl = new MAF.Class({
 	Protected: {
 		dispatchEvents: function(event){
 			this.parent(event);
-			console.log(event.type);
 			switch(event.type)
 			{
 				case "navigate":
@@ -17,7 +16,6 @@ var SidebarControl = new MAF.Class({
 					}
 				break;
 				case "select":
-					console.log(this.focussedButton);
 					this.fire('onSelect', { action: this.focussedButton });
 				break;
 			}

@@ -104,13 +104,14 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 			{				
 				MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
+				screen.log("Tune channel: " + data.channel.logicalPosition);
 				var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));
 				this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
 				this.Title.setText(data.video.title);			
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
 				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
 
-				var logoUrl = ChannelHelpers.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
 				{
 					this.Channel.setSource(logoUrl);
@@ -152,7 +153,14 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 
 	suicide: function () {
 		this.parent();
-		MAF.mediaplayer.control.stop();
 		this.stopProgressInterval();
+		delete this.BackgroundImage;
+		delete this.Title;
+		delete this.InfoImage;
+		delete this.StartEnd;
+		delete this.OkView;
+		delete this.Channel;
+		delete this.ProgressContainer;
+		delete this.ProgressIndicator;
 	}
 });

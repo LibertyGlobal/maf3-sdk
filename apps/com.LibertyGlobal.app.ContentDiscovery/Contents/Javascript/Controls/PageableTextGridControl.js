@@ -20,7 +20,7 @@ var PageableTextGridControl = new MAF.Class({
 				},
 				events: {
 					updateText: function(curpage, pagecount, state) {
-						return $_('Page_Indicator_Text', [parseInt(curpage, 10) + 1, pagecount]);
+						return $_('FullSynopsisScreen_Pagination', [parseInt(curpage, 10) + 1, pagecount]);
 					}
 				}
 			}).appendTo(this);
@@ -60,7 +60,6 @@ var PageableTextGridControl = new MAF.Class({
 		},
 		updateText: function(text){			
 			this.textGrid.setText(text);
-			console.log("textgrid paging" + this.textGrid.getPageCount());			
 			this.pageLeft.visible = (this.textGrid.getPageCount() > 1);
 			this.pageRight.visible = (this.textGrid.getPageCount() > 1);
 			this.pageIndicator.visible = (this.textGrid.getPageCount() > 1);
