@@ -8,8 +8,8 @@ function ContentDataRetriever() {
 
 		//console.log("start loading: " + menuItem.mainMenuLabel);
 		menuItem.dataLoading = true;
-		var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm') + "Z";
-		var timeWindowEndTime = moment().utc().add('minutes', Config.common.contentTimeWindow).format('YYYY-MM-DDTHH:mm') + "Z";
+		var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
+		var timeWindowEndTime = moment().utc().add('minutes', parseInt(ProfileHandler.getContentTimeWindow(), 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 					
 		switch(menuItem.itemType)
 		{
@@ -17,8 +17,8 @@ function ContentDataRetriever() {
 				LGI.Guide.Broadcast.create()
 				.limit(500)
 				.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
-						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL,
-						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
+						"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
 				.filter(LGI.Guide.Broadcast.START.greaterThan(currentTime))				
 				.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
 				.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
@@ -30,8 +30,8 @@ function ContentDataRetriever() {
 					LGI.Guide.Broadcast.create()
 					.limit(500)
 					.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
-						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL,
-						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
+						"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
 					.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))				
 					.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 					.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
@@ -48,7 +48,8 @@ function ContentDataRetriever() {
 					.limit(500)
 					.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
 						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
-						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+						"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, 
+						LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
 					.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))				
 					.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 					.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
@@ -69,7 +70,7 @@ function ContentDataRetriever() {
 					.limit(500)
 					.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, 
 						LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
-						LGI.Guide.Broadcast.SYNOPSIS, LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY)
+						"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
 					.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))				
 					.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 					.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
@@ -85,7 +86,7 @@ function ContentDataRetriever() {
 	var parseData = function(menuItem, activeAssets, futureAssets, sortAssets, uniqueAssets, shuffleAssets){		
 		var allAssets = [];	
 		for (var i = 0; i < activeAssets.length; i++) {		
-			console.log("item '"+ activeAssets[i].video.title + "' skipped: " + ((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold);	
+			//console.log("item '"+ activeAssets[i].video.title + "' skipped: " + (((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold));	
 			if(((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold)
 			{
 				allAssets.push(activeAssets[i]);

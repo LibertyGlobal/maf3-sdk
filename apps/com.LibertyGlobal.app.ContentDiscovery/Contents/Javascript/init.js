@@ -7,9 +7,12 @@ include('Javascript/Config/conf.common.js');
 include('Javascript/Core/ChannelHandler.js');
 include('Javascript/Core/MenuHandler.js');
 include('Javascript/Core/Notifications.js');
+include('Javascript/Core/ProfileHandler.js');
 
 include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
+include('Javascript/Controls/SettingsGridControl.js');
+include('Javascript/Controls/SettingsGridCellControl.js');
 include('Javascript/Controls/PageableTextGridControl.js');
 include('Javascript/Controls/MenuCarouselCellControl.js');
 include('Javascript/Controls/MenuCarouselControl.js');
@@ -33,10 +36,11 @@ include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
 include('Javascript/Views/FullSynopsis.js');
 include('Javascript/Views/EmptyScreen.js');
-include('Javascript/Views/PreferencesScreen.js');
+include('Javascript/Views/PopupScreen.js');
+include('Javascript/Views/PreferencesPopup.js');
 
 Config.load();
-//LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
+LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
 
 // Init application with view config
 MAF.application.init({
@@ -46,6 +50,7 @@ MAF.application.init({
 		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
 		{ id: 'view-AppInfoScreen', viewClass: AppInfoScreen },
 		{ id: 'view-EmptyScreen', viewClass: EmptyScreen },
+		{ id: 'view-PopupScreen', viewClass: PopupScreen },
 		{ id: 'view-About', viewClass: MAF.views.AboutBox } // Use standard About view
 	],
 	defaultViewId: 'view-MainScreen',

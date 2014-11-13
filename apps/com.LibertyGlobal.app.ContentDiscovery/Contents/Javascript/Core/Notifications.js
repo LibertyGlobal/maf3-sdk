@@ -12,10 +12,11 @@ var setNotification = function(title, channel, channelNr, startTime) {
 			//widget.notify(widget.getUrl("Images/icon.png"), [, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"], MAF.Notification.C2A); 
 			//widget.notify(widget.getUrl("Images/icon.png"), "title to display: " + title, MAF.Notification.ALERT);
 			//screen.log("Notify: " + title);
-					widget.notify(widget.getUrl("Images/icon.png"), 
-						[$_('App_Title'), $_('Notification1_Text', [title]), 
-						 $_('Notification2_Text', [channel, channelNr])],
-						  MAF.Notification.C2A);
+			widget.notify(widget.getUrl("Images/icon.png"), 
+			[$_('App_Title'), $_('Notification1_Text', [title]),
+				$_('Notification2_Text', [channel, channelNr])
+			],
+			MAF.Notification.C2A);
 		}).delay(delayInSeconds * 1000);
 	}
 };

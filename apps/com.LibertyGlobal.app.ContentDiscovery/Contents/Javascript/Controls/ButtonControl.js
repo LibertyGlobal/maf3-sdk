@@ -33,7 +33,7 @@ var ButtonControl = new MAF.Class({
 		},
 		createContent: function() {	
 			this.buttonImage = new MAF.element.Image({
-				source: "Images/button_small.png",
+				source: 'Images/button.png',
 				styles: {
 					width: 379,
 					heigth: 66
@@ -44,7 +44,7 @@ var ButtonControl = new MAF.Class({
 				text: this.config.buttonText,
 				theme: false,
 				styles: {	
-					color: '#706abf',
+					color: '#c0bcc5',
 					fontFamily: 'InterstatePro-Light',
 					fontSize: 30,				
 					hAlign: 'center',
@@ -57,7 +57,7 @@ var ButtonControl = new MAF.Class({
 	config: {
 		render: true,
 		focus: true,
-		buttonText: "",
+		buttonText: ""
 	},
 
 	initialize: function() {		
@@ -68,6 +68,12 @@ var ButtonControl = new MAF.Class({
 
 	setFocus: function() { 
 		this.focus();
+	},
+
+	setButtonText: function(text)
+	{
+		this.buttonText.setText(text);
+		this.config.buttonText = text;
 	},
 
 	suicide: function() {

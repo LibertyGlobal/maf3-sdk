@@ -104,7 +104,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 			{				
 				MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
-				screen.log("Tune channel: " + data.channel.logicalPosition);
+				//screen.log("Tune channel: " + data.channel.logicalPosition);
 				var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));
 				this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
 				this.Title.setText(data.video.title);			

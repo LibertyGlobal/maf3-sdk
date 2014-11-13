@@ -119,28 +119,43 @@ var MenuHandler = (function() {
     };
 
 	return {
-		initialize: function()
-		{
+		initialize: function() {
 			this.menuItems = createMenu();
-			this.menuItemsVisibility = Config.common.menuItemsVisibilityDefault;
+			this.menuItemsVisibility = ProfileHandler.getVisibleMenuItems();
 		},
 
-		setItemVisibility: function(visibleItems)
-		{
+		setItemVisibility: function(visibleItems) {
 			this.menuItemsVisibility = visibleItems;
+			ProfileHandler.updateVisibleMenuItems(visibleItems);
 		},
 
-		getVisualMenuItems: function()
-		{		
+		getVisualMenuItems: function() {	
 			var visibleMenuItems = [];
-			for(var i = 0; i<this.menuItems.length; i++)
-			{
-				if(this.menuItemsVisibility.indexOf(this.menuItems[i].itemName) > -1)
-				{
+			for(var i = 0; i<this.menuItems.length; i++) {
+				if(this.menuItems[i].itemType === "category") {
+					if(this.menuItemsVisibility.indexOf(this.menuItems[i].itemName) > -1) {
+						visibleMenuItems.push(this.menuItems[i]);
+					}
+				}
+				else {
 					visibleMenuItems.push(this.menuItems[i]);
 				}
 			}
 			return visibleMenuItems;
+		},
+
+		getCurrentMenuItemConfig: function() {	
+			var menuItemConfig = [];
+			for(var i = 0; i<this.menuItems.length; i++) {
+				if(this.menuItems[i].itemType === "category") {
+					var selected = false;
+					if(this.menuItemsVisibility.indexOf(this.menuItems[i].itemName) > -1) {
+						selected = true;					
+					}
+					menuItemConfig.push({ name:this.menuItems[i].itemName, displayName:this.menuItems[i].preferenceLabel, selected:selected});
+				}
+			}
+			return menuItemConfig;
 		},
 
 		cleanUp: function() {

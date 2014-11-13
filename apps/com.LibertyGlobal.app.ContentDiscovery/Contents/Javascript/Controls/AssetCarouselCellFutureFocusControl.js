@@ -125,11 +125,9 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));	
 				this.Title.setText(data.video.title);	
 				this.Genre.setText($_('MainScreen_Asset_Focus_Genre'));
-				var genreText = data.video.category.substring(data.video.category.indexOf("/") + 1);
-				genreText = genreText.replace("/", ", ");
-				this.GenreValue.setText(genreText);
+				this.GenreValue.setText(data.video.subcategory);
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
-				this.Synopsis.setText(data.video.synopsis);
+				this.Synopsis.setText(data.video.shortSynopsis);
 				this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
@@ -153,5 +151,14 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 
 	suicide: function () {
 		this.parent();
+		delete this.Poster;
+		delete this.Title;	
+		delete this.Genre;
+		delete this.GenreValue;
+		delete this.StartEnd;	
+		delete this.Synopsis;
+		delete this.Reminder;
+		delete this.InfoImage;
+		delete this.futureContainer;
 	}
 });

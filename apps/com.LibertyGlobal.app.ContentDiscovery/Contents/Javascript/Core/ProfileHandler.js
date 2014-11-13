@@ -18,6 +18,11 @@ var ProfileHandler = (function() {
 			return menuItemsVisibleVar;
 		},
 
+		updateVisibleMenuItems: function(visibleItems)
+		{
+			currentAppConfig.set(visibleItemsSetting, visibleItems);
+		},
+
 		getContentTimeWindow:function()
 		{
 			var contentTimeWindowVar = Config.common.contentTimeWindow;
@@ -29,9 +34,8 @@ var ProfileHandler = (function() {
 			return contentTimeWindowVar;
 		},
 
-		updateProfileSettings: function(visibleItems, contentTimeWindow)
+		updateContentTimeWindow: function(contentTimeWindow)
 		{
-			currentAppConfig.set(visibleItemsSetting, visibleItems);
 			currentAppConfig.set(contentTimeWindowSetting, contentTimeWindow);
 		},
 

@@ -12,6 +12,8 @@ var AssetCarouselControl = new MAF.Class({
 					{
 						this.doNavigate(event.detail.direction);
 					}
+					event.preventDefault();
+					event.stopPropagation();
 					break;
 				case 'select':
 						this.fire("onAssetSelect", { asset: this.mainCollection[this.focusIndex] });

@@ -303,11 +303,9 @@ var AssetDetailControl = new MAF.Class({
 				this.Prop1Text.setText($_('InfoScreen_Asset_Duration_Text'));
 				this.Prop1Value.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Prop2Text.setText($_('InfoScreen_Asset_Genre_Text'));
-				var genreText = data.video.category.substring(data.video.category.indexOf("/") + 1);
-				genreText = genreText.replace("/", ", ");
-				this.Prop2Value.setText(genreText);
+				this.Prop2Value.setText(data.video.subcategory);
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
-				this.Prop3Value.setText("TODO Value 3");
+				this.Prop3Value.setText(data.video.language);
 				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
 				this.Prop4Value.setText("TODO Value 4");
 				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
@@ -317,7 +315,7 @@ var AssetDetailControl = new MAF.Class({
 				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
 				this.PosterContainer.show();
 				
-				this.Synopsis.setText(data.video.synopsis);
+				this.Synopsis.setText(data.video.shortSynopsis);
 
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
