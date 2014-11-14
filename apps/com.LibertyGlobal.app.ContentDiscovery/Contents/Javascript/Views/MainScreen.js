@@ -8,6 +8,7 @@ var MainScreen = new MAF.Class({
 		view.parent();
 		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
 		view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);		 
 		ChannelHandler.initialize();
 		MenuHandler.initialize();
 	},
@@ -33,13 +34,22 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
+		console.log("Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		this.controls.sideBarContainer.setProfileName(profile.name);
+		this.reloadMenu(this, true);
+	},
+
+	onProfileUnloaded: function(event) {
+		console.log("Unload profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		Twitter.reset();
+		Facebook.reset(); 
+		this.controls.sideBarContainer.setProfileName("");
 		this.reloadMenu(this, true);
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
-			view.controls.assetCarousel.setFocus();
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		} else {
 			view.controls.assetCarousel.setLoading();
@@ -74,7 +84,9 @@ var MainScreen = new MAF.Class({
 								MAF.application.loadView('view-PopupScreen', {
 									"popupName": "preferences",
 									"redirectPage": "view-MainScreen",
-									"redirectParams": { "returnFromPopup": "preferences" }
+									"redirectParams": {
+										"returnFromPopup": "preferences"
+									}
 								});
 								break;
 							case "about":
@@ -152,14 +164,11 @@ var MainScreen = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 	},
 
-	updateView: function() {		
-		if(this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences")
-		{
+	updateView: function() {
+		if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
 			this.hideSidebar();
 			this.reloadMenu(this, true);
-		}
-		else
-		{
+		} else {
 			this.reloadMenu(this);
 		}
 	},
@@ -211,6 +220,7 @@ var MainScreen = new MAF.Class({
 		var view = this;
 		view.onInfoButtonPress.unsubscribeFrom(MAF.application, 'onWidgetKeyPress');
 		view.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		view.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		ChannelHandler.cleanUp();
 		MenuHandler.cleanUp();
 		delete view.controls.sideBarContainer;

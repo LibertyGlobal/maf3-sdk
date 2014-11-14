@@ -15,8 +15,7 @@ var PopupScreen = new MAF.Class({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({
-		}).appendTo(view);
+		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
 
 		view.elements.popup = new MAF.element.Container({
 			styles: {
@@ -30,9 +29,9 @@ var PopupScreen = new MAF.Class({
 				height: 'inherit',
 				width: 'inherit',
 				backgroundColor: "#000000",
-				opacity: 0.5 
+				opacity: 0.5
 			}
-		}).appendTo(view.elements.popup);		
+		}).appendTo(view.elements.popup);
 		view.elements.fullscreenPopupBackground = new MAF.element.Container({
 			styles: {
 				hOffset: 122,
@@ -49,9 +48,9 @@ var PopupScreen = new MAF.Class({
 				width: 'inherit'
 			},
 			events: {
-				onPreferencesClosed: function(){
+				onPreferencesClosed: function() {
 					view.closePopup(view);
-				}				
+				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
 		view.elements.preferencesPopup.hide();
@@ -62,33 +61,30 @@ var PopupScreen = new MAF.Class({
 		view.showPopup(view, this.persist.popupName, this.persist.redirectPage, this.persist.redirectParams);
 	},
 
-	showPopup: function(view, popupName, redirectPage, redirectParams)
-	{
-		view.elements.popup.show();	
+	showPopup: function(view, popupName, redirectPage, redirectParams) {
+		view.elements.popup.show();
 		view.redirectPage = redirectPage;
 		view.redirectParams = redirectParams;
-		switch(popupName)
-		{
+		switch (popupName) {
 			case "welcome":
-			break;
+				break;
 			case "preferences":
 				view.elements.preferencesPopup.show();
 				view.elements.preferencesPopup.bindData();
 				view.elements.preferencesPopup.setFocus();
-			break;
+				break;
 			case "facebook":
 
-			break;
-			case "twitter": 
+				break;
+			case "twitter":
 
-			break;
+				break;
 		}
 	},
 
-	closePopup: function(view)
-	{
+	closePopup: function(view) {
 		view.elements.preferencesPopup.hide();
-		view.elements.popup.hide();	
+		view.elements.popup.hide();
 
 		MAF.application.loadView(view.redirectPage, view.redirectParams);
 	},

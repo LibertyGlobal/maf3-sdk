@@ -84,6 +84,18 @@ var SidebarControl = new MAF.Class({
 				position: 'relative'
 			}
 			}).appendTo(this.expandedContainer);
+
+			this.expandedprofileText = new MAF.element.Text({
+				styles: {
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-Light, sans-serif',
+					fontSize: 36,
+					hOffset: 188,
+					vOffset: 100,
+					width: 245,
+					truncation: 'end'
+				}
+			}).appendTo(this.expandedContainer);
 			
 			this.switchProfileButton = new SidebarButtonControl({
 				buttonText: $_('Sidebar_SwitchProfileButton'),
@@ -212,6 +224,10 @@ var SidebarControl = new MAF.Class({
 		this.focussedButton = "switch";
 	},
 
+	setProfileName: function(profileName) {
+		this.expandedprofileText.setText(profileName);
+	},
+
 	expand: function() {
 		this.isCollapsed = false;
 		this.setStyles({
@@ -254,5 +270,17 @@ var SidebarControl = new MAF.Class({
 
 	suicide: function() {
 		this.parent();
+		delete this.collapsedContainer;
+		delete this.collapsedprofileHighlightImage;
+		delete this.collapsedprofileImage;
+		delete this.collapsedButton;
+		delete this.expandedContainer;
+		delete this.expandedprofileHighlightImage;
+		delete this.expandedprofileImage;
+		delete this.expandedprofileText;
+		delete this.switchProfileButton;
+		delete this.editProfileButton;
+		delete this.aboutAppButton;
+		delete this.exitButton;
 	}
 });

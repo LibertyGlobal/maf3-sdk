@@ -1,7 +1,8 @@
 var FacebookService = (function() {
 	return {
 		isPaired: function() {
-			return Facebook.userId;
+			console.log("facebook isPaired: " + Facebook.userId);
+			return (Facebook.userId !== false);
 		},
 
 		pair: function(callback, callbackParams) {

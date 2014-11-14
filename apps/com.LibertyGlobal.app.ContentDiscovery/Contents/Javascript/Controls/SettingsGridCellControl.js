@@ -13,6 +13,7 @@ var SettingsGridCellControl = new MAF.Class({
 						{
 							for(var i=0; i<this.grid.cells.length; i++)
 							{
+								this.grid.cells[i].getCellDataItem().selected = false;
 								this.grid.cells[i].disable();
 							}	
 							selected = true;		

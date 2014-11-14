@@ -4,7 +4,8 @@ var TwitterService = (function() {
 	return {
 		isPaired: function()
 		{
-			return Twitter.userId;
+			console.log("Twitter isPaired: " + Twitter.userId);
+			return (Twitter.userId !== false);
 		},
 
 		pair: function(callback, callbackParams) {

@@ -50,7 +50,7 @@ var PreferencesPopup = new MAF.Class({
 							} else {
 								view.ContentTimesGrid.focus();
 							}
-						}						
+						}
 					}
 				}
 			}).appendTo(view);
@@ -176,10 +176,10 @@ var PreferencesPopup = new MAF.Class({
 							} else {
 								view.MenuItemsGrid.focus();
 							}
-						}						
+						}
 					},
 					onNavigateDownRight: function(eventData) {
-						view.doneButton.setFocus();						
+						view.doneButton.setFocus();
 					}
 				}
 			}).appendTo(view);
@@ -228,12 +228,13 @@ var PreferencesPopup = new MAF.Class({
 						}
 						var contentTime = "30";
 						for (i = 0; i < view.ContentTimesGrid.cells.length; i++) {
-							if (view.ContentTimesGrid.cells[i].selected === true) {
-								contentTime = view.ContentTimesGrid.cells[i].name;
+							var contentTimeItemData = view.ContentTimesGrid.cells[i].getCellDataItem();
+							if (contentTimeItemData.selected === true) {
+								contentTime = contentTimeItemData.name;
 								break;
 							}
 						}
-						MenuHandler.setItemVisibility(menuItems);
+						ProfileHandler.updateVisibleMenuItems(menuItems);
 						ProfileHandler.updateContentTimeWindow(contentTime);
 						view.fire('onPreferencesClosed', {});
 					}
@@ -248,6 +249,9 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	initialize: function() {
+		this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
+
 		this.contentTimes = [];
 		this.contentTimes.push({
 			name: "30",
@@ -266,16 +270,31 @@ var PreferencesPopup = new MAF.Class({
 		});
 		this.parent();
 		this.createContent();
+	},
 
-		if (TwitterService.isPaired() === true) {
-			this.twitterButton.hide();
-		}
-		if (FacebookService.isPaired() === true) {
-			this.facebookButton.hide();
-		}
+	onProfileLoaded: function(event) {
+		console.log("Preferences Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		this.bindData();
+	},
+
+	onProfileUnloaded: function(event) {
+		console.log("Preferences Unload profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		Twitter.reset();
+		Facebook.reset();
 	},
 
 	bindData: function() {
+		this.facebookButton.show();
+		this.twitterButton.show();
+		if (ProfileHandler.isSelected() === true) {
+			if (TwitterService.isPaired() === true) {
+				this.twitterButton.hide();
+			}
+			if (FacebookService.isPaired() === true) {
+				this.facebookButton.hide();
+			}
+		}
+
 		this.MenuItemsGrid.changeDataset(MenuHandler.getCurrentMenuItemConfig());
 		for (var i = 0; i < this.contentTimes.length; i++) {
 			(this.contentTimes[i].name === ProfileHandler.getContentTimeWindow()) ?
@@ -303,6 +322,8 @@ var PreferencesPopup = new MAF.Class({
 
 	suicide: function() {
 		this.parent();
+		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		delete this.contentTimes;
 		delete this.Title;
 		delete this.MenuItemsTitle;
