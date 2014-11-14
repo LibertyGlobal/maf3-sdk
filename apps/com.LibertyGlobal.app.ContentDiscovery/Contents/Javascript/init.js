@@ -30,6 +30,8 @@ include('Javascript/Controls/AssetCarouselCellFutureFocusControl.js');
 include('Javascript/Controls/AssetCarouselControl.js');
 
 include('Javascript/Services/ContentDataRetriever.js');
+include('Javascript/Services/FacebookService.js');
+include('Javascript/Services/TwitterService.js');
 
 include('Javascript/Views/AppInfoScreen.js');
 include('Javascript/Views/MainScreen.js');

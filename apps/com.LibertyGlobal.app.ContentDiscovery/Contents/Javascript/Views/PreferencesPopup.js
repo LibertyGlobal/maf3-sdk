@@ -39,6 +39,19 @@ var PreferencesPopup = new MAF.Class({
 					vOffset: 170,
 					width: 1500,
 					height: 240
+				},
+				events: {
+					onNavigateDownRight: function(eventData) {
+						if (FacebookService.isPaired() !== true) {
+							view.facebookButton.setFocus();
+						} else {
+							if (TwitterService.isPaired() !== true) {
+								view.twitterButton.setFocus();
+							} else {
+								view.ContentTimesGrid.focus();
+							}
+						}						
+					}
 				}
 			}).appendTo(view);
 
@@ -52,18 +65,19 @@ var PreferencesPopup = new MAF.Class({
 				},
 				events: {
 					onButtonNavigate: function(eventData) {
-						console.log("facebookButton navigate" + eventData.payload.direction);
 						switch (eventData.payload.direction) {
-							case "left":
-
-								break;
 							case "down":
 								view.ContentTimesGrid.focus();
 								break;
 							case "right":
-								view.twitterButton.setFocus();
+								if (TwitterService.isPaired() !== true) {
+									view.twitterButton.setFocus();
+								} else {
+									view.ContentTimesGrid.focus();
+								}
 								break;
 							case "up":
+							case "left":
 								view.MenuItemsGrid.focusCell(3);
 								view.MenuItemsGrid.focus();
 								break;
@@ -71,7 +85,11 @@ var PreferencesPopup = new MAF.Class({
 						eventData.preventDefault();
 						eventData.stopPropagation();
 					},
-					onButtonSelect: function() {}
+					onButtonSelect: function() {
+						FacebookService.pair(view.facebookPaired, {
+							"view": view
+						});
+					}
 				}
 			}).appendTo(view);
 
@@ -87,7 +105,12 @@ var PreferencesPopup = new MAF.Class({
 					onButtonNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "left":
-								view.facebookButton.setFocus();
+								if (FacebookService.isPaired() !== true) {
+									view.facebookButton.setFocus();
+								} else {
+									view.MenuItemsGrid.focusCell(3);
+									view.MenuItemsGrid.focus();
+								}
 								break;
 							case "up":
 								view.MenuItemsGrid.focusCell(3);
@@ -101,7 +124,11 @@ var PreferencesPopup = new MAF.Class({
 						eventData.preventDefault();
 						eventData.stopPropagation();
 					},
-					onButtonSelect: function() {}
+					onButtonSelect: function() {
+						TwitterService.pair(view.twitterPaired, {
+							"view": view
+						});
+					}
 				}
 			}).appendTo(view);
 
@@ -138,6 +165,22 @@ var PreferencesPopup = new MAF.Class({
 					vOffset: 640,
 					width: 1500,
 					height: 80
+				},
+				events: {
+					onNavigateUpLeft: function(eventData) {
+						if (FacebookService.isPaired() !== true) {
+							view.facebookButton.setFocus();
+						} else {
+							if (TwitterService.isPaired() !== true) {
+								view.twitterButton.setFocus();
+							} else {
+								view.MenuItemsGrid.focus();
+							}
+						}						
+					},
+					onNavigateDownRight: function(eventData) {
+						view.doneButton.setFocus();						
+					}
 				}
 			}).appendTo(view);
 
@@ -223,13 +266,20 @@ var PreferencesPopup = new MAF.Class({
 		});
 		this.parent();
 		this.createContent();
+
+		if (TwitterService.isPaired() === true) {
+			this.twitterButton.hide();
+		}
+		if (FacebookService.isPaired() === true) {
+			this.facebookButton.hide();
+		}
 	},
 
 	bindData: function() {
 		this.MenuItemsGrid.changeDataset(MenuHandler.getCurrentMenuItemConfig());
 		for (var i = 0; i < this.contentTimes.length; i++) {
 			(this.contentTimes[i].name === ProfileHandler.getContentTimeWindow()) ?
-				this.contentTimes[i].selected = true :
+			this.contentTimes[i].selected = true:
 				this.contentTimes[i].selected = false;
 		}
 		this.ContentTimesGrid.changeDataset(this.contentTimes);
@@ -237,6 +287,18 @@ var PreferencesPopup = new MAF.Class({
 
 	setFocus: function() {
 		this.doneButton.focus();
+	},
+
+	facebookPaired: function(result, callbackParams) {
+		if (result.first_name !== undefined) {
+			callbackParams.view.facebookButton.hide();
+		}
+	},
+
+	twitterPaired: function(result, callbackParams) {
+		if (result.screen_name !== undefined) {
+			callbackParams.view.twitterButton.hide();
+		}
 	},
 
 	suicide: function() {
