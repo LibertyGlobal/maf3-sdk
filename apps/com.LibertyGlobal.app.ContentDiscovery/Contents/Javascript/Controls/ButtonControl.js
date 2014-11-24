@@ -19,16 +19,6 @@ var ButtonControl = new MAF.Class({
 						color: '#c0bcc5'
 					});	
 					break;
-				case 'navigate':
-					this.fire('onButtonNavigate', { direction: event.detail.direction });
-					event.preventDefault();
-					event.stopPropagation();
-					break;
-				case "select":
-					this.fire('onButtonSelect');
-					event.preventDefault();
-					event.stopPropagation();
-				break;
 			}
 		},
 		createContent: function() {	

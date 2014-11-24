@@ -1,13 +1,13 @@
 // General
 "App_Title" = "Watson";
-"App_Description" = "Met Watson kun je makkelijk zien wat er nu op TV is of zo meteen gaat beginnen";
-"Notification_Text" = "HERINNERING: '%s' gaat zo beginnen, ga naar kanaal %s(%s) om het niet te missen.";
+"App_Description" = "Met Watson kun je makkelijk zien wat er nu op tv is of zo meteen gaat beginnen";
+"Notification_Text" = "HERINNERING: '%s' gaat zo beginnen. Ga naar kanaal %s(%s) om het niet te missen.";
 "Notification1_Text" = "HERINNERING: '%s' gaat zo beginnen";
 "Notification2_Text" = "Ga naar kanaal '%s'(%s) om het niet te missen.";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Films / Drama";
-"MenuItem_Arts_Preference_Text" = "Kunst / Kultuur";
+"MenuItem_Arts_Preference_Text" = "Kunst / Cultuur";
 "MenuItem_News_Preference_Text" = "Nieuws";
 "MenuItem_Children_Preference_Text" = "Kinderen";
 "MenuItem_Social_Preference_Text" = "Social";
@@ -36,8 +36,8 @@
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
 "MainScreen_Asset_Focus_Reminder" = "Druk op OK om een herinnering in te stellen";
 "MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
-"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen %s programma's nu op TV, of die beginnen binnen %s.";
-"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categorien proberen.";
+"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen %s programma's nu op tv, of programma's die beginnen binnen %s.";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categoriën proberen.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Latere programma's";
 "MainScreen_Asset_Focus_LoadingTitle" = "Even geduld a.u.b. de data wordt geladen";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";
@@ -52,19 +52,19 @@
 "InfoScreen_Button_Set_Reminder_Text" = "Herinnering instellen";
 "InfoScreen_Button_View_Now_Text" = "View now";
 "InfoScreen_Button_Share_Text" = "Delen";
-"InfoScreen_Button_Full_Synopsis_Text" = "Volledige Synopsis";
+"InfoScreen_Button_Full_Synopsis_Text" = "Volledige synopsis";
 "InfoScreen_Cast_Text" = "CAST";
 "InfoScreen_Imdb_Text" = "/10";
 
 // Sidebar
-"Sidebar_SwitchProfileButton" = "Kies profiel";
+"Sidebar_SwitchProfileButton" = "Kies ander profiel";
 "Sidebar_EditProfileButton" = "Profiel instellingen";
 "Sidebar_AboutAppButton" = "Over deze app";
 "Sidebar_ExitButton" = "Sluiten";
 
 // Welcome screen
 "WelcomeScreen_Title" = "Welkom bij de Watson app";
-"WelcomeScreen_Text" = "Met deze app kun krijg je een beter beeld van de programma's die nu op TV zijn of zo meteen gaan beginnen.</br>Wanneer je een profiel aan maakt kun je de app customizen, en kan de app betere suggesties geven gebaseerd op je kijkgedrag.";
+"WelcomeScreen_Text" = "Deze app laat zien welke programma's op het punt staan te beginnen of net begonnen zijn. Door een profiel aan te maken kan je de app persoonlijk instellen en zal de app suggesties geven gebaseerd op je kijkgedrag.";
 "WelcomeScreen_SetProfile_Button" = "Profiel aanmaken";
 "WelcomeScreen_Skip_Button" = "Overslaan";
 
@@ -75,10 +75,10 @@
 "PreferencesScreen_ConnectTwitter_Button" = "Verbinden met Twitter";
 "PreferencesScreen_ContentTime_Title" = "Tijdvak*";
 "PreferencesScreen_ContentTime_SubTitle" = "Alles wat nu uitgezonden wordt, of begint over:";
-"PreferencesScreen_ContentTime_30min_Text" = "30 min";
-"PreferencesScreen_ContentTime_60min_Text" = "1 hour";
-"PreferencesScreen_ContentTime_90min_Text" = "1,5 hours";
-"PreferencesScreen_ContentTime_Footer" = "*Het tijdvak heeft alleen betrekking tot de begintijd van programma's";
+"PreferencesScreen_ContentTime_30min_Text" = "30 minuten";
+"PreferencesScreen_ContentTime_60min_Text" = "1 uur";
+"PreferencesScreen_ContentTime_90min_Text" = "1,5 uur";
+"PreferencesScreen_ContentTime_Footer" = "*Het tijdvak heeft alleen betrekking op de begintijd van programma's";
 "PreferencesScreen_Close_Button" = "Klaar";
 
 // Facebook login
@@ -108,8 +108,8 @@
 "ShareScreen_Back_Button" = "Hoofdpagina";
 
 // Cast info screen
-"CastInfoScreen_DateOfBirth_Text" = "Geboorte datum:";
-"CastInfoScreen_PlaceOfBirth_Text" = "Geboorte plaats:";
+"CastInfoScreen_DateOfBirth_Text" = "Geboortedatum:";
+"CastInfoScreen_PlaceOfBirth_Text" = "Geboorteplaats:";
 "CastInfoScreen_FullBiography_Button" = "Volledige biografie";
 "CastInfoScreen_AlsoKnownFor_Text" = "OOK BEKEND VAN";
 "CastInfoScreen_Back_Button" = "Hoofdpagina";
@@ -119,4 +119,4 @@
 
 // Full synopsis screen
 "FullSynopsisScreen_Pagination" = "Pagina %s van %s";
-"FullSynopsisScreem_Back_Button" = "Hoofdpagina";
+"FullSynopsisScreen_Back_Button" = "Hoofdpagina";

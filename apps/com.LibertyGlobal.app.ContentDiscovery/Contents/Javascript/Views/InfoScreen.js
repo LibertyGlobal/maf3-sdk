@@ -3,63 +3,89 @@ var InfoScreen = new MAF.Class({
 	Extends: MAF.system.FullscreenView,
 
 	// Add array of items on constructor of the class
-	initialize: function () {
+	initialize: function() {
 		var view = this;
 		view.parent();
 		view.assetId = this.persist.assetId;
 		view.isLive = false;
 		view.asset = null;
 		this.updateData(view);
-		
-		//view.casts = [];
-		view.casts = [
-		{ actor: "Gabriel Macht", name: "Harvey Specter", image: "http://image.tmdb.org/t/p/w396/15Q2drYXxNIf0Kzy55HQGJsLY7L.jpg" },
-		{ actor: "Patrick J. Adams", name: "Mike Ross", image: "http://image.tmdb.org/t/p/w396/sBfavftAvY08ZvUnhDtCjA8XdlY.jpg" },
-		{ actor: "Rick Hoffman", name: "Louis Litt", image: "http://image.tmdb.org/t/p/w396/d1B41muPxihy4YXsWRiXKfpzq0y.jpg" },
-		{ actor: "Meghan Markle", name: "Rachel Zane", image: "http://image.tmdb.org/t/p/w396/vCYRriV2w19TBoRWn65Bo8vKy0l.jpg" },
-		{ actor: "Sarah Rafferty", name: "Donna Paulsen", image: "http://image.tmdb.org/t/p/w396/3rTFrSH0Tt401RjeMijgYcgW1b3.jpg" },
-		{ actor: "Gina Torres", name: "Jessica Pearson", image: "http://image.tmdb.org/t/p/w396/z43hy1X1vRD26vNDh0lzxg1rcBl.jpg" },
-		{ actor: "Amanda Schull", name: "Katrina Bennett", image: "http://image.tmdb.org/t/p/w396/uVyoAKYP4HzUawgnjOWN3MwDrYK.jpg" },
-		{ actor: "Max Topplin", name: "Harold Jakowski", image: "http://image.tmdb.org/t/p/w396/2QoRYXRrVgGphIM6V91VrObQMLF.jpg" },
-		{ actor: "David Costabile", name: "Daniel Hardman", image: "http://image.tmdb.org/t/p/w396/j0WailErU7LN1X82zrHgFsp5yOX.jpg" },
-		{ actor: "Vanessa Ray", name: "Jenny Griffith", image: "http://image.tmdb.org/t/p/w396/aum4cBjWAcRruNYggXBxari4Gom.jpg" }
-		];
+
+		view.casts = [];
+		// view.casts = [{
+		// 	actor: "Gabriel Macht",
+		// 	name: "Harvey Specter",
+		// 	image: "http://image.tmdb.org/t/p/w396/15Q2drYXxNIf0Kzy55HQGJsLY7L.jpg"
+		// }, {
+		// 	actor: "Patrick J. Adams",
+		// 	name: "Mike Ross",
+		// 	image: "http://image.tmdb.org/t/p/w396/sBfavftAvY08ZvUnhDtCjA8XdlY.jpg"
+		// }, {
+		// 	actor: "Rick Hoffman",
+		// 	name: "Louis Litt",
+		// 	image: "http://image.tmdb.org/t/p/w396/d1B41muPxihy4YXsWRiXKfpzq0y.jpg"
+		// }, {
+		// 	actor: "Meghan Markle",
+		// 	name: "Rachel Zane",
+		// 	image: "http://image.tmdb.org/t/p/w396/vCYRriV2w19TBoRWn65Bo8vKy0l.jpg"
+		// }, {
+		// 	actor: "Sarah Rafferty",
+		// 	name: "Donna Paulsen",
+		// 	image: "http://image.tmdb.org/t/p/w396/3rTFrSH0Tt401RjeMijgYcgW1b3.jpg"
+		// }, {
+		// 	actor: "Gina Torres",
+		// 	name: "Jessica Pearson",
+		// 	image: "http://image.tmdb.org/t/p/w396/z43hy1X1vRD26vNDh0lzxg1rcBl.jpg"
+		// }, {
+		// 	actor: "Amanda Schull",
+		// 	name: "Katrina Bennett",
+		// 	image: "http://image.tmdb.org/t/p/w396/uVyoAKYP4HzUawgnjOWN3MwDrYK.jpg"
+		// }, {
+		// 	actor: "Max Topplin",
+		// 	name: "Harold Jakowski",
+		// 	image: "http://image.tmdb.org/t/p/w396/2QoRYXRrVgGphIM6V91VrObQMLF.jpg"
+		// }, {
+		// 	actor: "David Costabile",
+		// 	name: "Daniel Hardman",
+		// 	image: "http://image.tmdb.org/t/p/w396/j0WailErU7LN1X82zrHgFsp5yOX.jpg"
+		// }, {
+		// 	actor: "Vanessa Ray",
+		// 	name: "Jenny Griffith",
+		// 	image: "http://image.tmdb.org/t/p/w396/aum4cBjWAcRruNYggXBxari4Gom.jpg"
+		// }];
 	},
 
-	updateData: function(view) {	
+	updateData: function(view) {
 		LGI.Guide.Broadcast.create()
-		.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, LGI.Guide.Broadcast.END, 
-			LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.CHANNEL,
-			LGI.Guide.Broadcast.POPULARITY, LGI.Guide.Broadcast.SEASON, LGI.Guide.Broadcast.EPISODE, 
-			LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY, 'video.year', "video.language", 
-			"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
-		.filter(LGI.Guide.Broadcast.ID.equalTo(view.assetId))
-		.findOne(function(response){ 
-			if(response.length>0)
-			{
-				view.asset = response[0];
-				view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
-				view.controls.assetDetails.changeData(response[0]);
+			.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, LGI.Guide.Broadcast.END,
+				LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.CHANNEL,
+				LGI.Guide.Broadcast.POPULARITY, LGI.Guide.Broadcast.SEASON, LGI.Guide.Broadcast.EPISODE,
+				LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY, 'video.year', "video.language",
+				"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
+			.filter(LGI.Guide.Broadcast.ID.equalTo(view.assetId))
+			.findOne(function(response) {
+				if (response.length > 0) {
+					view.asset = response[0];
+					view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
+					view.controls.assetDetails.changeData(response[0]);
 
-				(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text')
-							: view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
-				view.controls.horizontalMenu.updateButtonText();
+					(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text'): view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+					view.controls.horizontalMenu.updateButtonText();
 
-				view.controls.horizontalMenu.show();
-				view.controls.horizontalMenu.setFocus();
-			}
-		});
+					view.controls.horizontalMenu.show();
+					view.controls.horizontalMenu.setFocus();
+				}
+			});
 	},
 
 	// Create your view template
-	createView: function () {
-		var view = this;		
+	createView: function() {
+		var view = this;
 		view.elements.backgroundImageNormal = new MAF.element.Image({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({
-		}).appendTo(view);
+		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
 
 		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
@@ -69,55 +95,62 @@ var InfoScreen = new MAF.Class({
 				display: 'inline-block'
 			}
 		}).appendTo(view);
-		
+
 		view.controls.assetDetails = new AssetDetailControl({
-			styles:{
+			styles: {
 				height: 550,
 				width: 'inherit',
 				vOffset: 80,
 				hOffset: 50
-			}			
+			}
 		}).appendTo(this.elements.rightContainer);
 		view.controls.assetDetails.clearData();
 
 		view.controls.horizontalMenu = new HorizontalMenuControl({
+			width: 1000,
 			button1Text: $_('InfoScreen_Button_Set_Reminder_Text'),
 			button2Text: $_('InfoScreen_Button_Share_Text'),
 			button3Text: $_('InfoScreen_Button_Full_Synopsis_Text'),
-			styles:{
-				height: 72,
-				width: 900,
+			styles: {
 				vOffset: 476,
 				hOffset: 340
 			},
 			events: {
-				onNavigateDown: function(){
-					if(view.casts.length>0)
-					{
-						view.controls.coverBar.setFocus();
+				onNavigate: function(event) {
+					switch (event.payload.direction) {
+						case 'down':
+							if (view.casts.length > 0) {
+								view.controls.coverBar.setFocus();
+							}
+							event.preventDefault();
+							event.stopPropagation();
+							break;
 					}
 				},
 				onButtonSelect: function(eventData) {
-					switch(eventData.payload.action)
-					{
+					switch (eventData.payload.action) {
 						case 1:
-							if(view.isLive)
-							{
-								MAF.application.loadView('view-EmptyScreen', { 
-									"channelNr": view.asset.channel.logicalPosition });
-							}
-							else
-							{
+							if (view.isLive) {
+								MAF.HostEventManager.send("exitToDock");
+								// MAF.application.loadView('view-EmptyScreen', { 
+								// "channelNr": view.asset.channel.logicalPosition });
+							} else {
 								setNotification($_('Notification_Text', [view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition]), view.asset.start);
 							}
-						break;
+							break;
+						case 2:
+							MAF.application.loadView('view-ShareScreen', {
+								"assetId": view.assetId
+							});
+							break;
 						case 3:
-							MAF.application.loadView('view-FullSynopsis', { 
-								"assetId": view.assetId });
-						break;
+							MAF.application.loadView('view-FullSynopsis', {
+								"assetId": view.assetId
+							});
+							break;
 					}
 				}
-			}		
+			}
 		}).appendTo(this.elements.rightContainer);
 		view.controls.horizontalMenu.hide();
 
@@ -135,35 +168,34 @@ var InfoScreen = new MAF.Class({
 		view.elements.coverBarTitle.hide();
 
 		view.controls.coverBar = new CoverBarControl({
-			styles:{
+			styles: {
 				height: 380,
 				width: 'inherit',
 				vOffset: 645,
 				hOffset: 45
 			},
 			events: {
-				onNavigateUp: function(){
+				onNavigateUp: function() {
 					view.controls.horizontalMenu.setFocus();
-				}	
+				}
 			}
 		}).appendTo(this.elements.rightContainer);
 		view.controls.coverBar.hide();
 	},
 
-	updateView: function () {
+	updateView: function() {
 		var view = this;
 		view.controls.assetDetails.clearData();
 		view.assetId = this.persist.assetId;
 		this.updateData(view);
-		if(view.casts.length>0)
-		{
+		if (view.casts.length > 0) {
 			view.controls.coverBar.changeDataset(view.casts);
 			view.controls.coverBar.show();
 			view.elements.coverBarTitle.show();
 		}
 	},
 
-	destroyView: function () {
+	destroyView: function() {
 		delete this.controls.coverBar;
 		delete this.controls.assetDetails;
 		delete this.controls.horizontalMenu;

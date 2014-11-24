@@ -8,13 +8,6 @@ var HorizontalMenuControl = new MAF.Class({
 			this.parent(event);
 			switch(event.type)
 			{
-				case "navigate":
-					switch (event.detail.direction) {	
-						case 'down':
-							this.fire("onNavigateDown");
-						break;							
-					}
-				break;
 				case "select":
 					this.fire('onButtonSelect', { action: this.focussedButton });
 				break;
@@ -25,6 +18,7 @@ var HorizontalMenuControl = new MAF.Class({
 			var horizontalMenuControl = this;						
 			this.button1 = new HorizontalMenuButtonControl({
 				buttonText: this.config.button1Text,
+				buttonType: this.config.button1Type,
 				events: {
 					onNavigate: function(event){
 						switch (event.payload.direction) {
@@ -40,8 +34,8 @@ var HorizontalMenuControl = new MAF.Class({
 				styles: {
 					margin: 0,
 					paddingTop: 3,
-					width: 261,
-					height: 72,
+					width: this.width / 3,
+					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -49,6 +43,7 @@ var HorizontalMenuControl = new MAF.Class({
 
 			this.button2 = new HorizontalMenuButtonControl({
 				buttonText: this.config.button2Text,
+				buttonType: this.config.button2Type,
 				events: {
 					onNavigate: function(event){
 						switch (event.payload.direction) {
@@ -70,8 +65,8 @@ var HorizontalMenuControl = new MAF.Class({
 				styles: {	
 					margin: 0,
 					paddingTop: 3,
-					width: 261,
-					height: 72,
+					width: this.width / 3,
+					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -79,6 +74,7 @@ var HorizontalMenuControl = new MAF.Class({
 
 			this.button3 = new HorizontalMenuButtonControl({
 				buttonText: this.config.button3Text,
+				buttonType: this.config.button3Type,
 				events: {
 					onNavigate: function(event){
 						switch (event.payload.direction) {
@@ -94,8 +90,8 @@ var HorizontalMenuControl = new MAF.Class({
 				styles: {
 					margin: 0,
 					paddingTop: 3,
-					width: 261,
-					height: 72,
+					width: this.width / 3,
+					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
 				}
@@ -107,19 +103,23 @@ var HorizontalMenuControl = new MAF.Class({
 		render: true,
 		focus: false,
 		showBackground: true,
+		width: 1000,
 		button1Visible: true,
 		button2Visible: true,
 		button3Visible: true,
 		button1Text: "",
 		button2Text: "",
-		button3Text: ""
+		button3Text: "",
+		button1Type: "text",
+		button2Type: "text",
+		button3Type: "text"
 	},
 
 	initialize: function() {
 		this.parent();
 		this.setStyles({
-			width: 900,
-			height:72,
+			width: this.config.width,
+			height: 72,
 			margin: 0,
 			padding: 0		
 		});
@@ -130,6 +130,9 @@ var HorizontalMenuControl = new MAF.Class({
 		this.config.button1Text = this.config.button1Text;	
 		this.config.button2Text = this.config.button2Text;	
 		this.config.button3Text = this.config.button3Text;	
+		this.config.button1Type = this.config.button1Type;	
+		this.config.button2Type = this.config.button2Type;
+		this.config.button3Type = this.config.button3Type;
 		this.createContent();
 		this.config.button1Visible ? this.button1.show() : this.button1.hide();
 		this.config.button2Visible ? this.button2.show() : this.button2.hide();
@@ -149,6 +152,19 @@ var HorizontalMenuControl = new MAF.Class({
 		this.button1.updateText();
 		this.button2.updateText();
 		this.button3.updateText();
+	},
+
+	getButton: function(buttonNr){
+		switch(buttonNr)
+		{
+			case 1:
+				return this.button1;
+			case 2:
+				return this.button2;
+			case 3:
+				return this.button3;
+		}
+		return null;
 	},
 
 	suicide: function() {

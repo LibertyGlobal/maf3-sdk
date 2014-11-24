@@ -16,7 +16,7 @@ var setNotification = function(title, channel, channelNr, startTime) {
 			[$_('App_Title'), $_('Notification1_Text', [title]),
 				$_('Notification2_Text', [channel, channelNr])
 			],
-			MAF.Notification.C2A);
+			MAF.Notification.CALL2ACTION);
 		}).delay(delayInSeconds * 1000);
 	}
 };

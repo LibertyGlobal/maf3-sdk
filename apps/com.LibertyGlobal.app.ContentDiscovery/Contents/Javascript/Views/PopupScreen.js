@@ -54,6 +54,32 @@ var PopupScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
 		view.elements.preferencesPopup.hide();
+
+		view.elements.appInfoPopup = new AppInfoPopup({
+			styles: {
+				height: 'inherit',
+				width: 'inherit'
+			},
+			events: {
+				onAppInfoClosed: function() {
+					view.closePopup(view);
+				}
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+		view.elements.appInfoPopup.hide();
+
+		view.elements.welcomePopup = new WelcomePopup({
+			styles: {
+				height: 'inherit',
+				width: 'inherit'
+			},
+			events: {
+				onWelcomeClosed: function() {
+					view.closePopup(view);
+				}
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+		view.elements.welcomePopup.hide();
 	},
 
 	updateView: function() {
@@ -62,6 +88,9 @@ var PopupScreen = new MAF.Class({
 	},
 
 	showPopup: function(view, popupName, redirectPage, redirectParams) {
+		view.elements.preferencesPopup.hide();
+		view.elements.appInfoPopup.hide();
+		view.elements.welcomePopup.hide();
 		view.elements.popup.show();
 		view.redirectPage = redirectPage;
 		view.redirectParams = redirectParams;
@@ -73,11 +102,15 @@ var PopupScreen = new MAF.Class({
 				view.elements.preferencesPopup.bindData();
 				view.elements.preferencesPopup.setFocus();
 				break;
-			case "facebook":
-
+			case "appInfo":
+				view.elements.appInfoPopup.show();
+				view.elements.appInfoPopup.bindData();
+				view.elements.appInfoPopup.setFocus();
 				break;
-			case "twitter":
-
+			case "welcome":
+				view.elements.welcomePopup.show();
+				view.elements.welcomePopup.bindData();
+				view.elements.welcomePopup.setFocus();
 				break;
 		}
 	},
@@ -90,7 +123,16 @@ var PopupScreen = new MAF.Class({
 	},
 
 	destroyView: function() {
-		delete this.redirectPage;
-		delete this.redirectParams;
+		var view = this;
+		delete view.elements.backgroundImageNormal;
+		delete view.controls.sideBarContainer;
+		delete view.elements.popup;
+		delete view.elements.fullscreenPopup;
+		delete view.elements.fullscreenPopupBackground;
+		delete view.elements.preferencesPopup;
+		delete view.elements.appInfoPopup;
+		delete view.elements.welcomePopup;
+		delete view.redirectPage;
+		delete view.redirectParams;
 	}
 });

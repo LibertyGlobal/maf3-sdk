@@ -1,27 +1,26 @@
 var FacebookService = (function() {
 	return {
 		isPaired: function() {
-			console.log("facebook isPaired: " + Facebook.userId);
 			return (Facebook.userId !== false);
 		},
 
 		pair: function(callback, callbackParams) {
 			Facebook.api('me', function(result) {
-				console.log('The result:', result);
 				callback(result, callbackParams);
 			});
 		},
 
-		postToTimeline: function(url, programTitle, image, title, description, text, callback) {
-			var message = $_('Facebook_Timeline_Message', [programTitle, text]);
+		postToTimeline: function(url, message, image, title, description, callback) {
+			//console.log("postToTimeline: " + url + ", " + message + ", " + image + ", " + title + ", " + description);
 			var body = {
 				message: message,
 				name: title,
-				link: url || LocaleUtils.getTvBuzzBaseURL()
+				url: url,
+				link: url
 			};
 			if (image && image.toLowerCase().indexOf("http") > -1) body.picture = image;
 			if (description) body.description = description;
-			Facebook.api('/me/feed', 'get', body,
+			Facebook.api('/me/feed', 'post', body,
 				function(response) {
 					if (response.id)
 						callback(true);

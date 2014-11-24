@@ -15,8 +15,7 @@ var TwitterService = (function() {
 			});
 		},
 
-		postStatus: function (programTitle, image, text, callback, callbackParams) {
-			var message = $_('Twitter_Message', [programTitle, text, image]);
+		postStatus: function (message, callback, callbackParams) {
 			Twitter.api('/statuses/update.json', 'post', {
 				status: message
 			}, function (tweet) {

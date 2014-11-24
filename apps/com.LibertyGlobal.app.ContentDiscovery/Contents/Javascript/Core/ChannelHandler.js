@@ -4,6 +4,10 @@ var ChannelHandler = (function() {
 
 	var getChannelLogo = function(channelLogicalPosition, logoSize) {
 		var logoUrl = "";
+		if(ChannelHandler.channelList === undefined)
+		{
+			debugger;
+		}
 		if (ChannelHandler.channelList.length > 0) {
 			for (var i = 0; i < ChannelHandler.channelList.length; i++) {
 				if (ChannelHandler.channelList[i].channelNumber === channelLogicalPosition) {

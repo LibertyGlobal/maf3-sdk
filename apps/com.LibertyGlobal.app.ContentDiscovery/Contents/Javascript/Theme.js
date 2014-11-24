@@ -6,7 +6,6 @@ Theme.Fonts.add('UPCDigital-Regular', 'Fonts/UPCDigital-Regular');
 
 Theme.set({
 	view: { styles: {
-			//backgroundImage: 'Images/background_main.jpg'
 		}
 	}
 });

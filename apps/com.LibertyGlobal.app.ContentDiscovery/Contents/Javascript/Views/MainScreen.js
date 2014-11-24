@@ -8,7 +8,7 @@ var MainScreen = new MAF.Class({
 		view.parent();
 		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
 		view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
-		view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);		 
+		view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
 		ChannelHandler.initialize();
 		MenuHandler.initialize();
 	},
@@ -42,7 +42,7 @@ var MainScreen = new MAF.Class({
 	onProfileUnloaded: function(event) {
 		console.log("Unload profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
 		Twitter.reset();
-		Facebook.reset(); 
+		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
 		this.reloadMenu(this, true);
 	},
@@ -90,6 +90,13 @@ var MainScreen = new MAF.Class({
 								});
 								break;
 							case "about":
+								MAF.application.loadView('view-PopupScreen', {
+									"popupName": "appInfo",
+									"redirectPage": "view-MainScreen",
+									"redirectParams": {
+										"returnFromPopup": "appInfo"
+									}
+								});
 								break;
 							case "exit":
 								MAF.HostEventManager.send("exitToDock");
@@ -148,9 +155,10 @@ var MainScreen = new MAF.Class({
 					if (view.controls.sideBarContainer.isCollapsed === true) {
 						if (eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
-								MAF.application.loadView('view-EmptyScreen', {
-									"channelNr": eventData.payload.asset.channel.logicalPosition
-								});
+								MAF.HostEventManager.send("exitToDock");
+								// MAF.application.loadView('view-EmptyScreen', {
+								// "channelNr": eventData.payload.asset.channel.logicalPosition
+								// });
 							} else {
 								setNotification(eventData.payload.asset.video.title,
 									eventData.payload.asset.channel.name,
@@ -168,6 +176,8 @@ var MainScreen = new MAF.Class({
 		if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
 			this.hideSidebar();
 			this.reloadMenu(this, true);
+		} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
+			this.hideSidebar();
 		} else {
 			this.reloadMenu(this);
 		}

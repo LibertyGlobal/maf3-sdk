@@ -33,13 +33,15 @@ include('Javascript/Services/ContentDataRetriever.js');
 include('Javascript/Services/FacebookService.js');
 include('Javascript/Services/TwitterService.js');
 
-include('Javascript/Views/AppInfoScreen.js');
+include('Javascript/Views/AppInfoPopup.js');
 include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
 include('Javascript/Views/FullSynopsis.js');
 include('Javascript/Views/EmptyScreen.js');
 include('Javascript/Views/PopupScreen.js');
 include('Javascript/Views/PreferencesPopup.js');
+include('Javascript/Views/ShareScreen.js');
+include('Javascript/Views/WelcomePopup.js');
 
 Config.load();
 LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
@@ -50,9 +52,9 @@ MAF.application.init({
 		{ id: 'view-MainScreen', viewClass: MainScreen },
 		{ id: 'view-InfoScreen', viewClass: InfoScreen },
 		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
-		{ id: 'view-AppInfoScreen', viewClass: AppInfoScreen },
 		{ id: 'view-EmptyScreen', viewClass: EmptyScreen },
 		{ id: 'view-PopupScreen', viewClass: PopupScreen },
+		{ id: 'view-ShareScreen', viewClass: ShareScreen },
 		{ id: 'view-About', viewClass: MAF.views.AboutBox } // Use standard About view
 	],
 	defaultViewId: 'view-MainScreen',

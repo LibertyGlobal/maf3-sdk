@@ -64,7 +64,7 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
-					onButtonNavigate: function(eventData) {
+					onNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "down":
 								view.ContentTimesGrid.focus();
@@ -85,7 +85,7 @@ var PreferencesPopup = new MAF.Class({
 						eventData.preventDefault();
 						eventData.stopPropagation();
 					},
-					onButtonSelect: function() {
+					onSelect: function() {
 						FacebookService.pair(view.facebookPaired, {
 							"view": view
 						});
@@ -102,7 +102,7 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
-					onButtonNavigate: function(eventData) {
+					onNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "left":
 								if (FacebookService.isPaired() !== true) {
@@ -124,7 +124,7 @@ var PreferencesPopup = new MAF.Class({
 						eventData.preventDefault();
 						eventData.stopPropagation();
 					},
-					onButtonSelect: function() {
+					onSelect: function() {
 						TwitterService.pair(view.twitterPaired, {
 							"view": view
 						});
@@ -205,7 +205,7 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
-					onButtonNavigate: function(eventData) {
+					onNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "left":
 							case "right":
@@ -218,7 +218,7 @@ var PreferencesPopup = new MAF.Class({
 						eventData.preventDefault();
 						eventData.stopPropagation();
 					},
-					onButtonSelect: function() {
+					onSelect: function() {
 						var menuItems = [];
 						for (var i = 0; i < view.MenuItemsGrid.cells.length; i++) {
 							var menuItemData = view.MenuItemsGrid.cells[i].getCellDataItem();

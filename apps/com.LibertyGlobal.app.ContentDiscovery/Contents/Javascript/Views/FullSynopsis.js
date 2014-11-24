@@ -9,7 +9,7 @@ var FullSynopsis = new MAF.Class({
 		this.updateData(view);
 	},
 
-	updateData: function(view) {	
+	updateData: function(view) {
 		LGI.Guide.Broadcast.create()
 		.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, LGI.Guide.Broadcast.END, 
 			LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.CHANNEL,
@@ -21,7 +21,7 @@ var FullSynopsis = new MAF.Class({
 			if(response.length>0)
 			{
 				view.controls.assetDetails.changeData(response[0]);
-				view.elements.synopsisText.setText("The story opens on the Planet Krypton, wherein Lara Lor-Van (Ayelet Zurer), has just given birth to a son. She and her husband Jor-El (Russell Crowe) have birthed their son naturally and in violation of the basic laws of the planet, where babies are to be bred through genetic engineering with a planetary 'Codex' that imprints what a person's place in life is to be (leader, scientist, general, etc). Jor-El and his wife have chosen this path as their planet is on the brink of destruction. Harvesting their planet's core for resources has made it unstable and it will destroy itself. After the birth of his son, Jor-El appears before the Kryptonian Leaders, pleading with them to allow him to save the planet's Codex, and to search for a habitable world beyond Krypton. However, even with destruction imminent, the council will not abandon its ways. The council is set upon by General Zod (Michael Shannon) and numerous followers, intending to take control of the planet. Though Jor-El does disagree with Council, he refuses to join Zod's coup. Zod orders Jor-El to be arrested, but Jor-El escapes and flees to an area nearby, wherein the planet's birthing chamber resides. Right before he leaves, he tells Lara to prepare the small spacecraft he has built to transport his son from Krypton and to find a suitable world to send him to. Stealing the Codex from the chamber, Jor-El races back to his home where his wife Lara has found a planet to send their baby to: Earth. Though Lara is sad at the loss of their child, Jor-El claims he will live his life in a new way: free of the limitations imposed by Kryptonian society. Their son, Kal-El, will be able to choose his way in life. Lara worries about their son's ability to survive on his new planet; Jor-El assures her he will be stronger, faster, invulnerable and possess powers that will make him a super-being there because of Earth's yellow sun. Jor-El places the Codex into a device that bonds it to his son's living cells.Though Jor-El does disagree with Council, he refuses to join Zod's coup. Zod orders Jor-El to be arrested, but Jor-El escapes and flees to an area nearby, wherein the planet's birthing chamber resides. Right before he leaves, he tells Lara to prepare the small spacecraft he has built to transport his son from Krypton and to find a suitable world to send him to. Stealing the Codex from the chamber, Jor-El races back to his home where his wife Lara has found a planet to send their baby to: Earth. Though Lara is sad at the loss of their child, Jor-El claims he will live his life in a new way: free of the limitations imposed by Kryptonian society. Their son, Kal-El, will be able to choose his way in life. Lara worries about their son's ability to survive on his new planet; Jor-El assures her he will be stronger, faster, invulnerable and possess powers that will make him a super-being there because of Earth's yellow sun. Jor-El places the Codex into a device that bonds it to his son's living cells.");
+				view.elements.synopsisText.setText(response[0].video.synopsis);
 				view.controls.backButton.focus();
 			}
 		});
@@ -67,7 +67,7 @@ var FullSynopsis = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 
 		view.controls.backButton = new ButtonControl({
-			buttonText: $_('FullSynopsisScreem_Back_Button'),
+			buttonText: $_('FullSynopsisScreen_Back_Button'),
 			styles:{
 				vOffset: 915,
 				hOffset: 340,
@@ -75,7 +75,7 @@ var FullSynopsis = new MAF.Class({
 				height: 66			
 			},
 			events: {
-				onButtonNavigate: function(eventData) {
+				onNavigate: function(eventData) {
 					switch(eventData.payload.direction)
 					{
 						case "left":
@@ -87,7 +87,7 @@ var FullSynopsis = new MAF.Class({
 						break;
 					}
 				},
-				onButtonSelect: function() {
+				onSelect: function() {
 					MAF.application.loadView('view-MainScreen');
 				}
 			}		
@@ -97,12 +97,18 @@ var FullSynopsis = new MAF.Class({
 
 	updateView: function () {
 		var view = this;
+		view.elements.synopsisText.setText("");
 		view.controls.assetDetails.clearData();
 		this.updateData(view);
 	},	
 
 	destroyView: function () {
+		var view = this;
+		delete view.elements.backgroundImageNormal;
+		delete view.controls.sideBarContainer;
+		delete view.elements.rightContainer;
 		delete view.controls.assetDetails;
 		delete view.elements.synopsisText;
+		delete view.controls.backButton;
 	}
 });

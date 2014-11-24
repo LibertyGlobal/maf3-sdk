@@ -3,8 +3,8 @@ var AssetDetailControl = new MAF.Class({
 
 	Extends: MAF.element.Container,
 
-	Protected: {	
-		generateContents: function (){
+	Protected: {
+		generateContents: function() {
 			this.PosterContainer = new MAF.element.Container({
 				styles: {
 					vOffset: 90,
@@ -56,7 +56,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 100,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -82,7 +82,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 135,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -108,7 +108,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 170,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -134,7 +134,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 205,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -160,7 +160,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 240,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -186,7 +186,7 @@ var AssetDetailControl = new MAF.Class({
 					hOffset: 490,
 					vOffset: 275,
 					width: 220,
-					wrap: true,					
+					wrap: true,
 					truncation: 'end'
 				}
 			}).appendTo(this);
@@ -203,7 +203,7 @@ var AssetDetailControl = new MAF.Class({
 
 			this.ImdbContainer = new MAF.element.Container({
 				styles: {
-					maxWidth: 180,					
+					maxWidth: 180,
 					vOffset: 330,
 					hOffset: 490,
 					height: 50,
@@ -215,7 +215,7 @@ var AssetDetailControl = new MAF.Class({
 			this.ImdbLogo = new MAF.element.Image({
 				source: 'Images/imdb_logo.png',
 				styles: {
-					marginTop: 7	
+					marginTop: 7
 				}
 			}).appendTo(this.ImdbContainer);
 
@@ -236,7 +236,7 @@ var AssetDetailControl = new MAF.Class({
 					fontFamily: 'InterstatePro-Light',
 					fontSize: 16,
 					hOffset: 135,
-					marginTop: 18					
+					marginTop: 18
 				}
 			}).appendTo(this.ImdbContainer);
 
@@ -247,21 +247,20 @@ var AssetDetailControl = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'UPCDigital-Regular',
 					fontSize: 26,
-					vOffset: 100,					
+					vOffset: 100,
 					hOffset: 746,
 					height: 250,
 					width: 520,
 					opacity: 0.59,
-					wrap: true,	
-					lineHeight: '35px',				
+					wrap: true,
+					lineHeight: '35px',
 					truncation: 'end'
 				}
 			}).appendTo(this);
-			if(this.config.showSynopsis!==true)
-			{
+			if (this.config.showSynopsis !== true) {
 				this.Synopsis.hide();
 			}
-		}		
+		}
 	},
 
 	config: {
@@ -270,68 +269,70 @@ var AssetDetailControl = new MAF.Class({
 		showSynopsis: true
 	},
 
-	initialize: function(){
+	initialize: function() {
 		this.parent();
 		this.generateContents();
 	},
 
-	changeData: function(data){		
-		if(data !== null)
-		{	
+	changeData: function(data) {
+		if (data !== null) {
 			this.clearData();
-			if(data.video !== null)
-			{
+			if (data.video !== null) {
 				var categories = Config.common.InfoScreenMovieSerieCategory.split(',');
-				if (categories.indexOf(data.video.category.substring(0, data.video.category.indexOf("/"))) > -1) {
+				if (categories.indexOf(data.video.category) > -1) {
 					// movies/series info screen
 					this.ImdbRating.setText("8.9"); // TODO
 					this.ImdbContainer.show();
 
-					this.Prop6Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
-					this.Prop6Value.setText(data.video.year);
-				}
-				else
-				{
+					if (data.video.year !== undefined) {
+						this.Prop6Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
+						this.Prop6Value.setText(data.video.year);
+					}
+				} else {
 					this.Prop6Text.setText("");
 					this.Prop6Value.setText("");
-					this.ImdbContainer.hide();			
+					this.ImdbContainer.hide();
 				}
-			
+
 				// both linear and movies / series info screen
 				this.Title.setText(data.video.title);
 
 				this.Prop1Text.setText($_('InfoScreen_Asset_Duration_Text'));
 				this.Prop1Value.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Prop2Text.setText($_('InfoScreen_Asset_Genre_Text'));
-				this.Prop2Value.setText(data.video.subcategory);
+				if (data.video.subcategory !== undefined && data.video.subcategory.length > 0) {
+					this.Prop2Value.setText(data.video.subcategory.charAt(0).toUpperCase() + data.video.subcategory.slice(1));
+				}
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
-				this.Prop3Value.setText(data.video.language);
+				if(data.video.language!==undefined)
+				{
+					this.Prop3Value.setText(data.video.language);
+				}
 				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
 				this.Prop4Value.setText("TODO Value 4");
 				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
-				this.Prop5Value.setText(data.video.ageRating);
+				if (data.video.ageRating !== undefined) {					
+					this.Prop5Value.setText(data.video.ageRating);
+				}
 
 				// TODO https doesn't work on the live box. check with ML why
 				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
 				this.PosterContainer.show();
-				
+
 				this.Synopsis.setText(data.video.shortSynopsis);
 
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
-				if(logoUrl!=="")
-				{
+				if (logoUrl !== "") {
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();
 				}
 			}
-		}
-		else
-		{
+		} else {
 			this.clearData();
 		}
 	},
 
-	clearData: function () {
+	clearData: function() {
 		this.PosterContainer.hide();
 		this.ImdbContainer.hide();
 		this.Channel.hide();
@@ -348,10 +349,10 @@ var AssetDetailControl = new MAF.Class({
 		this.Prop6Text.setText('');
 		this.Prop6Value.setText('');
 		this.Title.setText('');
-		this.Synopsis.setText('');		
+		this.Synopsis.setText('');
 	},
 
-	suicide: function () {
+	suicide: function() {
 		this.parent();
 	}
 });
