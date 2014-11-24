@@ -11,48 +11,7 @@ var InfoScreen = new MAF.Class({
 		view.asset = null;
 		this.updateData(view);
 
-		view.casts = [];
-		// view.casts = [{
-		// 	actor: "Gabriel Macht",
-		// 	name: "Harvey Specter",
-		// 	image: "http://image.tmdb.org/t/p/w396/15Q2drYXxNIf0Kzy55HQGJsLY7L.jpg"
-		// }, {
-		// 	actor: "Patrick J. Adams",
-		// 	name: "Mike Ross",
-		// 	image: "http://image.tmdb.org/t/p/w396/sBfavftAvY08ZvUnhDtCjA8XdlY.jpg"
-		// }, {
-		// 	actor: "Rick Hoffman",
-		// 	name: "Louis Litt",
-		// 	image: "http://image.tmdb.org/t/p/w396/d1B41muPxihy4YXsWRiXKfpzq0y.jpg"
-		// }, {
-		// 	actor: "Meghan Markle",
-		// 	name: "Rachel Zane",
-		// 	image: "http://image.tmdb.org/t/p/w396/vCYRriV2w19TBoRWn65Bo8vKy0l.jpg"
-		// }, {
-		// 	actor: "Sarah Rafferty",
-		// 	name: "Donna Paulsen",
-		// 	image: "http://image.tmdb.org/t/p/w396/3rTFrSH0Tt401RjeMijgYcgW1b3.jpg"
-		// }, {
-		// 	actor: "Gina Torres",
-		// 	name: "Jessica Pearson",
-		// 	image: "http://image.tmdb.org/t/p/w396/z43hy1X1vRD26vNDh0lzxg1rcBl.jpg"
-		// }, {
-		// 	actor: "Amanda Schull",
-		// 	name: "Katrina Bennett",
-		// 	image: "http://image.tmdb.org/t/p/w396/uVyoAKYP4HzUawgnjOWN3MwDrYK.jpg"
-		// }, {
-		// 	actor: "Max Topplin",
-		// 	name: "Harold Jakowski",
-		// 	image: "http://image.tmdb.org/t/p/w396/2QoRYXRrVgGphIM6V91VrObQMLF.jpg"
-		// }, {
-		// 	actor: "David Costabile",
-		// 	name: "Daniel Hardman",
-		// 	image: "http://image.tmdb.org/t/p/w396/j0WailErU7LN1X82zrHgFsp5yOX.jpg"
-		// }, {
-		// 	actor: "Vanessa Ray",
-		// 	name: "Jenny Griffith",
-		// 	image: "http://image.tmdb.org/t/p/w396/aum4cBjWAcRruNYggXBxari4Gom.jpg"
-		// }];
+		view.casts = [];		
 	},
 
 	updateData: function(view) {

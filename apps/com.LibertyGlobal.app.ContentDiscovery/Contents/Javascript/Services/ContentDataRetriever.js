@@ -55,6 +55,7 @@ function ContentDataRetriever() {
 					.sort(LGI.Guide.Broadcast.POPULARITY, 'desc')
 					.findOne(function(response) {
 						var activeAssets = response;
+						screen.log("trending response: " + response);
 						parseData(menuItem, activeAssets, null, false, true, false);
 					});
 				break;
@@ -76,6 +77,7 @@ function ContentDataRetriever() {
 					.sort(LGI.Guide.Broadcast.START)
 					.findOne(function(response) {
 						var activeAssets = response;
+						screen.log("shuffle response: " + response);
 						parseData(menuItem, activeAssets, null, false, true, true);
 					});
 				break;
@@ -102,7 +104,7 @@ function ContentDataRetriever() {
 			allAssets = removeDuplicates(allAssets);
 		}
 		if (shuffleAssets === true) {
-			allAssets = shuffleAssets(allAssets);
+			allAssets = shuffleArray(allAssets);
 		}
 
 		menuItem.data = allAssets;
