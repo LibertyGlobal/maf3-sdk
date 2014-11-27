@@ -109,7 +109,7 @@ var WelcomePopup = new MAF.Class({
 		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		delete this.Title;
 		delete this.MenuItemsTitle;
-		delete view.setProfileButton;
+		delete this.setProfileButton;
 		delete this.closeButton;
 	}
 });
