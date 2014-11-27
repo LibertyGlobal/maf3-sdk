@@ -2,15 +2,21 @@ var MainScreen = new MAF.Class({
 	ClassName: 'MainScreen',
 	Extends: MAF.system.FullscreenView,
 
-	// Add array of items on constructor of the class
 	initialize: function() {
 		var view = this;
 		view.parent();
+		view.initializing = true;
 		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
 		view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
 		view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
-		ChannelHandler.initialize();
+		ChannelHandler.initialize(view.onChannelInitializeComplete, view);
+
+	},
+
+	onChannelInitializeComplete: function(view) {
 		MenuHandler.initialize();
+		view.initializing = false;
+		view.updateView();
 	},
 
 	onInfoButtonPress: function(event) {
@@ -34,9 +40,19 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		console.log("Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
-		this.controls.sideBarContainer.setProfileName(profile.name);
-		this.reloadMenu(this, true);
+		if (ProfileHandler.isProfileSet()) {
+			console.log("Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+			this.controls.sideBarContainer.setProfileName(profile.name);
+			this.reloadMenu(this, true);
+		} else {
+			MAF.application.loadView('view-PopupScreen', {
+				"popupName": "preferences",
+				"redirectPage": "view-MainScreen",
+				"redirectParams": {
+					"returnFromPopup": "preferences"
+				}
+			});
+		}
 	},
 
 	onProfileUnloaded: function(event) {
@@ -48,13 +64,15 @@ var MainScreen = new MAF.Class({
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
+		console.log("onMenuItemDataLoaded" + menuItem.mainMenuLabel + ", " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
+		screen.log("onMenuItemDataLoaded: " + menuItem.data);
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		} else {
+			console.log("reload again");
 			view.controls.assetCarousel.setLoading();
-			var retriever = new ContentDataRetriever();
-			retriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], view.onMenuItemDataLoaded, view);
+			ContentDataRetriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], false, view.onMenuItemDataLoaded, view);
 		}
 	},
 
@@ -78,7 +96,17 @@ var MainScreen = new MAF.Class({
 					if (view.controls.sideBarContainer.isCollapsed === false) {
 						switch (eventData.payload.action) {
 							case "switch":
-								MAF.HostEventManager.send("changeProfile");
+								if (ProfileHandler.isAppProfileSet()) {
+									MAF.HostEventManager.send("changeProfile");
+								} else {
+									MAF.application.loadView('view-PopupScreen', {
+										"popupName": "welcome",
+										"redirectPage": "view-MainScreen",
+										"redirectParams": {
+											"returnFromPopup": "welcome"
+										}
+									});
+								}
 								break;
 							case "edit":
 								MAF.application.loadView('view-PopupScreen', {
@@ -125,8 +153,7 @@ var MainScreen = new MAF.Class({
 			events: {
 				onMenuChanged: function(eventData) {
 					view.controls.assetCarousel.setLoading();
-					var retriever = new ContentDataRetriever();
-					retriever.loadMenuData(eventData.payload.selectedMenuItem, view.onMenuItemDataLoaded, view);
+					ContentDataRetriever.loadMenuData(eventData.payload.selectedMenuItem, false, view.onMenuItemDataLoaded, view);
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
@@ -156,7 +183,7 @@ var MainScreen = new MAF.Class({
 						if (eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
 								MAF.HostEventManager.send("exitToDock");
-								// MAF.application.loadView('view-EmptyScreen', {
+								// TODO remove including empty screen MAF.application.loadView('view-EmptyScreen', {
 								// "channelNr": eventData.payload.asset.channel.logicalPosition
 								// });
 							} else {
@@ -167,19 +194,35 @@ var MainScreen = new MAF.Class({
 							}
 						}
 					}
+				},
+				onReloadItemsPressed: function(event) {
+					view.controls.assetCarousel.setLoading();
+					ContentDataRetriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex],
+						true, view.onMenuItemDataLoaded, view);
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
 	},
 
 	updateView: function() {
-		if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
-			this.hideSidebar();
-			this.reloadMenu(this, true);
-		} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
-			this.hideSidebar();
-		} else {
-			this.reloadMenu(this);
+		if (this.initializing !== true) {
+			if (ProfileHandler.isAppFirstLoad()) {
+				MAF.application.loadView('view-PopupScreen', {
+					"popupName": "welcome",
+					"redirectPage": "view-MainScreen",
+					"redirectParams": {
+						"returnFromPopup": "welcome"
+					}
+				});
+			}
+			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
+				this.hideSidebar();
+				this.reloadMenu(this, true);
+			} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
+				this.hideSidebar();
+			} else {
+				this.reloadMenu(this);
+			}
 		}
 	},
 

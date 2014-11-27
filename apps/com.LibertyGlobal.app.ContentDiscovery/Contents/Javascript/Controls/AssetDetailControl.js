@@ -311,8 +311,8 @@ var AssetDetailControl = new MAF.Class({
 				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
 				this.Prop4Value.setText("TODO Value 4");
 				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
-				if (data.video.ageRating !== undefined) {					
-					this.Prop5Value.setText(data.video.ageRating);
+				if (data.video.ageRating !== undefined) {	
+					this.Prop5Value.setText(AgeRatingConfig(data.video.ageRating));
 				}
 
 				// TODO https doesn't work on the live box. check with ML why

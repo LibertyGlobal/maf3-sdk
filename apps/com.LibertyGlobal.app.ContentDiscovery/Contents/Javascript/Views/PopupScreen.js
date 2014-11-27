@@ -95,8 +95,6 @@ var PopupScreen = new MAF.Class({
 		view.redirectPage = redirectPage;
 		view.redirectParams = redirectParams;
 		switch (popupName) {
-			case "welcome":
-				break;
 			case "preferences":
 				view.elements.preferencesPopup.show();
 				view.elements.preferencesPopup.bindData();

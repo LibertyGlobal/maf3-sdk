@@ -22,6 +22,7 @@ var AssetCarouselControl = new MAF.Class({
 		},
 
 		generateCells: function (){
+			var view = this;
 			this.emptyFocusContainer = new AssetCarouselCellEmptyFocusControl({
 					styles: {
 						backgroundImage: 'Images/asset_background_future_focus.png',
@@ -29,6 +30,13 @@ var AssetCarouselControl = new MAF.Class({
 						height: 474,
 						width: 843,
 						padding: 5
+					},
+					events:{
+						onReload: function(event) {
+							view.fire("onReloadItemsPressed", {});
+							event.preventDefault();
+							event.stopPropagation();
+						}
 					}
 				}).appendTo(this);			
 			this.futureFocusContainer = new AssetCarouselCellFutureFocusControl({
@@ -87,7 +95,7 @@ var AssetCarouselControl = new MAF.Class({
 				}).appendTo(this);
 			this.cells.push(this.asset4Container);
 		},	
-		displayFocussed: function(focussedData){
+		displayFocussed: function(focussedData, menuItem){
 			this.emptyFocusContainer.hide();
 			this.futureFocusContainer.hide();
 			this.currentFocusContainer.hide();	
@@ -113,10 +121,11 @@ var AssetCarouselControl = new MAF.Class({
 			else
 			{
 				this.emptyFocusContainer.show();
-				this.emptyFocusContainer.changeData("empty", this.menuItemText);
+				this.emptyFocusContainer.changeData("empty", this.menuItemText, this.menuItemTimeWindow);
+				this.emptyFocusContainer.setFocus();
 			}
 		},
-		updateCells: function(){
+		updateCells: function(){			
 			for(var i = 0; i<this.cells.length; i++)
 			{
 				this.cells[i].changeData(null);
@@ -157,8 +166,9 @@ var AssetCarouselControl = new MAF.Class({
 		this.parent();
 		this.cells = [];
 		this.generateCells();
-		this.mainCollection = [];
 		this.menuItemText = "";
+		this.menuItemTimeWindow = "";
+		this.mainCollection = [];
 		this.focusIndex = 0;
 		this.isLive = false;
 		this.setLoading();
@@ -177,8 +187,9 @@ var AssetCarouselControl = new MAF.Class({
 
 	changeDataset: function(menuItem){
 		this.focusIndex = 0;
-		this.mainCollection = [].concat(menuItem.data);		
+		this.mainCollection = [].concat(menuItem.data);
 		this.menuItemText = menuItem.mainMenuLabel;
+		this.menuItemTimeWindow = menuItem.dataTimeframe;
 		this.updateCells();
 	},
 
@@ -235,9 +246,15 @@ var AssetCarouselControl = new MAF.Class({
 	},
 
 	suicide: function () {
+		this.parent();	
 		this.mainCollection = null;
 		this.cells = null;
-		this.parent();	
+		this.menuItemText = null;
+		this.menuItemTimeWindow = null;
+		delete this.cells;
+		delete this.menuItemText;
+		delete this.menuItemTimeWindow;
+		delete this.mainCollection;
 		delete this.currentFocusContainer;
 		delete this.futureFocusContainer;
 		delete this.emptyFocusContainer;

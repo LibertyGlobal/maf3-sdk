@@ -5,6 +5,7 @@ var InfoScreen = new MAF.Class({
 	// Add array of items on constructor of the class
 	initialize: function() {
 		var view = this;
+		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 		view.parent();
 		view.assetId = this.persist.assetId;
 		view.isLive = false;

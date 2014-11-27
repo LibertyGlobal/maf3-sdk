@@ -3,8 +3,11 @@ include('Javascript/Theme.js');
 
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
+include('Javascript/Config/AgeRatingScheme.js');
 
+include('Javascript/Core/AgeRatingConfig.js');
 include('Javascript/Core/ChannelHandler.js');
+include('Javascript/Core/MenuItem.js');
 include('Javascript/Core/MenuHandler.js');
 include('Javascript/Core/Notifications.js');
 include('Javascript/Core/ProfileHandler.js');
@@ -45,6 +48,7 @@ include('Javascript/Views/WelcomePopup.js');
 
 Config.load();
 LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
+LGI.Guide.config.region = Config.common.country;
 
 // Init application with view config
 MAF.application.init({

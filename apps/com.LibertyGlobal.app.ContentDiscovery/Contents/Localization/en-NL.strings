@@ -37,7 +37,7 @@
 "MainScreen_Asset_Focus_Reminder" = "Druk op OK om een herinnering in te stellen";
 "MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
 "MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen %s programma's nu op tv, of programma's die beginnen binnen %s.";
-"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categoriën proberen.";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Latere programma's";
 "MainScreen_Asset_Focus_LoadingTitle" = "Even geduld a.u.b. de data wordt geladen";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";

@@ -22,7 +22,7 @@ var WelcomePopup = new MAF.Class({
 			view.MenuItemsTitle = new MAF.element.TextField({
 				text: $_('WelcomeScreen_Text'),
 				visibleLines: 11,
-				totalLines: 11,				
+				totalLines: 11,
 				styles: {
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
@@ -34,6 +34,21 @@ var WelcomePopup = new MAF.Class({
 					wrap: true
 				}
 			}).appendTo(view);
+
+			view.setProfileButton = new ButtonControl({
+				buttonText: $_('WelcomeScreen_SetProfile_Button'),
+				styles: {
+					vOffset: 756,
+					hOffset: 849,
+					width: 379,
+					height: 66
+				},
+				events: {
+					onSelect: function() {
+						MAF.HostEventManager.send("changeProfile");
+					}
+				}
+			}).appendTo(this);
 
 			view.closeButton = new ButtonControl({
 				buttonText: $_('WelcomeScreen_Skip_Button'),
@@ -57,13 +72,32 @@ var WelcomePopup = new MAF.Class({
 		focus: false
 	},
 
+	onProfileLoaded: function(event) {
+		if (ProfileHandler.isProfileSet()) {
+			view.fire('onWelcomeClosed', {});
+		} else {
+			MAF.application.loadView('view-PopupScreen', {
+				"popupName": "preferences",
+				"redirectPage": "view-MainScreen",
+				"redirectParams": {
+					"returnFromPopup": "preferences"
+				}
+			});
+		}
+	},
+
+	onProfileUnloaded: function(event) {
+		
+	},
+
 	initialize: function() {
 		this.parent();
+		this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
 		this.createContent();
 	},
 
-	bindData: function() {		
-	},
+	bindData: function() {},
 
 	setFocus: function() {
 		this.closeButton.focus();
@@ -71,8 +105,11 @@ var WelcomePopup = new MAF.Class({
 
 	suicide: function() {
 		this.parent();
+		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		delete this.Title;
 		delete this.MenuItemsTitle;
+		delete view.setProfileButton;
 		delete this.closeButton;
 	}
 });

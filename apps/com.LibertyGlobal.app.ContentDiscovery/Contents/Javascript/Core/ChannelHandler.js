@@ -4,10 +4,6 @@ var ChannelHandler = (function() {
 
 	var getChannelLogo = function(channelLogicalPosition, logoSize) {
 		var logoUrl = "";
-		if(ChannelHandler.channelList === undefined)
-		{
-			debugger;
-		}
 		if (ChannelHandler.channelList.length > 0) {
 			for (var i = 0; i < ChannelHandler.channelList.length; i++) {
 				if (ChannelHandler.channelList[i].channelNumber === channelLogicalPosition) {
@@ -25,7 +21,7 @@ var ChannelHandler = (function() {
 	};
 
 	return {
-		initialize: function() {
+		initialize: function(onInitializeComplete, view) {
 			var that = ChannelHandler;
 			new Request({
 				url: Config.common.channelApiUrl,
@@ -35,6 +31,7 @@ var ChannelHandler = (function() {
 						if (listOfChannels !== null) {
 							if (listOfChannels.channels !== null) {
 								that.channelList = listOfChannels.channels;
+								onInitializeComplete(view);
 							}
 						}
 					}

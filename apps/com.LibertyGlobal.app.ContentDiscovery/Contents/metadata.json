@@ -1,11 +1,11 @@
 {
 	"identifier": "com.libertyglobal.app.ContentDiscovery",
 	"name": "Watson",
-	"version": "0.0.16",
+	"version": "0.0.23",
 	"author": "Liberty Global",
 	"company": "Liberty Global",
 	"copyright": "Liberty Global 2014",
-	"description": "Watson, your guide to discover the best programs on TV (v0.0.15)",
+	"description": "Watson, your guide to discover the best programs on TV (v0.0.23)",
 	"categories": [
 		"video"
 	],
@@ -14,6 +14,11 @@
 		"about": "Images/Icon.png",
 		"icon": {
 			"192x192": "Images/Icon.png"
+		}
+	},
+	"whitelist": {
+		"operators": {
+			"liberty": []
 		}
 	}
 }
