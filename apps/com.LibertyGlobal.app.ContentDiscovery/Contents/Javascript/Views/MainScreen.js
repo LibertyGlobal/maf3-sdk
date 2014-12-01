@@ -65,7 +65,6 @@ var MainScreen = new MAF.Class({
 
 	onMenuItemDataLoaded: function(menuItem, view) {
 		console.log("onMenuItemDataLoaded" + menuItem.mainMenuLabel + ", " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
-		screen.log("onMenuItemDataLoaded: " + menuItem.data);
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
 			view.showBackground(view, view.controls.assetCarousel.isLive);

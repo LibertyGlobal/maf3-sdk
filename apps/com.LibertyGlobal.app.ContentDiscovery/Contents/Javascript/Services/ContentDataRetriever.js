@@ -25,6 +25,10 @@ var ContentDataRetriever = (function() {
 			allAssets = shuffleArray(allAssets);
 		}
 
+		allAssets.sort(function(a, b) {
+			return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
+		});
+
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
 		//console.log("data loaded: " + menuItem.mainMenuLabel);	
@@ -82,7 +86,6 @@ var ContentDataRetriever = (function() {
 
 	return {
 		loadMenuData: function(menuItem, extendedTimePeriod, callback, callbackParams) {
-			screen.log("start loading: " + menuItem);
 			callbackAfterLoaded = callback;
 			callbackAfterLoadedParams = callbackParams;
 
@@ -91,10 +94,10 @@ var ContentDataRetriever = (function() {
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ProfileHandler.getContentTimeWindow();
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 
-			screen.log("menu item: " + menuItem.itemType);
+			//screen.log("menu item: " + menuItem.itemType);
 			switch (menuItem.itemType) {
 				case 'category':
-					screen.log("start category: " + currentTime + ", " + timeWindowEndTime + ", " + menuItem.categoryFilters);
+					//screen.log("start category: " + currentTime + ", " + timeWindowEndTime + ", " + menuItem.categoryFilters);
 					LGI.Guide.Broadcast.create()
 						.limit(500)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
@@ -105,7 +108,7 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
-							screen.log("category response: " + response);
+							//screen.log("category response: " + response);
 							var futureAssets = response;
 
 							// retrieve all currently playing
@@ -140,7 +143,7 @@ var ContentDataRetriever = (function() {
 						.sort(LGI.Guide.Broadcast.POPULARITY, 'desc')
 						.findOne(function(response) {
 							var activeAssets = response;
-							screen.log("trending response: " + response);
+							//screen.log("trending response: " + response);
 							parseData(menuItem, activeAssets, null, false, true, false);
 						},
 						errorCallback);
@@ -152,8 +155,7 @@ var ContentDataRetriever = (function() {
 					break;
 				case 'shuffle':
 					// retrieve all currently playing trending
-					screen.log("start shuffle retrieve: " + currentTime + ", " + menuItem.categoryFilters);
-					try{
+					//screen.log("start shuffle retrieve: " + currentTime + ", " + menuItem.categoryFilters);
 					LGI.Guide.Broadcast.create()
 						.limit(500)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
@@ -164,14 +166,11 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
-							screen.log("shuffle response: " + response);
+							//screen.log("shuffle response: " + response);
 							var activeAssets = response;							
 							parseData(menuItem, activeAssets, null, false, true, true);
 						},
 						errorCallback);
-					} catch (err) {
-						screen.log("Exception: " + err);
-					}
 					break;
 			}
 		}

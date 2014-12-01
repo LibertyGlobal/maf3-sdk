@@ -138,7 +138,6 @@ var ShareScreen = new MAF.Class({
 					}
 				},
 				onKeyDown: function(event) {
-					screen.log("key pressed: " + event.payload.key + ", " + event.payload.keyCode + ", length: " + view.shareTextArray.length);
 					if (event.payload.key === "back") //"backspace")
 					{
 						view.shareTextArray.pop();

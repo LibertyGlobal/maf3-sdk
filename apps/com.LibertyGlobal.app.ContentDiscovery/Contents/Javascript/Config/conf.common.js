@@ -20,7 +20,7 @@ Config.common.createMenu = function() {
 	items.push(new MenuItem('movies', 'category', 'speelfilm', $_("MenuItem_Movies_Preference_Text"), $_("MenuItem_Movies_MainMenu_Text")));
 	items.push(new MenuItem('trending', 'trending', 'speelfilm,nieuws,show,sport,kids,muziek,kunst,maatschappelijk,educatie', $_("MenuItem_Trending_Preference_Text"), $_("MenuItem_Trending_MainMenu_Text")));
 	items.push(new MenuItem('recommendations', 'recommendations', '', $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text")));
-	items.push(new MenuItem('shuffle', 'shuffle', '', $_("MenuItem_Shuffle_Preference_Text"), $_("MenuItem_Shuffle_MainMenu_Text")));
+	items.push(new MenuItem('shuffle', 'shuffle', 'speelfilm,nieuws,show,sport,kids,muziek,kunst,maatschappelijk,educatie', $_("MenuItem_Shuffle_Preference_Text"), $_("MenuItem_Shuffle_MainMenu_Text")));
 	items.push(new MenuItem('sports', 'category', 'sport', $_("MenuItem_Sports_Preference_Text"), $_("MenuItem_Sports_MainMenu_Text")));
 	items.push(new MenuItem('arts', 'category', 'kunst', $_("MenuItem_Arts_Preference_Text"), $_("MenuItem_Arts_MainMenu_Text")));
 	items.push(new MenuItem('news', 'category', 'nieuws', $_("MenuItem_News_Preference_Text"), $_("MenuItem_News_MainMenu_Text")));

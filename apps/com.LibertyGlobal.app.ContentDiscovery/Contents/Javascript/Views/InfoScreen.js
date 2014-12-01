@@ -20,12 +20,13 @@ var InfoScreen = new MAF.Class({
 			.fields(LGI.Guide.Broadcast.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START, LGI.Guide.Broadcast.END,
 				LGI.Guide.Broadcast.AGE_RATING, LGI.Guide.Broadcast.CAST, LGI.Guide.Broadcast.CHANNEL,
 				LGI.Guide.Broadcast.POPULARITY, LGI.Guide.Broadcast.SEASON, LGI.Guide.Broadcast.EPISODE,
-				LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY, 'video.year', "video.language",
+				LGI.Guide.Broadcast.STATISTICS, LGI.Guide.Broadcast.POPULARITY, 'video.year', "video.language", LGI.Guide.Broadcast.SYNOPSIS,
 				"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
 			.filter(LGI.Guide.Broadcast.ID.equalTo(view.assetId))
 			.findOne(function(response) {
 				if (response.length > 0) {
 					view.asset = response[0];
+					view.ExtractIMDBRating(view);
 					view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
 					view.controls.assetDetails.changeData(response[0]);
 
@@ -105,7 +106,7 @@ var InfoScreen = new MAF.Class({
 							break;
 						case 3:
 							MAF.application.loadView('view-FullSynopsis', {
-								"assetId": view.assetId
+								"asset": view.asset
 							});
 							break;
 					}
@@ -152,6 +153,20 @@ var InfoScreen = new MAF.Class({
 			view.controls.coverBar.changeDataset(view.casts);
 			view.controls.coverBar.show();
 			view.elements.coverBarTitle.show();
+		}
+	},
+
+	ExtractIMDBRating: function(view) {
+		var startImdb = view.asset.video.synopsis.indexOf(" IMDb");
+		if(startImdb>=0)
+		{
+			var endImdb = view.asset.video.synopsis.indexOf("/10");
+			var imdbText = view.asset.video.synopsis.substring(startImdb, endImdb);
+			var firstPart = view.asset.video.synopsis.substring(0, startImdb);
+			var secondPart = view.asset.video.synopsis.substring(endImdb + 3, view.asset.video.synopsis.length);
+			var imdbRating = imdbText.slice(imdbText.indexOf(":") + 1, endImdb).trim();
+			view.asset.video.synopsis = firstPart + secondPart;
+			view.asset.video.retrievedImdb = imdbRating;
 		}
 	},
 

@@ -47,7 +47,7 @@ include('Javascript/Views/ShareScreen.js');
 include('Javascript/Views/WelcomePopup.js');
 
 Config.load();
-LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
+//LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
 LGI.Guide.config.region = Config.common.country;
 
 // Init application with view config

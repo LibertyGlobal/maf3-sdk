@@ -235,7 +235,7 @@ var AssetDetailControl = new MAF.Class({
 					color: '#e2bc38',
 					fontFamily: 'InterstatePro-Light',
 					fontSize: 16,
-					hOffset: 135,
+					hOffset: 130,
 					marginTop: 18
 				}
 			}).appendTo(this.ImdbContainer);
@@ -281,8 +281,10 @@ var AssetDetailControl = new MAF.Class({
 				var categories = Config.common.InfoScreenMovieSerieCategory.split(',');
 				if (categories.indexOf(data.video.category) > -1) {
 					// movies/series info screen
-					this.ImdbRating.setText("8.9"); // TODO
-					this.ImdbContainer.show();
+					if (data.video.retrievedImdb !== undefined) {
+						this.ImdbRating.setText(data.video.retrievedImdb);
+						this.ImdbContainer.show();
+					}
 
 					if (data.video.year !== undefined) {
 						this.Prop6Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
