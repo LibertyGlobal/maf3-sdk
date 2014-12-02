@@ -111,7 +111,7 @@ var CoverBarControl = new MAF.Class({
 		render: true,
 		focus: false,
 		showText: true,
-		clickable: true,
+		clickable: true
 	},
 
 	initialize: function() {
