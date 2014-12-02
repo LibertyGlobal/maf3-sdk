@@ -6,7 +6,6 @@ var FullSynopsis = new MAF.Class({
 	initialize: function() {
 		var view = this;
 		view.parent();
-		this.updateData(view);
 	},
 
 	updateData: function(view) {

@@ -25,9 +25,11 @@ var ContentDataRetriever = (function() {
 			allAssets = shuffleArray(allAssets);
 		}
 
-		allAssets.sort(function(a, b) {
-			return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
-		});
+		if (sortAssets === true) {
+			allAssets.sort(function(a, b) {
+				return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
+			});
+		}
 
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
@@ -108,26 +110,26 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
-							//screen.log("category response: " + response);
-							var futureAssets = response;
+								//screen.log("category response: " + response);
+								var futureAssets = response;
 
-							// retrieve all currently playing
-							LGI.Guide.Broadcast.create()
-								.limit(500)
-								.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
-									LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
-									"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
-								.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
-								.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
-								.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
-								.sort(LGI.Guide.Broadcast.START)
-								.findOne(function(response2) {
-									var activeAssets = response2;
-									parseData(menuItem, activeAssets, futureAssets, true, true, false);
-								},
-								errorCallback);
-						},
-						errorCallback);
+								// retrieve all currently playing
+								LGI.Guide.Broadcast.create()
+									.limit(500)
+									.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
+										LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
+										"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
+									.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
+									.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+									.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+									.sort(LGI.Guide.Broadcast.START)
+									.findOne(function(response2) {
+											var activeAssets = response2;
+											parseData(menuItem, activeAssets, futureAssets, true, true, false);
+										},
+										errorCallback);
+							},
+							errorCallback);
 					break;
 				case 'trending':
 					// retrieve all currently playing trending
@@ -142,11 +144,11 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
 						.sort(LGI.Guide.Broadcast.POPULARITY, 'desc')
 						.findOne(function(response) {
-							var activeAssets = response;
-							//screen.log("trending response: " + response);
-							parseData(menuItem, activeAssets, null, false, true, false);
-						},
-						errorCallback);
+								var activeAssets = response;
+								//screen.log("trending response: " + response);
+								parseData(menuItem, activeAssets, null, false, true, false);
+							},
+							errorCallback);
 					break;
 				case 'recommendations':
 					menuItem.data = [];
@@ -166,11 +168,11 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
-							//screen.log("shuffle response: " + response);
-							var activeAssets = response;							
-							parseData(menuItem, activeAssets, null, false, true, true);
-						},
-						errorCallback);
+								//screen.log("shuffle response: " + response);
+								var activeAssets = response;
+								parseData(menuItem, activeAssets, null, false, true, true);
+							},
+							errorCallback);
 					break;
 			}
 		}

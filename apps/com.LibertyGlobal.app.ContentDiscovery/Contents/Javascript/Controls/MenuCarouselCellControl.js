@@ -40,5 +40,6 @@ var MenuCarouselCellControl = new MAF.Class({
 
 	suicide: function () {
 		this.parent();
+		delete this.MenuText;
 	}
 });

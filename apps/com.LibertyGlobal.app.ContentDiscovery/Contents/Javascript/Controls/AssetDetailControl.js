@@ -356,5 +356,22 @@ var AssetDetailControl = new MAF.Class({
 
 	suicide: function() {
 		this.parent();
+		delete this.PosterContainer;
+		delete this.ImdbContainer;
+		delete this.Channel;
+		delete this.Prop1Text;
+		delete this.Prop1Value;
+		delete this.Prop2Text;
+		delete this.Prop2Value;
+		delete this.Prop3Text;
+		delete this.Prop3Value;
+		delete this.Prop4Text;
+		delete this.Prop4Value;
+		delete this.Prop5Text;
+		delete this.Prop5Value;
+		delete this.Prop6Text;
+		delete this.Prop6Value;
+		delete this.Title;
+		delete this.Synopsis;
 	}
 });

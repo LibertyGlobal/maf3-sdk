@@ -37,8 +37,10 @@ include('Javascript/Services/FacebookService.js');
 include('Javascript/Services/TwitterService.js');
 
 include('Javascript/Views/AppInfoPopup.js');
+include('Javascript/Views/CastScreen.js');
 include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
+include('Javascript/Views/FullBiography.js');
 include('Javascript/Views/FullSynopsis.js');
 include('Javascript/Views/EmptyScreen.js');
 include('Javascript/Views/PopupScreen.js');
@@ -54,7 +56,9 @@ LGI.Guide.config.region = Config.common.country;
 MAF.application.init({
 	views: [
 		{ id: 'view-MainScreen', viewClass: MainScreen },
+		{ id: 'view-CastScreen', viewClass: CastScreen },
 		{ id: 'view-InfoScreen', viewClass: InfoScreen },
+		{ id: 'view-FullBiography', viewClass: FullBiography },
 		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
 		{ id: 'view-EmptyScreen', viewClass: EmptyScreen },
 		{ id: 'view-PopupScreen', viewClass: PopupScreen },

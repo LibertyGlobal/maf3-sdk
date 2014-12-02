@@ -4,7 +4,7 @@ var PageableTextGridControl = new MAF.Class({
 	Extends: MAF.element.Container,
 
 	Protected: {
-		createContent: function() {	
+		createContent: function() {
 			this.pageIndicator = new MAF.control.PageIndicator({
 				theme: false,
 				styles: {
@@ -24,6 +24,7 @@ var PageableTextGridControl = new MAF.Class({
 					}
 				}
 			}).appendTo(this);
+			this.pageIndicator.hide();
 
 			this.pageLeft = new MAF.element.Image({
 				styles: {
@@ -34,6 +35,7 @@ var PageableTextGridControl = new MAF.Class({
 				},
 				source: 'Images/paging_left.png'
 			}).appendTo(this);
+			this.pageLeft.hide();
 
 			this.pageRight = new MAF.element.Image({
 				styles: {
@@ -44,6 +46,7 @@ var PageableTextGridControl = new MAF.Class({
 				},
 				source: 'Images/paging_right.png'
 			}).appendTo(this);
+			this.pageRight.hide();
 
 			this.textGrid = new MAF.element.TextGrid({
 				styles: {
@@ -58,11 +61,22 @@ var PageableTextGridControl = new MAF.Class({
 			}).appendTo(this);
 			this.textGrid.attachAccessories(this.pageIndicator);
 		},
-		updateText: function(text){			
+		updateText: function(text) {
 			this.textGrid.setText(text);
-			this.pageLeft.visible = (this.textGrid.getPageCount() > 1);
-			this.pageRight.visible = (this.textGrid.getPageCount() > 1);
-			this.pageIndicator.visible = (this.textGrid.getPageCount() > 1);
+			if (this.textGrid.getPageCount() > 1) {
+				
+				this.pageLeft.show();
+				this.pageRight.setStyles({ hOffset: 0 });
+				this.pageRight.show();
+				this.pageRight.setStyles({ hOffset: this.width - 96 });
+				this.pageIndicator.visible = true;
+			} else {
+				this.pageLeft.hide();
+				this.pageLeft.setStyles({ hOffset: -3000 });
+				this.pageRight.hide();
+				this.pageRight.setStyles({ hOffset: -3000 });
+				this.pageIndicator.visible = false;
+			}
 		}
 	},
 
@@ -73,17 +87,15 @@ var PageableTextGridControl = new MAF.Class({
 
 	initialize: function() {
 		this.parent();
-		this.config.buttonText = this.config.buttonText;		
-		this.createContent();		
+		this.createContent();
 		this.pageIndicator.focus = this.config.focus;
 	},
 
-	setText: function(text){
+	setText: function(text) {
 		this.updateText(text);
 	},
 
-	shiftPage: function(direction)
-	{
+	shiftPage: function(direction) {
 		this.pageIndicator.shiftSource(direction);
 		this.pageIndicator.focus = this.config.focus;
 	},

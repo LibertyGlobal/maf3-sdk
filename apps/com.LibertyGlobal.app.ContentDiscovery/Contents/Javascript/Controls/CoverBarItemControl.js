@@ -4,13 +4,13 @@ var CoverBarItemControl = new MAF.Class({
 	Extends: MAF.element.Container,
 
 	Protected: {
-		createContent: function() {	
+		createContent: function() {
 			this.PosterContainer = new MAF.element.Container({
 				styles: {
 					height: 294,
 					width: 204,
 					marginTop: 5,
-					marginLeft: 5,	
+					marginLeft: 5,
 					backgroundColor: '#b2bfcb'
 				}
 			}).appendTo(this);
@@ -35,32 +35,31 @@ var CoverBarItemControl = new MAF.Class({
 					wrap: true,
 					truncation: 'end'
 				}
-			}).appendTo(this);				
+			}).appendTo(this);
+			if (this.config.showText === false) this.Title.hide();
 		}
 	},
 
 	config: {
 		render: true,
-		focus: false
+		focus: false,
+		showText: true
 	},
 
 	initialize: function() {
 		this.parent();
-		this.config.buttonText = this.config.buttonText;		
+		this.config.showText = this.config.showText;
 		this.createContent();
 		this.PosterContainer.hide();
 	},
 
-	changeData: function(data){		
-		if(data !== null)
-		{			
-			this.Title.setText(data.actor + "/" + data.name);
+	changeData: function(data) {
+		if (data !== null) {
+			this.Title.setText(data.name);
 			this.Poster.setSource(data.image);
 			this.PosterContainer.show();
-		}
-		else
-		{
-			this.Title.setText('');	
+		} else {
+			this.Title.setText('');
 			this.Poster.setSource('');
 			this.PosterContainer.hide();
 		}

@@ -3,21 +3,28 @@ var CoverBarControl = new MAF.Class({
 
 	Extends: MAF.element.Container,
 
-	Protected: {		
-		dispatchEvents: function(event){
+	Protected: {
+		dispatchEvents: function(event) {
 			this.parent(event);
-			switch(event.type){
-				case 'navigate':
-					if(event.detail)
-					{
-						this.doNavigate(event.detail.direction);
-					}
-					break;
+			if (this.config.clickable === true) {
+				switch (event.type) {
+					case 'navigate':
+						if (event.detail) {
+							this.doNavigate(event.detail.direction);
+						}
+						break;
+					case 'select':
+						this.fire("onCastSelect", {
+							cast: this.mainCollection[this.focusIndex]
+						});
+						break;
+				}
 			}
 		},
 
-		generateCells: function (){
+		generateCells: function() {
 			this.cover1Container = new CoverBarItemFocusControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 214,
@@ -27,6 +34,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover1Container);
 			this.cover2Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -37,6 +45,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover2Container);
 			this.cover3Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -47,6 +56,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover3Container);
 			this.cover4Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -57,6 +67,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover4Container);
 			this.cover5Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -67,6 +78,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover5Container);
 			this.cover6Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -77,6 +89,7 @@ var CoverBarControl = new MAF.Class({
 			}).appendTo(this);
 			this.cells.push(this.cover6Container);
 			this.cover7Container = new CoverBarItemControl({
+				showText: this.config.showText,
 				styles: {
 					height: 380,
 					width: 209,
@@ -86,44 +99,48 @@ var CoverBarControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.cells.push(this.cover7Container);
-		},		
-		updateCells: function(){	
-			for(i =0; i<this.cells.length; i++)
-			{
-				(i<this.mainCollection.length) ? this.cells[i].changeData(this.mainCollection[i]) : this.cells[i].changeData(null);
+		},
+		updateCells: function() {
+			for (i = 0; i < this.cells.length; i++) {
+				(i < this.mainCollection.length) ? this.cells[i].changeData(this.mainCollection[i]): this.cells[i].changeData(null);
 			}
 		}
 	},
 
 	config: {
 		render: true,
-		focus: false
+		focus: false,
+		showText: true,
+		clickable: true,
 	},
 
-	initialize: function(){
+	initialize: function() {
 		this.parent();
+		this.config.showText = this.config.showText;
+		this.config.clickable = this.config.clickable;
 		this.cells = [];
 		this.generateCells();
 		this.mainCollection = [];
 		this.focusIndex = 0;
-	},	
+	},
 
-	changeDataset: function(data){
-		if(data!== null)
-		{			
+	changeDataset: function(data) {
+		if (data !== null) {
 			this.focusIndex = 0;
-			this.mainCollection = [].concat(data);		
+			this.mainCollection = [].concat(data);
 			this.updateCells();
 		}
 	},
 
 	setFocus: function() {
-		this.cover1Container.focus();
+		if (this.config.clickable === true) {
+			this.cover1Container.focus();
+		}
 	},
 
-	doNavigate: function(direction){
-		if(direction){
-			switch(direction){
+	doNavigate: function(direction) {
+		if (direction) {
+			switch (direction) {
 				case 'left':
 					this.mainCollection.unshift(this.mainCollection.pop());
 					break;
@@ -138,7 +155,7 @@ var CoverBarControl = new MAF.Class({
 		}
 	},
 
-	suicide: function () {
+	suicide: function() {
 		delete this.mainCollection;
 		delete this.cells;
 		delete this.cover1Container;
@@ -148,6 +165,6 @@ var CoverBarControl = new MAF.Class({
 		delete this.cover5Container;
 		delete this.cover6Container;
 		delete this.cover7Container;
-		this.parent();	
+		this.parent();
 	}
 });

@@ -60,7 +60,8 @@ var CoverBarItemFocusControl = new MAF.Class({
 					wrap: true,
 					truncation: 'end'
 				}
-			}).appendTo(this);			
+			}).appendTo(this);		
+			if (this.config.showText === false) this.Title.hide();	
 		}		
 	},
 
@@ -71,6 +72,7 @@ var CoverBarItemFocusControl = new MAF.Class({
 
 	initialize: function(){
 		this.parent();
+		this.config.showText = this.config.showText;
 		this.generateContents();
 		this.PosterContainer.hide();
 	},
@@ -78,7 +80,7 @@ var CoverBarItemFocusControl = new MAF.Class({
 	changeData: function(data){		
 		if(data !== null)
 		{			
-			this.Title.setText(data.actor + "/" + data.name);
+			this.Title.setText(data.name);
 			this.Poster.setSource(data.image);
 			this.PosterContainer.show();
 		}

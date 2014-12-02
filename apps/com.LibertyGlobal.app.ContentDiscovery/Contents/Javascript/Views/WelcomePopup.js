@@ -13,7 +13,7 @@ var WelcomePopup = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 48,
-					width: 'inherit' - 150,
+					width: 'inherit' - 170,
 					vOffset: 40,
 					hOffset: 75
 				}
@@ -27,7 +27,7 @@ var WelcomePopup = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
 					fontSize: 36,
-					width: 'inherit' - 150,
+					width: 'inherit' - 170,
 					height: 500,
 					vOffset: 115,
 					hOffset: 75,
@@ -74,7 +74,7 @@ var WelcomePopup = new MAF.Class({
 
 	onProfileLoaded: function(event) {
 		if (ProfileHandler.isProfileSet()) {
-			view.fire('onWelcomeClosed', {});
+			this.fire('onWelcomeClosed', {});
 		} else {
 			MAF.application.loadView('view-PopupScreen', {
 				"popupName": "preferences",

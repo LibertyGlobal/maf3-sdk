@@ -5,14 +5,10 @@ var InfoScreen = new MAF.Class({
 	// Add array of items on constructor of the class
 	initialize: function() {
 		var view = this;
-		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 		view.parent();
 		view.assetId = this.persist.assetId;
 		view.isLive = false;
 		view.asset = null;
-		this.updateData(view);
-
-		view.casts = [];		
 	},
 
 	updateData: function(view) {
@@ -32,6 +28,11 @@ var InfoScreen = new MAF.Class({
 
 					(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text'): view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
 					view.controls.horizontalMenu.updateButtonText();
+					if (view.asset.video.cast.data.length > 0) {
+						view.controls.coverBar.changeDataset(view.asset.video.cast.data);
+						view.controls.coverBar.show();
+						view.elements.coverBarTitle.show();
+					}
 
 					view.controls.horizontalMenu.show();
 					view.controls.horizontalMenu.setFocus();
@@ -80,7 +81,7 @@ var InfoScreen = new MAF.Class({
 				onNavigate: function(event) {
 					switch (event.payload.direction) {
 						case 'down':
-							if (view.casts.length > 0) {
+							if (view.asset.video.cast.data.length > 0) {
 								view.controls.coverBar.setFocus();
 							}
 							event.preventDefault();
@@ -138,6 +139,11 @@ var InfoScreen = new MAF.Class({
 			events: {
 				onNavigateUp: function() {
 					view.controls.horizontalMenu.setFocus();
+				},
+				onCastSelect: function(eventData) {
+					MAF.application.loadView('view-CastScreen', {
+						"cast": eventData.payload.cast
+					});
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
@@ -149,17 +155,11 @@ var InfoScreen = new MAF.Class({
 		view.controls.assetDetails.clearData();
 		view.assetId = this.persist.assetId;
 		this.updateData(view);
-		if (view.casts.length > 0) {
-			view.controls.coverBar.changeDataset(view.casts);
-			view.controls.coverBar.show();
-			view.elements.coverBarTitle.show();
-		}
 	},
 
 	ExtractIMDBRating: function(view) {
 		var startImdb = view.asset.video.synopsis.indexOf(" IMDb");
-		if(startImdb>=0)
-		{
+		if (startImdb >= 0) {
 			var endImdb = view.asset.video.synopsis.indexOf("/10");
 			var imdbText = view.asset.video.synopsis.substring(startImdb, endImdb);
 			var firstPart = view.asset.video.synopsis.substring(0, startImdb);

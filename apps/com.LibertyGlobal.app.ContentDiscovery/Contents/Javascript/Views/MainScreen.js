@@ -43,6 +43,7 @@ var MainScreen = new MAF.Class({
 		if (ProfileHandler.isProfileSet()) {
 			console.log("Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
 			this.controls.sideBarContainer.setProfileName(profile.name);
+			this.hideSidebar();
 			this.reloadMenu(this, true);
 		} else {
 			MAF.application.loadView('view-PopupScreen', {
@@ -230,6 +231,7 @@ var MainScreen = new MAF.Class({
 			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());
 		}
 		view.controls.assetCarousel.updateVideo();
+		view.showBackground(view, view.controls.assetCarousel.isLive);
 	},
 
 	showBackground: function(view, isLive) {
