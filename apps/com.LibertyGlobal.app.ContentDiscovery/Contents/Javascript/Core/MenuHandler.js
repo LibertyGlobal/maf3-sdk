@@ -1,5 +1,5 @@
 var MenuHandler = (function() {
-	this.menuItems = [];
+	var menuItems = [];
 
 	return {
 		initialize: function() {

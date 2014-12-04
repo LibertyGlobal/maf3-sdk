@@ -28,14 +28,16 @@ var InfoScreen = new MAF.Class({
 
 					(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text'): view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
 					view.controls.horizontalMenu.updateButtonText();
-					if (view.asset.video.cast.data.length > 0) {
-						view.controls.coverBar.changeDataset(view.asset.video.cast.data);
-						view.controls.coverBar.show();
-						view.elements.coverBarTitle.show();
-					}
-
 					view.controls.horizontalMenu.show();
 					view.controls.horizontalMenu.setFocus();
+
+					if (view.asset.video.cast !== undefined) {
+						if (view.asset.video.cast.data.length > 0) {
+							view.controls.coverBar.changeDataset(view.asset.video.cast.data);
+							view.controls.coverBar.show();
+							view.elements.coverBarTitle.show();
+						}
+					}
 				}
 			});
 	},

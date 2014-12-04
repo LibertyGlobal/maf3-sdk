@@ -95,11 +95,11 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 		}
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.futureContainer;
 		delete this.Title;
 		delete this.SubTitle;
 		delete this.ReloadButton;
+		this.parent();
 	}
 });

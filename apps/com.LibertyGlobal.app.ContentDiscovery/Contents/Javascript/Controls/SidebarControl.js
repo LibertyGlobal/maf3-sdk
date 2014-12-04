@@ -268,8 +268,7 @@ var SidebarControl = new MAF.Class({
 		this.switchProfileButton.setFocus();
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.collapsedContainer;
 		delete this.collapsedprofileHighlightImage;
 		delete this.collapsedprofileImage;
@@ -282,5 +281,6 @@ var SidebarControl = new MAF.Class({
 		delete this.editProfileButton;
 		delete this.aboutAppButton;
 		delete this.exitButton;
+		this.parent();
 	}
 });

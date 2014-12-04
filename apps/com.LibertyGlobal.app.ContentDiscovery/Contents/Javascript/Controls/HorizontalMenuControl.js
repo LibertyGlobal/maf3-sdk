@@ -167,10 +167,10 @@ var HorizontalMenuControl = new MAF.Class({
 		return null;
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.button1;
 		delete this.button2;
 		delete this.button3;
+		this.parent();
 	}
 });

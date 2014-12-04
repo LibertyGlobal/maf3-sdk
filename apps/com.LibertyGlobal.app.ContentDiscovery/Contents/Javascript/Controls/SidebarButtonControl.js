@@ -61,9 +61,9 @@ var SidebarButtonControl = new MAF.Class({
 		this.focus();
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.buttonRollover;
 		delete this.buttonText;
+		this.parent();
 	}
 });

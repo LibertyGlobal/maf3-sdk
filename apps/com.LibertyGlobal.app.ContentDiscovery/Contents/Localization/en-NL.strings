@@ -120,3 +120,11 @@
 // Full synopsis screen
 "FullSynopsisScreen_Pagination" = "Pagina %s van %s";
 "FullSynopsisScreen_Back_Button" = "Hoofdpagina";
+
+// Item Languages
+"ItemLanguage_EN" = "English";
+"ItemLanguage_NL" = "Dutch";
+"ItemLanguage_DE" = "German";
+"ItemLanguage_IT" = "Italian";
+"ItemLanguage_FR" = "French";
+"ItemLanguage_ES" = "Spanish";

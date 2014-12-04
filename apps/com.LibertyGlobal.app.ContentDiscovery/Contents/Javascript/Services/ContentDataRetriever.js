@@ -176,5 +176,6 @@ var ContentDataRetriever = (function() {
 					break;
 			}
 		}
+
 	};
 })();

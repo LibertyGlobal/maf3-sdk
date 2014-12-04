@@ -38,8 +38,8 @@ var MenuCarouselCellControl = new MAF.Class({
 		}
 	},
 
-	suicide: function () {
-		this.parent();
+	suicide: function () {		
 		delete this.MenuText;
+		this.parent();
 	}
 });

@@ -101,6 +101,10 @@ var PageableTextGridControl = new MAF.Class({
 	},
 
 	suicide: function() {
+		delete this.pageIndicator;
+		delete this.pageLeft;
+		delete this.pageRight;
+		delete this.textGrid;
 		this.parent();
 	}
 });

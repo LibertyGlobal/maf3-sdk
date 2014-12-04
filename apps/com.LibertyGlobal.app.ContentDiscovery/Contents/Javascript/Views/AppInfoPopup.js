@@ -69,10 +69,10 @@ var AppInfoPopup = new MAF.Class({
 		this.backButton.focus();
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.Title;
 		delete this.MenuItemsTitle;
 		delete this.backButton;
+		this.parent();
 	}
 });

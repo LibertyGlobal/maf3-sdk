@@ -8,31 +8,33 @@ var HorizontalMenuButtonControl = new MAF.Class({
 			this.parent(event, payload);
 			switch (event.type) {
 				case 'select':
-					if(this.disabled !== true)
-					{
-						if(this.config.buttonType === "check")
-						{
+					if (this.disabled !== true) {
+						if (this.config.buttonType === "check") {
 							this.selected = !this.selected;
-							this.setImage(this.selected);	
-						}	
-					}					
+							this.setImage(this.selected);
+						}
+					}
 					break;
 				case 'focus':
-					this.buttonText.setStyles({ opacity: 1.0 });
-					this.rolloverContainer.setStyles({ 
-							borderStyle: 'solid'							 
-						});
+					this.buttonText.setStyles({
+						opacity: 1.0
+					});
+					this.rolloverContainer.setStyles({
+						borderStyle: 'solid'
+					});
 					break;
 				case 'blur':
-					this.buttonText.setStyles({ opacity: 0.32 });
-					this.rolloverContainer.setStyles({ 
-							borderStyle: 'none'							 
-						});
+					this.buttonText.setStyles({
+						opacity: 0.32
+					});
+					this.rolloverContainer.setStyles({
+						borderStyle: 'none'
+					});
 					break;
 			}
 		},
-		createContent: function() {	
-			this.buttonText  = new MAF.element.Text({
+		createContent: function() {
+			this.buttonText = new MAF.element.Text({
 				text: this.config.buttonText,
 				styles: {
 					width: this.width,
@@ -46,8 +48,7 @@ var HorizontalMenuButtonControl = new MAF.Class({
 				}
 			}).appendTo(this);
 
-			if(this.config.buttonType === "check")
-			{
+			if (this.config.buttonType === "check") {
 				this.buttonImage = new MAF.element.Image({
 					source: "Images/checkbox.png",
 					hideWhileLoading: true,
@@ -61,15 +62,15 @@ var HorizontalMenuButtonControl = new MAF.Class({
 				this.buttonText.setStyle("hOffset", 69);
 			}
 
-			this.rolloverContainer  = new MAF.element.Container({
-				styles:{ 
+			this.rolloverContainer = new MAF.element.Container({
+				styles: {
 					width: this.width,
 					height: 66,
-					borderWidth:3,
-					borderColor:'#FFFFFF',
-					marginTop:3
+					borderWidth: 3,
+					borderColor: '#FFFFFF',
+					marginTop: 3
 				}
-			}).appendTo(this);	
+			}).appendTo(this);
 
 			this.setImage = function(selected) {
 				this.buttonImage.source = selected ? 'Images/checkbox_selected.png' : 'Images/checkbox.png';
@@ -88,20 +89,17 @@ var HorizontalMenuButtonControl = new MAF.Class({
 		this.selected = false;
 		this.disabled = false;
 		this.parent();
-		this.config.buttonText = this.config.buttonText;		
+		this.config.buttonText = this.config.buttonText;
 		this.createContent();
 	},
 
-	setFocus: function() { 
+	setFocus: function() {
 		this.focus();
 	},
 
 	setSelected: function(selected) {
-		if(this.disabled !== true)
-		{
-			this.selected = selected;
-			this.setImage(selected);
-		}
+		this.selected = selected;
+		this.setImage(selected);
 	},
 
 	isSelected: function() {
@@ -116,10 +114,10 @@ var HorizontalMenuButtonControl = new MAF.Class({
 		this.buttonText.data = this.config.buttonText;
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		delete this.buttonImage;
 		delete this.buttonText;
 		delete this.rolloverContainer;
+		this.parent();
 	}
 });

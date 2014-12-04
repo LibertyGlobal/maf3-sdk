@@ -306,14 +306,19 @@ var AssetDetailControl = new MAF.Class({
 					this.Prop2Value.setText(data.video.subcategory.charAt(0).toUpperCase() + data.video.subcategory.slice(1));
 				}
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
-				if(data.video.language!==undefined)
-				{
-					this.Prop3Value.setText(data.video.language);
+				if (data.video.language !== undefined) {
+					var languageString = $_('ItemLanguage_' + data.video.language);
+					console.log("language: " + languageString);
+					if (languageString && languageString.indexOf("ItemLanguage_") < 0) {
+						this.Prop3Value.setText(languageString);
+					} else {
+						this.Prop3Value.setText(data.video.language);
+					}
 				}
 				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
 				this.Prop4Value.setText("TODO Value 4");
 				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
-				if (data.video.ageRating !== undefined) {	
+				if (data.video.ageRating !== undefined) {
 					this.Prop5Value.setText(AgeRatingConfig(data.video.ageRating));
 				}
 
@@ -354,10 +359,13 @@ var AssetDetailControl = new MAF.Class({
 		this.Synopsis.setText('');
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {	
+		delete this.Poster;	
 		delete this.PosterContainer;
 		delete this.ImdbContainer;
+		delete this.ImdbLogo;
+		delete this.ImdbRating;
+		delete this.ImdbText;
 		delete this.Channel;
 		delete this.Prop1Text;
 		delete this.Prop1Value;
@@ -373,5 +381,6 @@ var AssetDetailControl = new MAF.Class({
 		delete this.Prop6Value;
 		delete this.Title;
 		delete this.Synopsis;
+		this.parent();
 	}
 });

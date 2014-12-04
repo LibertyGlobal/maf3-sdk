@@ -151,9 +151,9 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		}
 	},
 
-	suicide: function () {
-		this.parent();
+	suicide: function () {		
 		this.stopProgressInterval();
+		delete this.displayData;
 		delete this.BackgroundImage;
 		delete this.Title;
 		delete this.InfoImage;
@@ -162,5 +162,6 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		delete this.Channel;
 		delete this.ProgressContainer;
 		delete this.ProgressIndicator;
+		this.parent();
 	}
 });

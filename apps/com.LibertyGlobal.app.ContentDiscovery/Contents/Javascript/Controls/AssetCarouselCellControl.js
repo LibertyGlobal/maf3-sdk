@@ -92,12 +92,12 @@ var AssetCarouselCellControl = new MAF.Class({
 		}
 	},
 
-	suicide: function () {
-		this.parent();
+	suicide: function () {		
 		delete this.PosterContainer;
 		delete this.Poster;
 		delete this.Title;
 		delete this.StartEnd;
 		delete this.Channel;
+		this.parent();
 	}
 });

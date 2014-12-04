@@ -321,7 +321,6 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	suicide: function() {
-		this.parent();
 		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
 		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		delete this.contentTimes;
@@ -335,5 +334,6 @@ var PreferencesPopup = new MAF.Class({
 		delete this.ContentTimesGrid;
 		delete this.ContentTimeFooter;
 		delete this.doneButton;
+		this.parent();
 	}
 });

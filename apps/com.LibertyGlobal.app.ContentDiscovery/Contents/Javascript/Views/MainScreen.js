@@ -4,6 +4,7 @@ var MainScreen = new MAF.Class({
 
 	initialize: function() {
 		var view = this;
+		view.loading = false;
 		view.parent();
 		view.initializing = true;
 		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
@@ -26,12 +27,15 @@ var MainScreen = new MAF.Class({
 					if (event.payload.keyCode === 457 || event.payload.keyCode === 36) // info button or home button on keyboard
 					{
 						if (this.controls.sideBarContainer.isCollapsed === true) {
-							var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
-							MAF.application.loadView('view-InfoScreen', {
-								"assetId": selectedAsset.id
-							});
-							event.preventDefault();
-							event.stopPropagation();
+							if (this.loading === false) {
+								this.loading = true; // avoid multiple clicks
+								var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
+								MAF.application.loadView('view-InfoScreen', {
+									"assetId": selectedAsset.id
+								});
+								event.preventDefault();
+								event.stopPropagation();
+							}
 						}
 					}
 				}
@@ -205,6 +209,7 @@ var MainScreen = new MAF.Class({
 	},
 
 	updateView: function() {
+		this.loading = false;
 		if (this.initializing !== true) {
 			if (ProfileHandler.isAppFirstLoad()) {
 				MAF.application.loadView('view-PopupScreen', {

@@ -138,8 +138,7 @@ var ShareScreen = new MAF.Class({
 					}
 				},
 				onKeyDown: function(event) {
-					if (event.payload.key === "back") //"backspace")
-					{
+					if (event.payload.key === "backspace") {
 						view.shareTextArray.pop();
 						event.preventDefault();
 						event.stopPropagation();
@@ -147,8 +146,7 @@ var ShareScreen = new MAF.Class({
 						view.shareTextArray.push(' ');
 						event.preventDefault();
 						event.stopPropagation();
-					} 
-					else if (event.payload.key.length === 1 || (event.payload.key.substring(0, 2) === "\\u")) {
+					} else if (event.payload.key.length === 1 || (event.payload.key.substring(0, 2) === "\\u")) {
 						if (view.shareTextArray.length <= 500) {
 							view.shareTextArray.push(event.payload.key);
 						}
@@ -279,15 +277,15 @@ var ShareScreen = new MAF.Class({
 					{
 						FacebookService.postToTimeline(
 							Config.common.facebookDefaultUrl,
-							view.shareTextArray.join(''),  
+							view.shareTextArray.join(''),
 							view.currentItem.video.imageLink.href,
-							view.currentItem.video.title,							
+							view.currentItem.video.title,
 							view.currentItem.video.shortSynopsis,
 							view.facebookCompleted);
 					}
 					if (view.controls.horizontalMenu.getButton(2).isSelected() === false) // share twitter
 					{
-						TwitterService.postStatus(view.shareTextArray.join(''), 
+						TwitterService.postStatus(view.shareTextArray.join(''),
 							view.twitterCompleted, []);
 					}
 				}
@@ -296,14 +294,12 @@ var ShareScreen = new MAF.Class({
 		view.controls.shareButton.setFocus();
 	},
 
-	facebookCompleted: function(result)
-	{
+	facebookCompleted: function(result) {
 		// TODO
 		console.log("facebookCompleted: " + result);
 	},
 
-	twitterCompleted: function(result, params)
-	{
+	twitterCompleted: function(result, params) {
 		// TODO
 		console.log("twitterCompleted: " + result);
 	},

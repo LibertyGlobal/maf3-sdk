@@ -11,6 +11,7 @@ var AssetCarouselControl = new MAF.Class({
 					if(event.detail)
 					{
 						this.doNavigate(event.detail.direction);
+						console.log("doNavigate: " + event.detail.direction);
 					}
 					event.preventDefault();
 					event.stopPropagation();
@@ -245,8 +246,7 @@ var AssetCarouselControl = new MAF.Class({
 		return handled;
 	},
 
-	suicide: function () {
-		this.parent();	
+	suicide: function () {		
 		this.mainCollection = null;
 		this.cells = null;
 		this.menuItemText = null;
@@ -262,5 +262,6 @@ var AssetCarouselControl = new MAF.Class({
 		delete this.asset2Container;
 		delete this.asset3Container;
 		delete this.asset4Container;
+		this.parent();	
 	}
 });

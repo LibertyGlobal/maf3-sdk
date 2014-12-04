@@ -1,5 +1,5 @@
 var ChannelHandler = (function() {
-	this.channelList = [];
+	var channelList = [];
 	var mediumSize = "station-logo-medium";
 
 	var getChannelLogo = function(channelLogicalPosition, logoSize) {

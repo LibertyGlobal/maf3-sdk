@@ -93,6 +93,10 @@ var CoverBarItemFocusControl = new MAF.Class({
 	},
 
 	suicide: function () {
+		delete this.PosterContainer;
+		delete this.Poster;
+		delete this.PosterBorderContainer;
+		delete this.Title;
 		this.parent();
 	}
 });

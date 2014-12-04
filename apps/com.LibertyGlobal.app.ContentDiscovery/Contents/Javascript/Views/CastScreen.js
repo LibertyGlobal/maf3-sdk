@@ -257,19 +257,19 @@ var CastScreen = new MAF.Class({
 	},
 
 	destroyView: function() {
-		delete view.elements.Title;
-		delete view.elements.PosterContainer;
-		delete view.elements.Poster;
-		delete view.elements.Prop1Text;
-		delete view.elements.Prop1Value;
-		delete view.elements.Prop2Text;
-		delete view.elements.Prop2Value;
-		delete view.elements.Biography;
-		delete view.elements.coverBarTitle;
+		delete this.elements.Title;
+		delete this.elements.PosterContainer;
+		delete this.elements.Poster;
+		delete this.elements.Prop1Text;
+		delete this.elements.Prop1Value;
+		delete this.elements.Prop2Text;
+		delete this.elements.Prop2Value;
+		delete this.elements.Biography;
+		delete this.elements.coverBarTitle;
 		delete this.controls.coverBar;
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;
-		delete view.controls.backButton;
+		delete this.controls.backButton;
 		delete this.cast;
 	}
 });

@@ -101,7 +101,7 @@ var CoverBarControl = new MAF.Class({
 			this.cells.push(this.cover7Container);
 		},
 		updateCells: function() {
-			for (i = 0; i < this.cells.length; i++) {
+			for (var i = 0; i < this.cells.length; i++) {
 				(i < this.mainCollection.length) ? this.cells[i].changeData(this.mainCollection[i]): this.cells[i].changeData(null);
 			}
 		}

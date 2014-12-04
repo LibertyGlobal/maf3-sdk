@@ -103,13 +103,13 @@ var WelcomePopup = new MAF.Class({
 		this.closeButton.focus();
 	},
 
-	suicide: function() {
-		this.parent();
+	suicide: function() {		
 		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
 		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		delete this.Title;
 		delete this.MenuItemsTitle;
 		delete this.setProfileButton;
 		delete this.closeButton;
+		this.parent();
 	}
 });

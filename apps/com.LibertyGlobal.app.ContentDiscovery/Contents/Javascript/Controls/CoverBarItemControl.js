@@ -66,6 +66,9 @@ var CoverBarItemControl = new MAF.Class({
 	},
 
 	suicide: function() {
+		delete this.PosterContainer;
+		delete this.Poster;
+		delete this.Title;
 		this.parent();
 	}
 });

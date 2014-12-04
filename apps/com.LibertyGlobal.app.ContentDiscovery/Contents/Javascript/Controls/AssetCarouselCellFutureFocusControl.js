@@ -149,8 +149,8 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 		}
 	},
 
-	suicide: function () {
-		this.parent();
+	suicide: function () {	
+		delete this.Channel;	
 		delete this.Poster;
 		delete this.Title;	
 		delete this.Genre;
@@ -160,5 +160,6 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 		delete this.Reminder;
 		delete this.InfoImage;
 		delete this.futureContainer;
+		this.parent();
 	}
 });

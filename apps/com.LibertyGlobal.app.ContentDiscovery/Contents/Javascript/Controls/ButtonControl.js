@@ -67,6 +67,8 @@ var ButtonControl = new MAF.Class({
 	},
 
 	suicide: function() {
+		delete this.buttonText;
+		delete this.buttonImage;
 		this.parent();
 	}
 });
