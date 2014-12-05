@@ -99,7 +99,7 @@ var InfoScreen = new MAF.Class({
 								// MAF.application.loadView('view-EmptyScreen', { 
 								// "channelNr": view.asset.channel.logicalPosition });
 							} else {
-								setNotification($_('Notification_Text', [view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition]), view.asset.start);
+								setNotification(view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition, view.asset.start);
 							}
 							break;
 						case 2:

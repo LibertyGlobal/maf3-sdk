@@ -191,7 +191,8 @@ var MainScreen = new MAF.Class({
 								// "channelNr": eventData.payload.asset.channel.logicalPosition
 								// });
 							} else {
-								setNotification(eventData.payload.asset.video.title,
+								setNotification(
+									eventData.payload.asset.video.title,
 									eventData.payload.asset.channel.name,
 									eventData.payload.asset.channel.logicalPosition,
 									eventData.payload.asset.start);

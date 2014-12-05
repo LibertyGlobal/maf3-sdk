@@ -1,9 +1,8 @@
 // General
 "App_Title" = "Watson";
 "App_Description" = "Met Watson kun je makkelijk zien wat er nu op tv is of zo meteen gaat beginnen";
-"Notification_Text" = "HERINNERING: '%s' gaat zo beginnen. Ga naar kanaal %s(%s) om het niet te missen.";
-"Notification1_Text" = "HERINNERING: '%s' gaat zo beginnen";
-"Notification2_Text" = "Ga naar kanaal '%s'(%s) om het niet te missen.";
+"Notification_Line1_Text" = "HERINNERING: '%s' gaat zo beginnen." 
+"Notification_Line2_Text" = "Ga naar kanaal %s(%s) om het niet te missen.";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Films / Drama";
@@ -35,6 +34,7 @@
 "MenuItem_Shuffle_MainMenu_Text" = "Shuffle";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
 "MainScreen_Asset_Focus_Reminder" = "Druk op OK om een herinnering in te stellen";
+"MainScreen_Asset_Focus_Remove_Reminder" = "Druk op OK om een herinnering te verwijderen";
 "MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
 "MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen %s programma's nu op tv, of programma's die beginnen binnen %s.";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
@@ -50,6 +50,7 @@
 "InfoScreen_Asset_Rating_Text" = "Geschikt voor:";
 "InfoScreen_Asset_Year_Produced_Text" = "Productie jaar:";
 "InfoScreen_Button_Set_Reminder_Text" = "Herinnering instellen";
+"InfoScreen_Button_Remove_Reminder_Text" = "Herinnering verwijderen";
 "InfoScreen_Button_View_Now_Text" = "View now";
 "InfoScreen_Button_Share_Text" = "Delen";
 "InfoScreen_Button_Full_Synopsis_Text" = "Volledige synopsis";
@@ -101,11 +102,21 @@
 // Share screen
 "ShareScreen_Title" = "";
 "ShareScreen_EmptyMessage_Text" = "Ik ben %s aan het kijken.";
+"ShareScreen_Message_Footer" = "Gepost met behulp van de Watson app";
 "ShareScreen_ExcludeFacebook_Button" = "Niet voor Facebook";
 "ShareScreen_ExcludeTwitter_Button" = "Niet voor Twitter";
 "ShareScreen_ClearAll_Button" = "Alles wissen";
 "ShareScreen_Send_Button" = "Verstuur";
 "ShareScreen_Back_Button" = "Hoofdpagina";
+"ShareScreen_Fail_Facebook" = "Your message could not be posted. Would you like to retry?";
+"ShareScreen_Fail_Twitter" = "Your message could not be posted. Would you like to retry?";
+"ShareScreen_Fail_Facebook_Twitter" = "Your message could not be posted. Would you like to retry?";
+"ShareScreen_Success_Facebook" = "Your message has succesfully been posted on Facebook";
+"ShareScreen_Success_Twitter" = "Your message has succesfully been posted on Twitter";
+"ShareScreen_Success_Facebook_Twitter" = "Your message has succesfully been posted on Facebook and Twitter";
+"ShareScreen_Fail_Retry_Button" = "Retry";
+"ShareScreen_Fail_Cancel_Button" = "Cancel";
+"ShareScreen_Success_Ok_Button" = "OK";
 
 // Cast info screen
 "CastInfoScreen_DateOfBirth_Text" = "Geboortedatum:";

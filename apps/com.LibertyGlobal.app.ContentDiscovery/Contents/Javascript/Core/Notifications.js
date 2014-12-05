@@ -2,6 +2,7 @@ var setNotification = function(title, channel, channelNr, startTime) {
 	var startTimeAsset = moment(startTime).utc();
 	if(startTimeAsset.isValid() === false) return;
 	var currentTime = moment().utc();
+	console.log("set notfication: " +startTimeAsset + ", " + currentTime);
 	if(startTimeAsset > currentTime)
 	{
 		var diff = moment(startTimeAsset - currentTime).utc();
@@ -9,14 +10,10 @@ var setNotification = function(title, channel, channelNr, startTime) {
 		console.log("Store notification in " + diff.hours() + ":" + diff.minutes() + ":" + diff.seconds() +" or " + delayInSeconds + " seconds, message:" + title + ", " + channel + ":" + channelNr);
 		
 		(function () {
-			//widget.notify(widget.getUrl("Images/icon.png"), [, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"], MAF.Notification.C2A); 
-			//widget.notify(widget.getUrl("Images/icon.png"), "title to display: " + title, MAF.Notification.ALERT);
-			//screen.log("Notify: " + title);
+			console.log("Notification: " + $_('Notification_Line1_Text', [title]) + ", " + $_('Notification_Line2_Text', [channel, channelNr]));
 			widget.notify(widget.getUrl("Images/icon.png"), 
-			[$_('App_Title'), $_('Notification1_Text', [title]),
-				$_('Notification2_Text', [channel, channelNr])
-			],
-			MAF.Notification.CALL2ACTION);
+					[$_('App_Title'), $_('Notification_Line1_Text', [title]), $_('Notification_Line2_Text', [channel, channelNr])],
+					MAF.Notification.ALERT);
 		}).delay(delayInSeconds * 1000);
 	}
 };

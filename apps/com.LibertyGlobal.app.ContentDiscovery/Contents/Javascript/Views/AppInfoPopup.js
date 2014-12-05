@@ -13,7 +13,7 @@ var AppInfoPopup = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 48,
-					width: 'inherit' - 150,
+					width: 1520,
 					vOffset: 40,
 					hOffset: 75
 				}
@@ -27,7 +27,7 @@ var AppInfoPopup = new MAF.Class({
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
 					fontSize: 36,
-					width: 'inherit' - 150,
+					width: 1520,
 					height: 500,
 					vOffset: 115,
 					hOffset: 75,

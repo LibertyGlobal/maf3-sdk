@@ -94,6 +94,8 @@ var ContentDataRetriever = (function() {
 			menuItem.dataLoading = true;
 			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ProfileHandler.getContentTimeWindow();
+			delete menuItem.data;
+			menuItem.data = null;
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 
 			//screen.log("menu item: " + menuItem.itemType);
