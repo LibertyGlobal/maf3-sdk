@@ -1,14 +1,15 @@
 {
 	"identifier": "com.libertyglobal.app.ContentDiscovery",
 	"name": "Watson",
-	"version": "0.0.32",
+	"version": "0.0.34",
 	"author": "Liberty Global",
 	"company": "Liberty Global",
-	"copyright": "Liberty Global 2014",
-	"description": "Watson, your guide to discover the best programs on TV (v0.0.32)",
+	"copyright": "Liberty Global 2014",	
+	"description": "Watson, your guide to discover the best programs on TV (v0.0.34)",
 	"categories": [
 		"video"
 	],
+	"background": true,
 	"scripts": "Javascript/init.js",
 	"images": {
 		"about": "Images/Icon.png",

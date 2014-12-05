@@ -54,6 +54,7 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 				},
 				events: {
 					onSelect: function(event) {
+						console.log("onReload AssetCarouselEmptyFocus");
 						view.fire("onReload", {});
 						event.preventDefault();
 						event.stopPropagation();
@@ -66,7 +67,7 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 
 	config: {
 		render: true,
-		focus: false
+		focus: true
 	},
 
 	initialize: function() {

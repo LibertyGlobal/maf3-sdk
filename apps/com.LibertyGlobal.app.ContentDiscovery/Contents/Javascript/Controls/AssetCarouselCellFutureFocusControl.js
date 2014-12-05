@@ -109,7 +109,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 
 	config: {
 		render: true,
-		focus: false
+		focus: true
 	},
 
 	initialize: function(){

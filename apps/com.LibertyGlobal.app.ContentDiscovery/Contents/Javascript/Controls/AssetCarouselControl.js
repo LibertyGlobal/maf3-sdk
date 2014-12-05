@@ -3,13 +3,13 @@ var AssetCarouselControl = new MAF.Class({
 
 	Extends: MAF.element.Container,
 
-	Protected: {		
-		dispatchEvents: function(event){
+	Protected: {
+		dispatchEvents: function(event) {
 			this.parent(event);
-			switch(event.type){
+			console.log("AssetCarouselControl event: " + event.type);
+			switch (event.type) {
 				case 'navigate':
-					if(event.detail)
-					{
+					if (event.detail) {
 						this.doNavigate(event.detail.direction);
 						console.log("doNavigate: " + event.detail.direction);
 					}
@@ -17,140 +17,138 @@ var AssetCarouselControl = new MAF.Class({
 					event.stopPropagation();
 					break;
 				case 'select':
-						this.fire("onAssetSelect", { asset: this.mainCollection[this.focusIndex] });
+					this.fire("onAssetSelect", {
+						asset: this.mainCollection[this.focusIndex]
+					});
 					break;
 			}
 		},
 
-		generateCells: function (){
+		generateCells: function() {
 			var view = this;
 			this.emptyFocusContainer = new AssetCarouselCellEmptyFocusControl({
-					styles: {
-						backgroundImage: 'Images/asset_background_future_focus.png',
-						backgroundColor: '#FFFFFF',
-						height: 474,
-						width: 843,
-						padding: 5
-					},
-					events:{
-						onReload: function(event) {
-							view.fire("onReloadItemsPressed", {});
-							event.preventDefault();
-							event.stopPropagation();
-						}
+				styles: {
+					backgroundImage: 'Images/asset_background_future_focus.png',
+					backgroundColor: '#FFFFFF',
+					height: 474,
+					width: 843,
+					padding: 5
+				},
+				events: {
+					onReload: function(event) {
+						console.log("onReload AssetCarouselControl");
+						view.fire("onReloadItemsPressed", {});
+						event.preventDefault();
+						event.stopPropagation();
 					}
-				}).appendTo(this);			
+				}
+			}).appendTo(this);
 			this.futureFocusContainer = new AssetCarouselCellFutureFocusControl({
-					styles: {
-						backgroundImage: 'Images/asset_background_future_focus.png',
-						backgroundColor: '#FFFFFF',
-						height: 474,
-						width: 843,
-						padding: 5
-					}
-				}).appendTo(this);
+				styles: {
+					backgroundImage: 'Images/asset_background_future_focus.png',
+					backgroundColor: '#FFFFFF',
+					height: 474,
+					width: 843,
+					padding: 5
+				}
+			}).appendTo(this);
 			this.currentFocusContainer = new AssetCarouselCellCurrentFocusControl({
-					styles: {
-						height: 498,
-						width: 843,
-						borderStyle: 'solid',
-						borderWidth:4,
-						borderColor:'#FFFFFF',
-						padding: 0
-					}
-				}).appendTo(this);
+				styles: {
+					height: 498,
+					width: 843,
+					borderStyle: 'solid',
+					borderWidth: 4,
+					borderColor: '#FFFFFF',
+					padding: 0
+				}
+			}).appendTo(this);
 			this.asset1Container = new AssetCarouselCellControl({
-					styles: {
-						height: 'inherit',
-						width: 215,
-						vOffset: 45,
-						hOffset: 890
-					}
-				}).appendTo(this);
+				styles: {
+					height: 'inherit',
+					width: 215,
+					vOffset: 45,
+					hOffset: 890
+				}
+			}).appendTo(this);
 			this.cells.push(this.asset1Container);
 			this.asset2Container = new AssetCarouselCellControl({
-					styles: {
-						height: 'inherit',
-						width: 215,
-						vOffset: 45,
-						hOffset: 1150
-					}
-				}).appendTo(this);
+				styles: {
+					height: 'inherit',
+					width: 215,
+					vOffset: 45,
+					hOffset: 1150
+				}
+			}).appendTo(this);
 			this.cells.push(this.asset2Container);
 			this.asset3Container = new AssetCarouselCellControl({
-					styles: {
-						height: 'inherit',
-						width: 215,
-						vOffset: 45,
-						hOffset: 1410
-					}
-				}).appendTo(this);
+				styles: {
+					height: 'inherit',
+					width: 215,
+					vOffset: 45,
+					hOffset: 1410
+				}
+			}).appendTo(this);
 			this.cells.push(this.asset3Container);
 			this.asset4Container = new AssetCarouselCellControl({
-					styles: {
-						height: 'inherit',
-						width: 215,
-						vOffset: 45,
-						hOffset: 1670
-					}
-				}).appendTo(this);
+				styles: {
+					height: 'inherit',
+					width: 215,
+					vOffset: 45,
+					hOffset: 1670
+				}
+			}).appendTo(this);
 			this.cells.push(this.asset4Container);
-		},	
-		displayFocussed: function(focussedData, menuItem){
+		},
+		displayFocussed: function(focussedData, menuItem) {
 			this.emptyFocusContainer.hide();
 			this.futureFocusContainer.hide();
-			this.currentFocusContainer.hide();	
+			this.currentFocusContainer.hide();
 			this.futureFocusContainer.changeData(null);
 			this.currentFocusContainer.changeData(null);
-			if(focussedData!==null)
-			{
-				if(moment() > moment(focussedData.start))
-				{
-					this.fire('onAssetChanged', { isLiveAsset: true });					
+			if (focussedData !== null) {
+				if (moment() > moment(focussedData.start)) {
+					this.fire('onAssetChanged', {
+						isLiveAsset: true
+					});
 					this.currentFocusContainer.show();
 					this.currentFocusContainer.changeData(focussedData);
-					this.isLive = true;					
-				}
-				else
-				{
-					this.fire('onAssetChanged', { isLiveAsset: false });
-					this.futureFocusContainer.show();					
+					this.isLive = true;
+					this.currentFocusContainer.focus();
+				} else {
+					this.fire('onAssetChanged', {
+						isLiveAsset: false
+					});
+					this.futureFocusContainer.show();
 					this.futureFocusContainer.changeData(focussedData);
-					this.isLive = false;						
+					this.isLive = false;
+					this.futureFocusContainer.focus();
 				}
-			}
-			else
-			{
+			} else {
 				this.emptyFocusContainer.show();
 				this.emptyFocusContainer.changeData("empty", this.menuItemText, this.menuItemTimeWindow);
 				this.emptyFocusContainer.setFocus();
 			}
 		},
-		updateCells: function(){			
-			for(var i = 0; i<this.cells.length; i++)
-			{
+		updateCells: function() {
+			for (var i = 0; i < this.cells.length; i++) {
 				this.cells[i].changeData(null);
 			}
 			this.displayFocussed(null);
 
 			var pos = 0; // unfocussed cells
-			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length-1;		
-			for(i = this.focusIndex; i<this.mainCollection.length && pos<maxItems; i++)
-			{
-				if(i===this.focusIndex){
+			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length - 1;
+			for (i = this.focusIndex; i < this.mainCollection.length && pos < maxItems; i++) {
+				if (i === this.focusIndex) {
 					this.displayFocussed(this.mainCollection[i]);
-				}
-				else
-				{
+				} else {
 					this.cells[pos].changeData(this.mainCollection[i]);
 					pos++;
-				}				
+				}
 			}
-			
+
 			// if not all cells filled, start at beginning			
 			i = 0;
-			while(pos<maxItems)
-			{
+			while (pos < maxItems) {
 				this.cells[pos].changeData(this.mainCollection[i]);
 				pos++;
 				i++;
@@ -160,10 +158,10 @@ var AssetCarouselControl = new MAF.Class({
 
 	config: {
 		render: true,
-		focus: true
+		focus: false
 	},
 
-	initialize: function(){
+	initialize: function() {
 		this.parent();
 		this.cells = [];
 		this.generateCells();
@@ -173,20 +171,19 @@ var AssetCarouselControl = new MAF.Class({
 		this.focusIndex = 0;
 		this.isLive = false;
 		this.setLoading();
-	},	
+	},
 
 	setLoading: function() {
 		this.futureFocusContainer.hide();
 		this.currentFocusContainer.hide();
-		this.emptyFocusContainer.show();	
+		this.emptyFocusContainer.show();
 		this.emptyFocusContainer.changeData("loading", null);
-		for(var i = 0; i<this.cells.length; i++)
-		{
+		for (var i = 0; i < this.cells.length; i++) {
 			this.cells[i].changeData(null);
 		}
 	},
 
-	changeDataset: function(menuItem){
+	changeDataset: function(menuItem) {
 		this.focusIndex = 0;
 		this.mainCollection = [].concat(menuItem.data);
 		this.menuItemText = menuItem.mainMenuLabel;
@@ -195,14 +192,21 @@ var AssetCarouselControl = new MAF.Class({
 	},
 
 	updateVideo: function() {
-		if(this.currentFocusContainer.visible)
-		{
+		if (this.currentFocusContainer.visible) {
 			this.currentFocusContainer.updateVideo();
 		}
 	},
 
 	setFocus: function() {
-		this.focus();
+		if (this.mainCollection.length > 0) {
+			if (this.isLive === true) {
+				this.currentFocusContainer.focus();
+			} else {
+				this.futureFocusContainer.focus();
+			}
+		} else {
+			this.emptyFocusContainer.setFocus();
+		}
 	},
 
 	disable: function() {
@@ -217,16 +221,16 @@ var AssetCarouselControl = new MAF.Class({
 		});
 	},
 
-	doNavigate: function(direction){		
+	doNavigate: function(direction) {
 		var handled = true;
-		if(direction){
-			switch(direction){
+		if (direction) {
+			switch (direction) {
 				case 'left':
 					this.fire('onNavigateLeft');
 					break;
 				case 'right':
-					if(this.focusIndex +1 < this.mainCollection.length)
-						this.focusIndex ++;
+					if (this.focusIndex + 1 < this.mainCollection.length)
+						this.focusIndex++;
 					else
 						this.focusIndex = 0;
 
@@ -246,7 +250,7 @@ var AssetCarouselControl = new MAF.Class({
 		return handled;
 	},
 
-	suicide: function () {		
+	suicide: function() {
 		this.mainCollection = null;
 		this.cells = null;
 		this.menuItemText = null;
@@ -262,6 +266,6 @@ var AssetCarouselControl = new MAF.Class({
 		delete this.asset2Container;
 		delete this.asset3Container;
 		delete this.asset4Container;
-		this.parent();	
+		this.parent();
 	}
 });
