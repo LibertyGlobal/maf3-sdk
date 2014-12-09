@@ -28,6 +28,22 @@ var FacebookService = (function() {
 						callback(false);
 				}
 			);
+		},
+
+		getProfilePicture: function(callback) {
+			var body = {
+				height: 58,
+				width: 58,
+				type: 'square'
+			};
+			Facebook.api('/me/picture?redirect=0', 'get', body,
+				function(response) {
+					if (response.data !== undefined)
+						callback(response.data.url);
+					else
+						callback('');
+				}
+			);
 		}
 	};
 })();

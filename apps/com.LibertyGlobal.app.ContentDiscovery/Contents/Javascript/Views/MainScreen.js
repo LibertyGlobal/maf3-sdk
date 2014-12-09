@@ -44,9 +44,16 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
+		var view = this;
 		if (ConfigurationStorageHandler.isProfileSet()) {
 			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 			this.controls.sideBarContainer.setProfileName(profile.name);
+			if(FacebookService.isPaired()===true)
+			{
+				FacebookService.getProfilePicture(function(url) { 
+					view.controls.sideBarContainer.setProfilePicture(url);
+				});
+			}
 			this.hideSidebar();
 			this.reloadMenu(this, true);
 		} else {
@@ -65,6 +72,7 @@ var MainScreen = new MAF.Class({
 		Twitter.reset();
 		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
+		this.controls.sideBarContainer.setProfilePicture("");
 		this.reloadMenu(this, false);
 	},
 
