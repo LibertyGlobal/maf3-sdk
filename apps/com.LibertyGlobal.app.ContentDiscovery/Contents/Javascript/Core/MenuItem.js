@@ -7,7 +7,7 @@ function MenuItem(itemName, itemType, categoryFilters, mainMenuLabel, preference
 	this.dataLoading = false; // currently loading data
 	this.mainMenuLabel = mainMenuLabel; // text for preference menu
 	this.preferenceLabel = preferenceLabel; // text for main menu
-	this.destroy = function () {
+	this.cleanUp = function () {
 		delete this.data;
 		this.data = null;
 	};

@@ -99,7 +99,19 @@ var InfoScreen = new MAF.Class({
 								// MAF.application.loadView('view-EmptyScreen', { 
 								// "channelNr": view.asset.channel.logicalPosition });
 							} else {
-								setNotification(view.asset.video.title, view.asset.channel.name, view.asset.channel.logicalPosition, view.asset.start);
+								if (ReminderHandler.isReminderSet(view.asset.id) === true) {
+									ReminderHandler.removeReminder(view.asset.id);
+									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+								} else {
+									ReminderHandler.setReminder(
+										view.asset.id,
+										view.asset.start,
+										view.asset.video.title,
+										view.asset.channel.name,
+										view.asset.channel.logicalPosition);
+									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
+								}
+								view.controls.horizontalMenu.updateButtonText();
 							}
 							break;
 						case 2:

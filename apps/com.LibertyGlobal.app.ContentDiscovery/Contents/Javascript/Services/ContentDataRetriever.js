@@ -93,7 +93,7 @@ var ContentDataRetriever = (function() {
 
 			menuItem.dataLoading = true;
 			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
-			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ProfileHandler.getContentTimeWindow();
+			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ConfigurationStorageHandler.getContentTimeWindow();
 			delete menuItem.data;
 			menuItem.data = null;
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
@@ -158,8 +158,7 @@ var ContentDataRetriever = (function() {
 					callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
 					break;
 				case 'shuffle':
-					// retrieve all currently playing trending
-					//screen.log("start shuffle retrieve: " + currentTime + ", " + menuItem.categoryFilters);
+					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 					LGI.Guide.Broadcast.create()
 						.limit(500)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
@@ -167,7 +166,7 @@ var ContentDataRetriever = (function() {
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK, LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
 						.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
 						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
-						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuConfig))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
 								//screen.log("shuffle response: " + response);

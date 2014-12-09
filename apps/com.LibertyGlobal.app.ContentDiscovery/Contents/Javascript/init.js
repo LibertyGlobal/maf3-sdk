@@ -6,11 +6,13 @@ include('Javascript/Config/conf.common.js');
 include('Javascript/Config/AgeRatingScheme.js');
 
 include('Javascript/Core/AgeRatingConfig.js');
+include('Javascript/Core/AssetReminder.js');
 include('Javascript/Core/ChannelHandler.js');
 include('Javascript/Core/MenuItem.js');
 include('Javascript/Core/MenuHandler.js');
 include('Javascript/Core/Notifications.js');
-include('Javascript/Core/ProfileHandler.js');
+include('Javascript/Core/ConfigurationStorageHandler.js');
+include('Javascript/Core/ReminderHandler.js');
 
 include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
@@ -68,3 +70,12 @@ MAF.application.init({
 	defaultViewId: 'view-MainScreen',
 	settingsViewId: 'view-AppInfoScreen'
 });
+
+// (function() {
+// 	ReminderHandler.initialize();
+// }).subscribeTo(MAF.application, 'onApplicationStartup');
+
+// (function() {
+// 	ReminderHandler.cleanUp();
+// }).subscribeTo(MAF.application, 'onApplicationShutdown');
+

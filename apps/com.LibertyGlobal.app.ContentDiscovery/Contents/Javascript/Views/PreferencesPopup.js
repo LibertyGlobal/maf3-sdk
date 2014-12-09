@@ -234,8 +234,8 @@ var PreferencesPopup = new MAF.Class({
 								break;
 							}
 						}
-						ProfileHandler.updateVisibleMenuItems(menuItems);
-						ProfileHandler.updateContentTimeWindow(contentTime);
+						ConfigurationStorageHandler.updateVisibleMenuItems(menuItems);
+						ConfigurationStorageHandler.updateContentTimeWindow(contentTime);
 						view.fire('onPreferencesClosed', {});
 					}
 				}
@@ -273,12 +273,12 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		console.log("Preferences Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		console.log("Preferences Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		this.bindData();
 	},
 
 	onProfileUnloaded: function(event) {
-		console.log("Preferences Unload profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		console.log("Preferences Unload profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		Twitter.reset();
 		Facebook.reset();
 	},
@@ -286,7 +286,7 @@ var PreferencesPopup = new MAF.Class({
 	bindData: function() {
 		this.facebookButton.show();
 		this.twitterButton.show();
-		if (ProfileHandler.isSelected() === true) {
+		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
 				this.twitterButton.hide();
 			}
@@ -297,7 +297,7 @@ var PreferencesPopup = new MAF.Class({
 
 		this.MenuItemsGrid.changeDataset(MenuHandler.getCurrentMenuItemConfig());
 		for (var i = 0; i < this.contentTimes.length; i++) {
-			(this.contentTimes[i].name === ProfileHandler.getContentTimeWindow()) ?
+			(this.contentTimes[i].name === ConfigurationStorageHandler.getContentTimeWindow()) ?
 			this.contentTimes[i].selected = true:
 				this.contentTimes[i].selected = false;
 		}

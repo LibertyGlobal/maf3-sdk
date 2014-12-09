@@ -73,7 +73,7 @@ var WelcomePopup = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		if (ProfileHandler.isProfileSet()) {
+		if (ConfigurationStorageHandler.isProfileSet()) {
 			this.fire('onWelcomeClosed', {});
 		} else {
 			MAF.application.loadView('view-PopupScreen', {

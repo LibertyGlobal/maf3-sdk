@@ -321,7 +321,7 @@ var ShareScreen = new MAF.Class({
 		facebookButton.setSelected(true);
 		twitterButton.setDisabled(true);
 		twitterButton.setSelected(true);
-		if (ProfileHandler.isSelected() === true) {
+		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
 				twitterButton.setDisabled(false);
 				twitterButton.setSelected(false);

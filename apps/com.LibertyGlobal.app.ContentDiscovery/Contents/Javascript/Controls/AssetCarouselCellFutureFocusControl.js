@@ -3,15 +3,15 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 
 	Extends: MAF.element.Container,
 
-	Protected: {	
-		generateContents: function (){	
+	Protected: {
+		generateContents: function() {
 			this.futureContainer = new MAF.element.Container({
-				styles: {	
+				styles: {
 					height: 'inherit',
 					width: 'inherit',
-					padding: 5		
+					padding: 5
 				}
-			}).appendTo(this);			
+			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
 				styles: {
 					height: 465,
@@ -19,7 +19,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					position: 'relative',
 					display: 'inline'
 				}
-			}).appendTo(this.futureContainer);				
+			}).appendTo(this.futureContainer);
 			this.Title = new MAF.element.Text({
 				styles: {
 					color: '#000000',
@@ -30,7 +30,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					width: 410,
 					truncation: 'end'
 				}
-			}).appendTo(this);	
+			}).appendTo(this);
 			this.InfoImage = new MAF.element.Image({
 				source: 'Images/info.png',
 				styles: {
@@ -39,7 +39,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					height: 42,
 					width: 40
 				}
-			}).appendTo(this);		
+			}).appendTo(this);
 			this.Genre = new MAF.element.Text({
 				styles: {
 					color: '#7a7a7a',
@@ -64,7 +64,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				aspect: 'auto',
 				styles: {
 					vOffset: 90,
-					hOffset: 610,					
+					hOffset: 610,
 					height: 40,
 					width: 180,
 					hAlign: 'right',
@@ -89,7 +89,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					fontSize: 26,
 					vOffset: 166,
 					hOffset: 346,
-					height:240,
+					height: 240,
 					width: 464,
 					wrap: true,
 					truncation: 'end'
@@ -104,7 +104,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					hOffset: 346
 				}
 			}).appendTo(this);
-		}		
+		}
 	},
 
 	config: {
@@ -112,50 +112,62 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 		focus: true
 	},
 
-	initialize: function(){
+	initialize: function() {
 		this.parent();
 		this.generateContents();
+		this.currentAssetId = null;
 	},
 
-	changeData: function(data){		
-		if(data !== null)
-		{		
-			if(data.video !== null)
-			{
-				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));	
-				this.Title.setText(data.video.title);	
+	changeData: function(data) {
+		if (data !== null) {
+			if (data.video !== null) {
+				this.currentAssetId = data.id;
+				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
+				this.Title.setText(data.video.title);
 				this.Genre.setText($_('MainScreen_Asset_Focus_Genre'));
 				this.GenreValue.setText(data.video.subcategory);
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Synopsis.setText(data.video.shortSynopsis);
-				this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+				if (ReminderHandler.isReminderSet(data.id) === true) {
+					this.Reminder.setText($_('MainScreen_Asset_Focus_Remove_Reminder'));
+				} else {
+					this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+				}
+
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
-				if(logoUrl!=="")
-				{
+				if (logoUrl !== "") {
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();
 				}
 			}
-		}
-		else
-		{
+		} else {
+			this.currentAssetId = null;
 			this.Poster.setSource('');
-			this.Title.setText('');	
+			this.Title.setText('');
 			this.Genre.setText('');
 			this.GenreValue.setText('');
-			this.StartEnd.setText('');	
+			this.StartEnd.setText('');
 			this.Synopsis.setText('');
 			this.Reminder.setText('');
 		}
 	},
 
-	suicide: function () {	
-		delete this.Channel;	
+	setReminder: function() {
+		if (ReminderHandler.isReminderSet(this.currentAssetId) === true) {
+			this.Reminder.setText($_('MainScreen_Asset_Focus_Remove_Reminder'));
+		} else {
+			this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+		}
+	},
+
+	suicide: function() {
+		delete this.currentAssetId;
+		delete this.Channel;
 		delete this.Poster;
-		delete this.Title;	
+		delete this.Title;
 		delete this.Genre;
 		delete this.GenreValue;
-		delete this.StartEnd;	
+		delete this.StartEnd;
 		delete this.Synopsis;
 		delete this.Reminder;
 		delete this.InfoImage;

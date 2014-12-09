@@ -44,8 +44,8 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		if (ProfileHandler.isProfileSet()) {
-			console.log("Load profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		if (ConfigurationStorageHandler.isProfileSet()) {
+			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 			this.controls.sideBarContainer.setProfileName(profile.name);
 			this.hideSidebar();
 			this.reloadMenu(this, true);
@@ -61,11 +61,11 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileUnloaded: function(event) {
-		console.log("Unload profile: " + ProfileHandler.getVisibleMenuItems() + ", " + ProfileHandler.getContentTimeWindow());
+		console.log("Unload profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		Twitter.reset();
 		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
-		this.reloadMenu(this, true);
+		this.reloadMenu(this, false);
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
@@ -100,7 +100,7 @@ var MainScreen = new MAF.Class({
 					if (view.controls.sideBarContainer.isCollapsed === false) {
 						switch (eventData.payload.action) {
 							case "switch":
-								if (ProfileHandler.isAppProfileSet()) {
+								if (ConfigurationStorageHandler.isAppProfileSet()) {
 									MAF.HostEventManager.send("changeProfile");
 								} else {
 									MAF.application.loadView('view-PopupScreen', {
@@ -192,11 +192,18 @@ var MainScreen = new MAF.Class({
 								// "channelNr": eventData.payload.asset.channel.logicalPosition
 								// });
 							} else {
-								setNotification(
-									eventData.payload.asset.video.title,
-									eventData.payload.asset.channel.name,
-									eventData.payload.asset.channel.logicalPosition,
-									eventData.payload.asset.start);
+								if(ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {
+									ReminderHandler.removeReminder(eventData.payload.asset.id);
+								}
+								else {
+									ReminderHandler.setReminder(
+										eventData.payload.asset.id, 
+										eventData.payload.asset.start, 
+										eventData.payload.asset.video.title, 
+										eventData.payload.asset.channel.name, 
+										eventData.payload.asset.channel.logicalPosition);
+								}
+								view.controls.assetCarousel.setReminder();
 							}
 						}
 					}
@@ -215,7 +222,7 @@ var MainScreen = new MAF.Class({
 		console.log("update view: " + this.persist.returnFromPopup);
 		this.loading = false;
 		if (this.initializing !== true) {
-			if (ProfileHandler.isAppFirstLoad()) {
+			if (ConfigurationStorageHandler.isAppFirstLoad()) {
 				MAF.application.loadView('view-PopupScreen', {
 					"popupName": "welcome",
 					"redirectPage": "view-MainScreen",
@@ -246,7 +253,7 @@ var MainScreen = new MAF.Class({
 
 	showBackground: function(view, isLive) {
 		console.log("showBackground: " + isLive);
-		if (isLive === true) {
+		if (isLive === true && view.controls.sideBarContainer.isCollapsed === true) {
 			view.elements.backgroundImageLive.show();
 			view.elements.backgroundImageNormal.hide();
 		} else {

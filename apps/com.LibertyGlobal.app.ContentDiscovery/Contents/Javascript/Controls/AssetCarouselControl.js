@@ -6,12 +6,10 @@ var AssetCarouselControl = new MAF.Class({
 	Protected: {
 		dispatchEvents: function(event) {
 			this.parent(event);
-			console.log("AssetCarouselControl event: " + event.type);
 			switch (event.type) {
 				case 'navigate':
 					if (event.detail) {
 						this.doNavigate(event.detail.direction);
-						console.log("doNavigate: " + event.detail.direction);
 					}
 					event.preventDefault();
 					event.stopPropagation();
@@ -194,6 +192,12 @@ var AssetCarouselControl = new MAF.Class({
 	updateVideo: function() {
 		if (this.currentFocusContainer.visible) {
 			this.currentFocusContainer.updateVideo();
+		}
+	},
+
+	setReminder: function() {
+		if (this.futureFocusContainer.visible) {
+			this.futureFocusContainer.setReminder();
 		}
 	},
 

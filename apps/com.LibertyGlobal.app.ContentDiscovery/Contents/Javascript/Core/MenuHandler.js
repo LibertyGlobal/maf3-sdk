@@ -7,14 +7,14 @@ var MenuHandler = (function() {
 		},
 
 		setItemVisibility: function(visibleItems) {
-			ProfileHandler.updateVisibleMenuItems(visibleItems);
+			ConfigurationStorageHandler.updateVisibleMenuItems(visibleItems);
 		},
 
 		getVisualMenuItems: function() {
 			var visibleMenuItems = [];
 			for (var i = 0; i < this.menuItems.length; i++) {
 				if (this.menuItems[i].itemType === "category") {
-					if (ProfileHandler.getVisibleMenuItems().indexOf(this.menuItems[i].itemName) > -1) {
+					if (ConfigurationStorageHandler.getVisibleMenuItems().indexOf(this.menuItems[i].itemName) > -1) {
 						visibleMenuItems.push(this.menuItems[i]);
 					}
 				} else {
@@ -29,7 +29,7 @@ var MenuHandler = (function() {
 			for (var i = 0; i < this.menuItems.length; i++) {
 				if (this.menuItems[i].itemType === "category") {
 					var selected = false;
-					if (ProfileHandler.getVisibleMenuItems().indexOf(this.menuItems[i].itemName) > -1) {
+					if (ConfigurationStorageHandler.getVisibleMenuItems().indexOf(this.menuItems[i].itemName) > -1) {
 						selected = true;
 					}
 					menuItemConfig.push({
@@ -44,7 +44,7 @@ var MenuHandler = (function() {
 
 		cleanUp: function() {
 			for (var i = 0; i < this.menuItems.length; i++) {
-				this.menuItems[i].destroy();
+				this.menuItems[i].cleanUp();
 			}
 			delete this.menuItems;
 		}
