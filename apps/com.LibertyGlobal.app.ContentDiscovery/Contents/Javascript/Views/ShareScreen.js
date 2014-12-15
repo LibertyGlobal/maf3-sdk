@@ -139,7 +139,7 @@ var ShareScreen = new MAF.Class({
 					}
 				},
 				onKeyDown: function(event) {
-					if (event.payload.key === "backspace") {
+					if (event.payload.key === "delete") {
 						view.shareTextArray.pop();
 						event.preventDefault();
 						event.stopPropagation();
@@ -212,6 +212,7 @@ var ShareScreen = new MAF.Class({
 						case 2:
 							break;
 						case 3:
+							view.shareTextArray = [];
 							view.elements.ShareText.setText("");
 							break;
 					}

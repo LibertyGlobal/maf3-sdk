@@ -19,7 +19,7 @@ var ReminderHandler = (function() {
 
 				reminder.timer = new Timer(delayInSeconds, function() {
 					console.log("Notification: " + $_('Notification_Line1_Text', [reminder.title]) + ", " + $_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]));
-					widget.notify(widget.getUrl("Images/icon.png"), [$_('App_Title'),
+					widget.notify(widget.getUrl("Images/Icon.png"), [$_('App_Title'),
 							$_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]),
 							$_('Notification_Line1_Text', [reminder.title])
 						],

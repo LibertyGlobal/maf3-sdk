@@ -378,6 +378,8 @@ var PreferencesPopup = new MAF.Class({
 		delete this.ContentTimesGrid;
 		delete this.ContentTimeFooter;
 		delete this.doneButton;
+		delete this.facebookText;
+		delete this.twitterText;
 		this.parent();
 	}
 });
