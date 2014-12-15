@@ -19,7 +19,7 @@ var AppInfoPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.MenuItemsTitle = new MAF.element.TextField({
+			view.BodyText = new MAF.element.TextField({
 				text: $_('AppInfoScreen_Text'),
 				visibleLines: 11,
 				totalLines: 11,				
@@ -71,7 +71,7 @@ var AppInfoPopup = new MAF.Class({
 
 	suicide: function() {		
 		delete this.Title;
-		delete this.MenuItemsTitle;
+		delete this.BodyText;
 		delete this.backButton;
 		this.parent();
 	}

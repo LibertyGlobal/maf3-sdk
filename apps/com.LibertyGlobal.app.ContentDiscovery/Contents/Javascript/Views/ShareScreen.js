@@ -74,6 +74,7 @@ var ShareScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.rightContainer);
 		view.elements.Poster = new MAF.element.Image({
+			aspect: 'auto',
 			styles: {
 				height: 372,
 				width: 258
@@ -273,35 +274,187 @@ var ShareScreen = new MAF.Class({
 					eventData.stopPropagation();
 				},
 				onSelect: function() {
-					if (view.controls.horizontalMenu.getButton(1).isSelected() === false) // share facebook
-					{
-						FacebookService.postToTimeline(
-							Config.common.facebookDefaultUrl,
-							view.shareTextArray.join(''),
-							view.currentItem.video.imageLink.href,
-							view.currentItem.video.title,
-							view.currentItem.video.shortSynopsis,
-							view.facebookCompleted);
-					}
-					if (view.controls.horizontalMenu.getButton(2).isSelected() === false) // share twitter
-					{
-						TwitterService.postStatus(view.shareTextArray.join(''),
-							view.twitterCompleted, []);
-					}
+					view.shareToSocial(view, !view.controls.horizontalMenu.getButton(1).isSelected(), !view.controls.horizontalMenu.getButton(2).isSelected());
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
 		view.controls.shareButton.setFocus();
+
+		view.elements.popup = new MAF.element.Container({
+			styles: {
+				height: 'inherit',
+				width: 'inherit'
+			}
+		}).appendTo(view);
+
+		view.elements.fullscreenPopup = new MAF.element.Container({
+			styles: {
+				height: 'inherit',
+				width: 'inherit',
+				backgroundColor: "#000000",
+				opacity: 0.5
+			}
+		}).appendTo(view.elements.popup);
+
+		view.elements.fullscreenPopupBackground = new MAF.element.Container({
+			styles: {
+				hOffset: 122,
+				vOffset: 108,
+				width: 1676,
+				height: 863,
+				backgroundImage: 'Images/background_popup.jpg'
+			}
+		}).appendTo(view.elements.popup);
+
+		view.elements.BodyText = new MAF.element.TextField({
+			visibleLines: 3,
+			totalLines: 3,
+			anchorStyle: 'center',
+			styles: {
+				color: '#FFFFFF',
+				fontFamily: 'InterstatePro-ExtraLight, sans-serif',
+				fontSize: 36,
+				width: 1520,
+				height: 500,
+				vOffset: 360,
+				hOffset: 75,
+				wrap: true
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+
+		view.controls.popupButton1 = new ButtonControl({
+			buttonText: $_('ShareScreen_Fail_Cancel_Button'),
+			styles: {
+				vOffset: 756,
+				hOffset: 839,
+				width: 379,
+				height: 66
+			},
+			events: {
+				onSelect: function() {
+					view.elements.popup.hide();
+					view.controls.shareButton.setFocus();
+				}
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+
+		view.controls.popupButton2 = new ButtonControl({
+			buttonText: $_('ShareScreen_Fail_Retry_Button'),
+			styles: {
+				vOffset: 756,
+				hOffset: 1239,
+				width: 379,
+				height: 66
+			},
+			events: {
+				onSelect: function() {
+					if (view.controls.popupButton2.config.buttonText === $_('ShareScreen_Fail_Retry_Button')) {
+						view.elements.popup.hide();
+						view.shareToSocial(view, 
+							(view.facebookPosted === true && view.facebookResult === false), 
+							(view.twitterPosted === true && view.twitterResult === false));
+					} else {
+						view.elements.popup.hide();
+					}
+					view.controls.shareButton.setFocus();
+				}
+			}
+		}).appendTo(view.elements.fullscreenPopupBackground);
+		view.elements.popup.hide();
 	},
 
-	facebookCompleted: function(result) {
-		// TODO
-		console.log("facebookCompleted: " + result);
+	shareToSocial: function(view, shareFacebook, shareTwitter) {
+		view.facebookPosted = false;
+		view.facebookResultReceived = false;
+		view.facebookResult = false;
+		view.twitterPosted = false;
+		view.twitterResultReceived = false;
+		view.twitterResult = false;
+		if (shareFacebook === true) // share facebook
+		{
+			view.facebookPosted = true;
+			FacebookService.postToTimeline(
+				Config.common.facebookDefaultUrl,
+				view.shareTextArray.join(''),
+				view.currentItem.video.imageLink.href,
+				view.currentItem.video.title,
+				view.currentItem.video.shortSynopsis,
+				view.facebookCompleted, view);
+		}
+		if (shareTwitter === true) // share twitter
+		{
+			view.twitterPosted = true;
+			TwitterService.postStatus(view.shareTextArray.join(''),
+				view.twitterCompleted, view);
+		}
+	},
+
+	facebookCompleted: function(result, params) {
+		var view = params;
+		view.facebookResult = result;
+		view.facebookResultReceived = true;
+		view.showConfirmation(view);
 	},
 
 	twitterCompleted: function(result, params) {
-		// TODO
-		console.log("twitterCompleted: " + result);
+		var view = params;
+		view.twitterResult = result;
+		view.twitterResultReceived = true;
+		view.showConfirmation(view);
+	},
+
+	showConfirmation: function(view) {	
+		var requestFailed = true;
+		if (view.facebookPosted === true && view.twitterPosted === true) {
+			if (view.facebookResultReceived === true && view.twitterResultReceived === true) {
+				if (view.facebookResult === true && view.twitterResult === true) {
+					requestFailed = false;
+					view.elements.BodyText.setText($_('ShareScreen_Success_Facebook_Twitter'));
+				} else if (view.facebookResult === true && view.twitterResult === false) {
+					view.elements.BodyText.setText($_('ShareScreen_Fail_Twitter'));
+				} else if (view.facebookResult === false && view.twitterResult === true) {
+					view.elements.BodyText.setText($_('ShareScreen_Fail_Facebook'));
+				} else {
+					view.elements.BodyText.setText($_('ShareScreen_Fail_Facebook_Twitter'));
+				}
+				view.updatePopupView(view, requestFailed);
+			}
+		} else if (view.facebookPosted === true) {
+			if (view.facebookResultReceived === true) {
+				if (view.facebookResult === true) {
+					requestFailed = false;
+					view.elements.BodyText.setText($_('ShareScreen_Success_Facebook'));
+				} else {
+					view.elements.BodyText.setText($_('ShareScreen_Fail_Facebook'));
+				}
+				view.updatePopupView(view, requestFailed);
+			}
+		} else if (view.twitterPosted === true) {
+			if (view.twitterResultReceived === true) {
+				if (view.twitterResult === true) {
+					requestFailed = false;
+					view.elements.BodyText.setText($_('ShareScreen_Success_Twitter'));
+				} else {
+					view.elements.BodyText.setText($_('ShareScreen_Fail_Twitter'));
+				}
+				view.updatePopupView(view, requestFailed);
+			}
+		}
+				
+	},
+
+	updatePopupView: function(view, requestFailed){
+		view.elements.popup.show();
+		view.controls.popupButton2.setFocus();
+		if (requestFailed === true) {
+			view.controls.popupButton1.show();
+			view.controls.popupButton1.setButtonText($_('ShareScreen_Fail_Cancel_Button'));
+			view.controls.popupButton2.setButtonText($_('ShareScreen_Fail_Retry_Button'));
+			
+		} else {
+			view.controls.popupButton1.hide();
+			view.controls.popupButton2.setButtonText($_('ShareScreen_Success_Ok_Button'));
+		}
 	},
 
 	encodeText: function(textToEncode) {
@@ -354,5 +507,11 @@ var ShareScreen = new MAF.Class({
 		delete view.controls.horizontalMenu;
 		delete view.controls.backButton;
 		delete view.controls.shareButton;
+		delete view.elements.popup;
+		delete view.elements.fullscreenPopup;
+		delete view.elements.fullscreenPopupBackground;
+		delete view.elements.BodyText;
+		delete view.controls.button1;
+		delete view.controls.button2;
 	}
 });

@@ -10,7 +10,6 @@ include('Javascript/Core/AssetReminder.js');
 include('Javascript/Core/ChannelHandler.js');
 include('Javascript/Core/MenuItem.js');
 include('Javascript/Core/MenuHandler.js');
-include('Javascript/Core/Notifications.js');
 include('Javascript/Core/ConfigurationStorageHandler.js');
 include('Javascript/Core/ReminderHandler.js');
 
@@ -71,11 +70,11 @@ MAF.application.init({
 	settingsViewId: 'view-AppInfoScreen'
 });
 
-// (function() {
-// 	ReminderHandler.initialize();
-// }).subscribeTo(MAF.application, 'onApplicationStartup');
+//(function() {
+//ReminderHandler.initialize();
+//}).subscribeTo(MAF.application, 'onApplicationStartup');
 
-// (function() {
-// 	ReminderHandler.cleanUp();
-// }).subscribeTo(MAF.application, 'onApplicationShutdown');
+//(function() {
+//ReminderHandler.cleanUp();
+//}).subscribeTo(MAF.application, 'onApplicationShutdown');
 

@@ -92,8 +92,8 @@ var WelcomePopup = new MAF.Class({
 
 	initialize: function() {
 		this.parent();
-		this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
-		this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
+		this.fnOnProfileLoaded = this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		this.fnOnProfileUnloaded = this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
 		this.createContent();
 	},
 
@@ -104,8 +104,10 @@ var WelcomePopup = new MAF.Class({
 	},
 
 	suicide: function() {		
-		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
-		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		this.fnOnProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		this.fnOnProfileLoaded = null;
+		this.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		this.fnOnProfileUnloaded = null;
 		delete this.Title;
 		delete this.MenuItemsTitle;
 		delete this.setProfileButton;

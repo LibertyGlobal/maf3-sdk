@@ -14,6 +14,7 @@ var AssetCarouselCellControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
 					height: 300,
 					width: 211
@@ -68,8 +69,7 @@ var AssetCarouselCellControl = new MAF.Class({
 			if(data.video !== null)
 			{
 				this.Title.setText(data.video.title);
-				// TODO https doesn't work on the live box. check with ML why
-				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
+				this.Poster.setSource(data.video.imageLink.href);
 				this.PosterContainer.show();
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 			

@@ -31,9 +31,9 @@ var SidebarButtonControl = new MAF.Class({
 				styles: {
 					color: '#FFFFFF',
 					fontFamily: 'InterstatePro-Light',
-					fontSize: 40,
-					hOffset: 15,
-					vOffset: 14,
+					fontSize: 32,
+					hOffset: 22,
+					vOffset: 19,
 					opacity: 0.32
 				}
 			}).appendTo(this);				

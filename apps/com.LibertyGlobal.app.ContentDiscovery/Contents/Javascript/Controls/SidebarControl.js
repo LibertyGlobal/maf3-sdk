@@ -42,6 +42,7 @@ var SidebarControl = new MAF.Class({
 			}).appendTo(this.collapsedContainer);
 
 			this.collapsedprofileImage = new MAF.element.Image({
+				aspect: 'auto',
 				source: 'Images/sidebar_profile_image.png',
 				styles: {
 					position: 'relative',
@@ -78,6 +79,7 @@ var SidebarControl = new MAF.Class({
 			}).appendTo(this.expandedContainer);
 
 			this.expandedprofileImage = new MAF.element.Image({
+				aspect: 'auto',
 				source: 'Images/sidebar_profile_image.png',
 				styles: {
 					hOffset: -260,
@@ -223,20 +225,17 @@ var SidebarControl = new MAF.Class({
 		this.collapse();
 		this.isCollapsed = true;
 		this.focussedButton = "switch";
+		this.collapsedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
+		this.expandedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
 	},
 
 	setProfileName: function(profileName) {
 		this.expandedprofileText.setText(profileName);
 	},
 
-	setProfilePicture: function(url) {
-		if (url) {
-			this.collapsedprofileImage.setSource(url);
-			this.expandedprofileImage.setSource(url);
-		} else {
-			this.collapsedprofileImage.setSource("Images/sidebar_profile_image.png");
-			this.expandedprofileImage.setSource("Images/sidebar_profile_image.png");
-		}
+	updateProfilePicture: function() {
+		this.collapsedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
+		this.expandedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
 	},
 
 	expand: function() {

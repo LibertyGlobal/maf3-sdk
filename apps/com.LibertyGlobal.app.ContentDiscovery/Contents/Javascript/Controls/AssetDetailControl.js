@@ -15,6 +15,7 @@ var AssetDetailControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
 					height: 372,
 					width: 258
@@ -307,9 +308,8 @@ var AssetDetailControl = new MAF.Class({
 				}
 				this.Prop3Text.setText($_('InfoScreen_Asset_Language_Text'));
 				if (data.video.language !== undefined) {
-					var languageString = $_('ItemLanguage_' + data.video.language);
-					console.log("language: " + languageString);
-					if (languageString && languageString.indexOf("ItemLanguage_") < 0) {
+					var languageString = $_('language_' + data.video.language);
+					if (languageString && languageString.indexOf("language_") < 0) {
 						this.Prop3Value.setText(languageString);
 					} else {
 						this.Prop3Value.setText(data.video.language);
@@ -322,8 +322,7 @@ var AssetDetailControl = new MAF.Class({
 					this.Prop5Value.setText(AgeRatingConfig(data.video.ageRating));
 				}
 
-				// TODO https doesn't work on the live box. check with ML why
-				this.Poster.setSource(data.video.imageLink.href.replace("https", "http"));
+				this.Poster.setSource(data.video.imageLink.href);
 				this.PosterContainer.show();
 
 				this.Synopsis.setText(data.video.shortSynopsis);

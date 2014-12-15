@@ -13,6 +13,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
 					height: 465,
 					width: 313,
@@ -128,11 +129,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				this.GenreValue.setText(data.video.subcategory);
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.Synopsis.setText(data.video.shortSynopsis);
-				if (ReminderHandler.isReminderSet(data.id) === true) {
-					this.Reminder.setText($_('MainScreen_Asset_Focus_Remove_Reminder'));
-				} else {
-					this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
-				}
+				this.updateReminder();
 
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if (logoUrl !== "") {
@@ -152,7 +149,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 		}
 	},
 
-	setReminder: function() {
+	updateReminder: function() {
 		if (ReminderHandler.isReminderSet(this.currentAssetId) === true) {
 			this.Reminder.setText($_('MainScreen_Asset_Focus_Remove_Reminder'));
 		} else {

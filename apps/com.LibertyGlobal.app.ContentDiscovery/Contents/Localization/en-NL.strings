@@ -1,7 +1,7 @@
 // General
 "App_Title" = "Watson";
 "App_Description" = "Met Watson kun je makkelijk zien wat er nu op tv is of zo meteen gaat beginnen";
-"Notification_Line1_Text" = "HERINNERING: '%s' gaat zo beginnen." 
+"Notification_Line1_Text" = "HERINNERING: %s gaat zo beginnen.";
 "Notification_Line2_Text" = "Ga naar kanaal %s(%s) om het niet te missen.";
 
 // Preferences page
@@ -74,6 +74,8 @@
 "PreferencesScreen_MenuItems_Title" = "Menu items";
 "PreferencesScreen_ConnectFacebook_Button" = "Verbinden met Facebook";
 "PreferencesScreen_ConnectTwitter_Button" = "Verbinden met Twitter";
+"PreferencesScreen_ConnectedFacebook_Text" = "Verbonden met Facebook";
+"PreferencesScreen_ConnectedTwitter_Text" = "Verbonden met Twitter";
 "PreferencesScreen_ContentTime_Title" = "Tijdvak*";
 "PreferencesScreen_ContentTime_SubTitle" = "Alles wat nu uitgezonden wordt, of begint over:";
 "PreferencesScreen_ContentTime_30min_Text" = "30 minuten";
@@ -108,8 +110,8 @@
 "ShareScreen_ClearAll_Button" = "Alles wissen";
 "ShareScreen_Send_Button" = "Verstuur";
 "ShareScreen_Back_Button" = "Hoofdpagina";
-"ShareScreen_Fail_Facebook" = "Your message could not be posted. Would you like to retry?";
-"ShareScreen_Fail_Twitter" = "Your message could not be posted. Would you like to retry?";
+"ShareScreen_Fail_Facebook" = "Your message could not be posted on facebook. Would you like to retry?";
+"ShareScreen_Fail_Twitter" = "Your message could not be posted on twitter. Would you like to retry?";
 "ShareScreen_Fail_Facebook_Twitter" = "Your message could not be posted. Would you like to retry?";
 "ShareScreen_Success_Facebook" = "Your message has succesfully been posted on Facebook";
 "ShareScreen_Success_Twitter" = "Your message has succesfully been posted on Twitter";
@@ -132,10 +134,16 @@
 "FullSynopsisScreen_Pagination" = "Pagina %s van %s";
 "FullSynopsisScreen_Back_Button" = "Hoofdpagina";
 
-// Item Languages
-"ItemLanguage_EN" = "English";
-"ItemLanguage_NL" = "Dutch";
-"ItemLanguage_DE" = "German";
-"ItemLanguage_IT" = "Italian";
-"ItemLanguage_FR" = "French";
-"ItemLanguage_ES" = "Spanish";
+// Languages
+"language_EN" = "English";
+"language_NL" = "Nederlands";
+"language_FR" = "Francais";
+"language_PL" = "Polski";
+"language_IT" = "Italiano";
+"language_RO" = "Roman";
+"language_HU" = "Magyar";
+"language_DE" = "Deutsch";
+"language_CZ" = "Cestina";
+"language_IR" = "Irish";
+"language_SK" = "Slovencina";
+"language_ES" = "Espanol";

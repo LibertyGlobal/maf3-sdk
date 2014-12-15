@@ -88,6 +88,7 @@ var PopupScreen = new MAF.Class({
 	},
 
 	showPopup: function(view, popupName, redirectPage, redirectParams) {
+		view.controls.sideBarContainer.updateProfilePicture();
 		view.elements.preferencesPopup.hide();
 		view.elements.appInfoPopup.hide();
 		view.elements.welcomePopup.hide();

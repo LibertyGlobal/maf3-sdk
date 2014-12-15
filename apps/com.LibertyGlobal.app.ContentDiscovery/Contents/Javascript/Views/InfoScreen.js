@@ -26,7 +26,15 @@ var InfoScreen = new MAF.Class({
 					view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
 					view.controls.assetDetails.changeData(response[0]);
 
-					(view.isLive) ? view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text'): view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+					if (view.isLive) {
+						view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text');
+					} else {
+						if (ReminderHandler.isReminderSet(view.asset.id) === true) {
+							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
+						} else {
+							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+						}
+					}
 					view.controls.horizontalMenu.updateButtonText();
 					view.controls.horizontalMenu.show();
 					view.controls.horizontalMenu.setFocus();

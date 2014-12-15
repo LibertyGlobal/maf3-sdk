@@ -1,6 +1,7 @@
 var ConfigurationStorageHandler = (function() {
 	var visibleItemsSettingName = "VisibleMenuItems";
 	var contentTimeWindowSettingName = "ContentTimeWindow";
+	var profileImageUrlSettingName = "ProfileImage";
 	var appFirstLoadSettingName = "AppFirstLoad";
 	var appProfileSetSettingName = "AppProfileSet";
 	var remindersStorageSettingName = "AppReminderStorage";
@@ -16,14 +17,12 @@ var ConfigurationStorageHandler = (function() {
 			var reminders = [];
 			var remindersFromStorage = currentAppConfig.get(remindersStorageSettingName);			
 			if (remindersFromStorage !== undefined) {
-				console.log("Get reminders: " + remindersFromStorage.length);
 				contentTimeWindowVar = remindersFromStorage;
 			}
 			return reminders;
 		},
 
 		setAppReminderStorage: function(reminders) {
-			console.log("Store reminders: " + reminders);
 			currentAppData.set(remindersStorageSettingName, reminders);
 		},
 
@@ -74,6 +73,19 @@ var ConfigurationStorageHandler = (function() {
 		updateContentTimeWindow: function(contentTimeWindow) {
 			currentAppData.set(contentTimeWindowSettingName, contentTimeWindow);
 			currentAppConfig.set(appProfileSetSettingName, "true");
+		},
+
+		getProfileImage: function() {
+			var profileImageVar = 'Images/sidebar_profile_image.png';
+			var profileImage = currentAppData.get(profileImageUrlSettingName);
+			if (profileImage !== undefined) {
+				profileImageVar = profileImage;
+			}
+			return profileImageVar;
+		},
+
+		updateProfileImage: function(url) {
+			currentAppData.set(profileImageUrlSettingName, url);
 		},
 
 		cleanUp: function() {}

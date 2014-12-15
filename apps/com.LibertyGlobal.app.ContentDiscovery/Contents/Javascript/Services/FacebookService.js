@@ -10,7 +10,7 @@ var FacebookService = (function() {
 			});
 		},
 
-		postToTimeline: function(url, message, image, title, description, callback) {
+		postToTimeline: function(url, message, image, title, description, callback, callbackParams) {
 			//console.log("postToTimeline: " + url + ", " + message + ", " + image + ", " + title + ", " + description);
 			var body = {
 				message: message,
@@ -23,9 +23,9 @@ var FacebookService = (function() {
 			Facebook.api('/me/feed', 'post', body,
 				function(response) {
 					if (response.id)
-						callback(true);
+						callback(true, callbackParams);
 					else
-						callback(false);
+						callback(false, callbackParams);
 				}
 			);
 		},
@@ -39,7 +39,9 @@ var FacebookService = (function() {
 			Facebook.api('/me/picture?redirect=0', 'get', body,
 				function(response) {
 					if (response.data !== undefined)
+					{
 						callback(response.data.url);
+					}
 					else
 						callback('');
 				}

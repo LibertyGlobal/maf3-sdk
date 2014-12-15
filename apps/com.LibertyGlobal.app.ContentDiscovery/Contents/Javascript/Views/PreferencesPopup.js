@@ -55,6 +55,20 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
+			view.facebookText = new MAF.element.Text({
+				text: $_('PreferencesScreen_ConnectedFacebook_Text'),
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
+					fontSize: 36,
+					vOffset: 450,
+					hOffset: 75,
+					width: 500,
+					height: 66
+				}
+			}).appendTo(view);
+			view.facebookText.hide();
+
 			view.facebookButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectFacebook_Button'),
 				styles: {
@@ -93,11 +107,25 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
+			view.twitterText = new MAF.element.Text({
+				text: $_('PreferencesScreen_ConnectedTwitter_Text'),
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
+					fontSize: 36,
+					vOffset: 450,
+					hOffset: 570,
+					width: 500,
+					height: 66
+				}
+			}).appendTo(view);
+			view.twitterText.hide();
+
 			view.twitterButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectTwitter_Button'),
 				styles: {
 					vOffset: 438,
-					hOffset: 485,
+					hOffset: 570,
 					width: 379,
 					height: 66
 				},
@@ -249,8 +277,8 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	initialize: function() {
-		this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
-		this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
+		this.fnOnProfileLoaded = this.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
+		this.fnOnProfileUnloaded = this.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
 
 		this.contentTimes = [];
 		this.contentTimes.push({
@@ -289,9 +317,21 @@ var PreferencesPopup = new MAF.Class({
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
 				this.twitterButton.hide();
+				this.twitterText.show();
+			}
+			else
+			{
+				this.twitterButton.show();
+				this.twitterText.hide();
 			}
 			if (FacebookService.isPaired() === true) {
 				this.facebookButton.hide();
+				this.facebookText.show();
+			}
+			else
+			{
+				this.facebookButton.show();
+				this.facebookText.hide();
 			}
 		}
 
@@ -311,18 +351,22 @@ var PreferencesPopup = new MAF.Class({
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
 			callbackParams.view.facebookButton.hide();
+			callbackParams.view.facebookText.show();
 		}
 	},
 
 	twitterPaired: function(result, callbackParams) {
 		if (result.screen_name !== undefined) {
 			callbackParams.view.twitterButton.hide();
+			callbackParams.view.twitterText.show();
 		}
 	},
 
 	suicide: function() {
-		this.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
-		this.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		this.fnOnProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		this.fnOnProfileLoaded = null;
+		this.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		this.fnOnProfileUnloaded = null;
 		delete this.contentTimes;
 		delete this.Title;
 		delete this.MenuItemsTitle;

@@ -7,9 +7,9 @@ var MainScreen = new MAF.Class({
 		view.loading = false;
 		view.parent();
 		view.initializing = true;
-		view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', this);
-		view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', this);
-		view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', this);
+		view.fnOnInfoButtonPress = view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', view);
+		view.fnOnProfileLoaded = view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', view);
+		view.fnOnProfileUnloaded = view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', view);
 		ChannelHandler.initialize(view.onChannelInitializeComplete, view);
 
 	},
@@ -46,12 +46,13 @@ var MainScreen = new MAF.Class({
 	onProfileLoaded: function(event) {
 		var view = this;
 		if (ConfigurationStorageHandler.isProfileSet()) {
-			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
+			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow() + ", " + this.controls);
 			this.controls.sideBarContainer.setProfileName(profile.name);
 			if(FacebookService.isPaired()===true)
 			{
 				FacebookService.getProfilePicture(function(url) { 
-					view.controls.sideBarContainer.setProfilePicture(url);
+					ConfigurationStorageHandler.updateProfileImage(url);
+					view.controls.sideBarContainer.updateProfilePicture();
 				});
 			}
 			this.hideSidebar();
@@ -72,7 +73,8 @@ var MainScreen = new MAF.Class({
 		Twitter.reset();
 		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
-		this.controls.sideBarContainer.setProfilePicture("");
+		ConfigurationStorageHandler.updateProfileImage("");
+		this.controls.sideBarContainer.updateProfilePicture();
 		this.reloadMenu(this, false);
 	},
 
@@ -193,7 +195,7 @@ var MainScreen = new MAF.Class({
 				},
 				onAssetSelect: function(eventData) {
 					if (view.controls.sideBarContainer.isCollapsed === true) {
-						if (eventData.payload.asset !== null) {
+						if (eventData.payload.asset !== undefined && eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
 								MAF.HostEventManager.send("exitToDock");
 								// TODO remove including empty screen MAF.application.loadView('view-EmptyScreen', {
@@ -211,7 +213,7 @@ var MainScreen = new MAF.Class({
 										eventData.payload.asset.channel.name, 
 										eventData.payload.asset.channel.logicalPosition);
 								}
-								view.controls.assetCarousel.setReminder();
+								view.controls.assetCarousel.updateReminder();
 							}
 						}
 					}
@@ -256,6 +258,7 @@ var MainScreen = new MAF.Class({
 			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());
 		}
 		view.controls.assetCarousel.updateVideo();
+		view.controls.assetCarousel.updateReminder();
 		view.showBackground(view, view.controls.assetCarousel.isLive);
 	},
 
@@ -298,9 +301,12 @@ var MainScreen = new MAF.Class({
 
 	destroyView: function() {
 		var view = this;
-		view.onInfoButtonPress.unsubscribeFrom(MAF.application, 'onWidgetKeyPress');
-		view.onProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
-		view.onProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		view.fnOnInfoButtonPress.unsubscribeFrom(MAF.application, 'onWidgetKeyPress');
+		view.fnOnInfoButtonPress = null;
+		view.fnOnProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
+		view.fnOnProfileLoaded = null;
+		view.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
+		view.fnOnProfileUnloaded = null;
 		ChannelHandler.cleanUp();
 		MenuHandler.cleanUp();
 		delete view.controls.sideBarContainer;

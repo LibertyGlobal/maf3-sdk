@@ -195,9 +195,9 @@ var AssetCarouselControl = new MAF.Class({
 		}
 	},
 
-	setReminder: function() {
+	updateReminder: function() {
 		if (this.futureFocusContainer.visible) {
-			this.futureFocusContainer.setReminder();
+			this.futureFocusContainer.updateReminder();
 		}
 	},
 

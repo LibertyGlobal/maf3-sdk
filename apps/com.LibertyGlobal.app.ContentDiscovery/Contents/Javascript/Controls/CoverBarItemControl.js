@@ -15,6 +15,7 @@ var CoverBarItemControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
 					margin: 1,
 					height: 292,

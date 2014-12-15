@@ -33,6 +33,7 @@ var ButtonControl = new MAF.Class({
 			this.buttonText  = new MAF.element.Text({
 				text: this.config.buttonText,
 				theme: false,
+				anchorStyle: 'center',
 				styles: {	
 					color: '#c0bcc5',
 					fontFamily: 'InterstatePro-Light',
