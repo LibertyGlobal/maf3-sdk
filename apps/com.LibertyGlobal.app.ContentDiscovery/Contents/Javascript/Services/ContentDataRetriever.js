@@ -136,11 +136,11 @@ var ContentDataRetriever = (function() {
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
-							LGI.Guide.Broadcast.CATEGORY, "video.subcategory")
+							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", 'statistics.bpm')
 						.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
 						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
-						.sort(LGI.Guide.Broadcast.POPULARITY, 'desc')
+						.sort('statistics.bpm', 'desc')
 						.findOne(function(response) {
 								var activeAssets = response;
 								parseData(menuItem, activeAssets, null, false, true, false);

@@ -139,6 +139,7 @@ var ShareScreen = new MAF.Class({
 					}
 				},
 				onKeyDown: function(event) {
+					screen.log("key event: " + event.payload.key + ", " + event.payload.keyCode);
 					if (event.payload.key === "delete") {
 						view.shareTextArray.pop();
 						event.preventDefault();

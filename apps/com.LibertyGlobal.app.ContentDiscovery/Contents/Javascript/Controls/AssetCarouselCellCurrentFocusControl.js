@@ -3,15 +3,15 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 
 	Extends: MAF.element.Container,
 
-	Protected: {	
-		generateContents: function (){	
+	Protected: {
+		generateContents: function() {
 			this.BackgroundImage = new MAF.element.Image({
 				source: 'Images/asset_background_current_focus.png',
 				styles: {
 					vOffset: 370,
 					hOffset: 0
 				}
-			}).appendTo(this);			
+			}).appendTo(this);
 			this.Title = new MAF.element.Text({
 				styles: {
 					color: '#000000',
@@ -22,7 +22,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 					width: 803,
 					truncation: 'end'
 				}
-			}).appendTo(this);				
+			}).appendTo(this);
 			this.InfoImage = new MAF.element.Image({
 				source: 'Images/info.png',
 				styles: {
@@ -31,7 +31,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 					height: 42,
 					width: 40
 				}
-			}).appendTo(this);			
+			}).appendTo(this);
 			this.StartEnd = new MAF.element.Text({
 				styles: {
 					color: '#000000',
@@ -81,7 +81,33 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 					borderColor: '#898989'
 				}
 			}).appendTo(this);
-		}		
+
+			this.ExpiredImage = new MAF.element.Image({
+				source: 'Images/asset_background_current_focus_expired.png',
+				styles: {
+					vOffset: 0,
+					hOffset: 0,
+					width: 836,
+					height: 374
+				}
+			}).appendTo(this);
+			this.ExpiredImage.hide();
+
+			this.ExpiredText = new MAF.element.Text({
+				text: $_('MainScreen_Asset_Focus_Asset_Ended_Text'),
+				anchorStyle: 'center',
+				styles: {
+					color: '#FFFFFF',
+					fontFamily: 'InterstatePro-Light, sans-serif',
+					fontSize: 38,
+					vOffset: 160,
+					hOffset: 0,
+					width: 836,
+					heigh: 374
+				}
+			}).appendTo(this);
+			this.ExpiredText.hide();
+		}
 	},
 
 	config: {
@@ -89,69 +115,75 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		focus: true
 	},
 
-	initialize: function(){
+	initialize: function() {
 		this.parent();
 		this.generateContents();
 		this.displayData = null;
-		MAF.mediaplayer.init(); 
+		MAF.mediaplayer.init();
 	},
 
-	changeData: function(data){		
-		if(data !== null)
-		{		
+	changeData: function(data) {
+		var view = this;
+		if (data !== null) {
 			this.displayData = data;
-			if(data.video !== null)
-			{				
+			if (data.video !== null) {
 				MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
-				//screen.log("Tune channel: " + data.channel.logicalPosition);
-				var currentPercentage = ((moment() - moment(data.start)) / (moment(data.end) - moment(data.start)));
-				this.ProgressIndicator.setStyle("width", (811 * currentPercentage));
-				this.Title.setText(data.video.title);			
-				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));				
+				
+				this.Title.setText(data.video.title);
+				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
 
 				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
-				if(logoUrl!=="")
-				{
+				if (logoUrl !== "") {
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();
 				}
 
-				var view = this;
+				this.updateProgress(view);
 				this.stopProgressInterval();
 				this.timerId = setInterval(function() {
-					if(view.displayData!==null)
-					{
-						var currentPercentage = ((moment() - moment(view.displayData.start)) / (moment(view.displayData.end) - moment(view.displayData.start)));
-						view.ProgressIndicator.setStyle("width", (811 * currentPercentage));
-					}
+					view.updateProgress(view);
 				}, Config.common.progressBarUpdateFreq);
 			}
-		}
-		else
-		{
+		} else {
 			this.displayData = null;
-			this.Title.setText('');	
-			this.StartEnd.setText('');	
+			this.Title.setText('');
+			this.StartEnd.setText('');
 			this.OkView.setText('');
 			this.ProgressIndicator.setStyle("width", 0);
 			this.stopProgressInterval();
 		}
 	},
 
-	updateVideo: function(){
+	updateVideo: function() {
 		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
 	},
 
+	updateProgress: function(view) {
+		if (view.displayData !== null) {
+			var currentPercentage = ((moment() - moment(view.displayData.start)) / (moment(view.displayData.end) - moment(view.displayData.start)));
+			console.log("Progress percentage: " + currentPercentage);
+			if (currentPercentage <= 1) {
+				view.ProgressIndicator.setStyle("width", (811 * currentPercentage));
+				view.ExpiredImage.hide();
+				view.ExpiredText.hide();
+			} else {
+				view.ProgressIndicator.setStyle("width", 811);
+				view.ExpiredImage.show();
+				view.ExpiredText.show();
+			}
+		}
+	},
+
 	stopProgressInterval: function() {
-		if(this.timerId)	{
+		if (this.timerId) {
 			clearInterval(this.timerId);
 			this.timerId = null;
 		}
 	},
 
-	suicide: function () {		
+	suicide: function() {
 		this.stopProgressInterval();
 		delete this.displayData;
 		delete this.BackgroundImage;
@@ -162,6 +194,8 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		delete this.Channel;
 		delete this.ProgressContainer;
 		delete this.ProgressIndicator;
+		delete this.ExpiredImage;
+		delete this.ExpiredText;
 		this.parent();
 	}
 });
