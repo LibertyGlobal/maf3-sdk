@@ -47,9 +47,10 @@ var ConfigurationStorageHandler = (function() {
 			return (menuItemsVisible !== undefined && contentTimeWindow !== undefined);
 		},
 
-		getVisibleMenuItems: function() {
+		getVisibleMenuItems: function() {			
 			var menuItemsVisibleVar = Config.common.menuItemsVisibilityDefault;
 			var menuItemsVisible = currentAppData.get(visibleItemsSettingName);
+			screen.log("menu items: " + menuItemsVisible);
 			if (menuItemsVisible !== undefined) {
 				menuItemsVisibleVar = menuItemsVisible;
 			}
@@ -64,6 +65,7 @@ var ConfigurationStorageHandler = (function() {
 		getContentTimeWindow: function() {
 			var contentTimeWindowVar = Config.common.contentTimeWindow;
 			var contentTimeWindow = currentAppData.get(contentTimeWindowSettingName);
+			screen.log("content time: " + contentTimeWindow);
 			if (contentTimeWindow !== undefined) {
 				contentTimeWindowVar = contentTimeWindow;
 			}

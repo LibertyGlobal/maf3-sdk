@@ -24,7 +24,6 @@ var MainScreen = new MAF.Class({
 		switch (event.type) {
 			case "onWidgetKeyPress":
 				if (event.payload !== undefined) {
-					screen.log("key event: " + event.payload.key + ", " + event.payload.keyCode);
 					if (event.payload.keyCode === 457 || event.payload.keyCode === 36) // info button or home button on keyboard
 					{
 						if (this.controls.sideBarContainer.isCollapsed === true) {
@@ -49,6 +48,7 @@ var MainScreen = new MAF.Class({
 		if (ConfigurationStorageHandler.isProfileSet()) {
 			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow() + ", " + this.controls);
 			this.controls.sideBarContainer.setProfileName(profile.name);
+			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
 			if(FacebookService.isPaired()===true)
 			{
 				FacebookService.getProfilePicture(function(url) { 
@@ -75,8 +75,9 @@ var MainScreen = new MAF.Class({
 		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
 		ConfigurationStorageHandler.updateProfileImage("");
+		MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text"));
 		this.controls.sideBarContainer.updateProfilePicture();
-		this.reloadMenu(this, false);
+		this.reloadMenu(this, true);
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {

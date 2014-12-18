@@ -10,6 +10,15 @@ var MenuHandler = (function() {
 			ConfigurationStorageHandler.updateVisibleMenuItems(visibleItems);
 		},
 
+		updateTextForItem: function(itemName, preferenceMenuText, mainMenuText) {
+			for (var i = 0; i < this.menuItems.length; i++) {
+				if (this.menuItems[i].itemName === itemName) {
+					this.menuItems[i].mainMenuLabel = mainMenuText;
+					this.menuItems[i].preferenceLabel = preferenceMenuText; 
+				}
+			}
+		},
+
 		getVisualMenuItems: function() {
 			var visibleMenuItems = [];
 			for (var i = 0; i < this.menuItems.length; i++) {

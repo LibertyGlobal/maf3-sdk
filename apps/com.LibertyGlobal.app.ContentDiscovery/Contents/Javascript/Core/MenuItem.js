@@ -1,4 +1,4 @@
-function MenuItem(itemName, itemType, categoryFilters, mainMenuLabel, preferenceLabel) {
+function MenuItem(itemName, itemType, categoryFilters, preferenceLabel, mainMenuLabel) {
 	this.itemName = itemName; // unique item name
 	this.itemType = itemType; // item type (standard is 'category', special types for shuffle, trending and recommendations)
 	this.categoryFilters = categoryFilters; // categories to include in the query for this menu item

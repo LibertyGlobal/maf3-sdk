@@ -85,7 +85,20 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 		this.ReloadButton.hide();
 		switch (emptyType) {
 			case "empty":
-				this.Title.setText($_('MainScreen_Asset_Focus_NoDataTitle', [menuItemText, menuItemTimeWindow]));
+				var emptyText = "";
+				if(menuItemTimeWindow < 60)
+				{
+					emptyText = $_('MainScreen_Asset_Focus_NoDataTitle', [menuItemText, menuItemTimeWindow]);
+					emptyText = emptyText + $_('MainScreen_Asset_Focus_Minutes');
+				}
+				else
+				{
+					var period = menuItemTimeWindow / 60;
+					emptyText = $_('MainScreen_Asset_Focus_NoDataTitle', [menuItemText, period]);
+					emptyText = emptyText + $_('MainScreen_Asset_Focus_Hours');
+				}
+
+				this.Title.setText(emptyText);
 				this.SubTitle.setText($_('MainScreen_Asset_Focus_NoDataSubTitle'));
 				this.ReloadButton.show();
 				break;
