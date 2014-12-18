@@ -5,31 +5,44 @@ var ContentDataRetriever = (function() {
 	var parseData = function(menuItem, activeAssets, futureAssets, sortAssets, uniqueAssets, shuffleAssets) {
 		var allAssets = [];
 		for (var i = 0; i < activeAssets.length; i++) {
-			//console.log("item '"+ activeAssets[i].video.title + "' skipped: " + (((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold));	
-			if (((moment(activeAssets[i].end) - moment().utc()) / (moment(activeAssets[i].end) - moment(activeAssets[i].start)) * 100) < Config.common.programDurationDisplayThreshold) {
+			var currentProgress = (moment().utc() - moment(activeAssets[i].start)) / (moment(activeAssets[i].end) - moment(activeAssets[i].start));
+			//console.log("item '" + activeAssets[i].video.title + "', " + moment(activeAssets[i].start).format("HH:mm") + ", " +  moment(activeAssets[i].end).format("HH:mm") +
+			//", current progress: " + currentProgress +
+			//", skipped: " + (currentProgress >= Config.common.programDurationDisplayThreshold));
+			if (currentProgress < Config.common.programDurationDisplayThreshold) {
 				allAssets.push(activeAssets[i]);
 			}
 		}
+
 		if (futureAssets !== null) {
 			allAssets = allAssets.concat(futureAssets);
 		}
+
+		for (var k = 0; k < allAssets.length; k++) {
+			console.log("item '" + allAssets[k].video.title + ", " + allAssets[k].start + "," + allAssets[k].end + "," + allAssets[k].channel.logicalPosition);
+		}
+
+		console.log("Both items: " + allAssets.length);
 		if (sortAssets === true) {
 			allAssets.sort(function(a, b) {
 				return (moment(a.start) - moment(b.start)) || (a.video.title.localeCompare(b.video.title));
 			});
 		}
+		console.log("Sorted items: " + allAssets.length);
 		if (uniqueAssets === true) {
 			allAssets = removeDuplicates(allAssets);
 		}
+		console.log("Unique items: " + allAssets.length);
 		if (shuffleAssets === true) {
 			allAssets = shuffleArray(allAssets);
 		}
-
+		console.log("shuffle items: " + allAssets.length);
 		if (sortAssets === true) {
 			allAssets.sort(function(a, b) {
 				return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
 			});
 		}
+		console.log("re-sorted items: " + allAssets.length);
 
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
@@ -42,24 +55,37 @@ var ContentDataRetriever = (function() {
 		var skipped = 0;
 		var skipNext = false;
 		for (var i = allAssets.length - 1; i >= 0; i--) {
-			if (i - 1 > 0) {
-				if (skipNext !== true) {
-					if (allAssets[i].start === allAssets[i - 1].start &&
-						allAssets[i].end === allAssets[i - 1].end &&
-						allAssets[i].video.title === allAssets[i - 1].video.title) {
-						if (allAssets[i].channel.name.toUpperCase().indexOf("HD") >= 0) {
-							allAssetsFiltered.unshift(allAssets[i]);
+			var current = i;
+			var previous = i - 1;
+			console.log("index: " + current);
+			if (skipNext !== true) {
+				if (previous > 0) {
+					console.log("All assets: current: " + allAssets[current].start + ", " + allAssets[current].end + ", " + allAssets[current].video.title);
+					console.log("All assets: prev: " + allAssets[previous].start + ", " + allAssets[previous].end + ", " + allAssets[previous].video.title);
+					if (allAssets[current].start === allAssets[previous].start &&
+						allAssets[current].end === allAssets[previous].end &&
+						allAssets[current].video.title === allAssets[previous].video.title) {
+						if (allAssets[current].channel.name.toUpperCase().indexOf("HD") >= 0) {
+							console.log("adding 2: " + allAssets[current].video.title);
+							allAssetsFiltered.unshift(allAssets[current]);
 						} else {
-							allAssetsFiltered.unshift(allAssets[i - 1]);
+							console.log("adding 3: " + allAssets[previous].video.title);
+							allAssetsFiltered.unshift(allAssets[previous]);
 						}
+						console.log("skip next");
 						skipNext = true;
 						skipped++;
 					} else {
-						allAssetsFiltered.unshift(allAssets[i]);
+						console.log("adding 1: " + allAssets[current].video.title);
+						allAssetsFiltered.unshift(allAssets[current]);
 					}
 				} else {
-					skipNext = false;
+					console.log("adding 0: " + allAssets[current].video.title);
+					allAssetsFiltered.unshift(allAssets[current]);
 				}
+			} else {
+				console.log("skipping: " + current);
+				skipNext = false;
 			}
 		}
 		console.log("Duplicate items skipped: " + skipped);

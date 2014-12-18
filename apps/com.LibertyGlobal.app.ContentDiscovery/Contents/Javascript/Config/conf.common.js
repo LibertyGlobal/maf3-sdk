@@ -1,5 +1,5 @@
 Config.common = {
-	programDurationDisplayThreshold: 85, // 
+	programDurationDisplayThreshold: 0.85, // 
 	progressBarUpdateFreq: 10000, 
 	contentTimeWindow: "30", // default content time window (minutes)
 	extendedContentTimeWindow: "150", // extendend content time window in case no items found in the default window (minutes)
@@ -17,9 +17,9 @@ Config.common = {
 // parameters: unique name, type of menu, filter on categories ('' is all)
 Config.common.createMenu = function() { 
 	var items = [];
+	items.push(new MenuItem('recommendations', 'recommendations', '', $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text")));
 	items.push(new MenuItem('speelfilm', 'category', 'speelfilm', $_("MenuItem_Movies_Preference_Text"), $_("MenuItem_Movies_MainMenu_Text")));
 	items.push(new MenuItem('trending', 'trending', 'speelfilm,nieuws,show,sport,kids,muziek,kunst,maatschappelijk,educatie', $_("MenuItem_Trending_Preference_Text"), $_("MenuItem_Trending_MainMenu_Text")));
-	items.push(new MenuItem('recommendations', 'recommendations', '', $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text")));
 	items.push(new MenuItem('shuffle', 'shuffle', '', $_("MenuItem_Shuffle_Preference_Text"), $_("MenuItem_Shuffle_MainMenu_Text")));
 	items.push(new MenuItem('sport', 'category', 'sport', $_("MenuItem_Sports_Preference_Text"), $_("MenuItem_Sports_MainMenu_Text")));
 	items.push(new MenuItem('kunst', 'category', 'kunst', $_("MenuItem_Arts_Preference_Text"), $_("MenuItem_Arts_MainMenu_Text")));

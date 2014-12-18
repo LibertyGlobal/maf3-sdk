@@ -163,7 +163,6 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	updateProgress: function(view) {
 		if (view.displayData !== null) {
 			var currentPercentage = ((moment() - moment(view.displayData.start)) / (moment(view.displayData.end) - moment(view.displayData.start)));
-			console.log("Progress percentage: " + currentPercentage);
 			if (currentPercentage <= 1) {
 				view.ProgressIndicator.setStyle("width", (811 * currentPercentage));
 				view.ExpiredImage.hide();
