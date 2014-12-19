@@ -31,7 +31,7 @@ var ContentDataRetriever = (function() {
 		if (shuffleAssets === true) {
 			allAssets = shuffleArray(allAssets);
 		}
-		
+
 		if (sortAssets === true) {
 			allAssets.sort(function(a, b) {
 				return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
@@ -50,38 +50,28 @@ var ContentDataRetriever = (function() {
 		for (var i = allAssets.length - 1; i >= 0; i--) {
 			var current = i;
 			var previous = i - 1;
-			console.log("index: " + current);
 			if (skipNext !== true) {
 				if (previous > 0) {
-					console.log("All assets: current: " + allAssets[current].start + ", " + allAssets[current].end + ", " + allAssets[current].video.title);
-					console.log("All assets: prev: " + allAssets[previous].start + ", " + allAssets[previous].end + ", " + allAssets[previous].video.title);
 					if (allAssets[current].start === allAssets[previous].start &&
 						allAssets[current].end === allAssets[previous].end &&
 						allAssets[current].video.title === allAssets[previous].video.title) {
 						if (allAssets[current].channel.name.toUpperCase().indexOf("HD") >= 0) {
-							console.log("adding 2: " + allAssets[current].video.title);
 							allAssetsFiltered.unshift(allAssets[current]);
 						} else {
-							console.log("adding 3: " + allAssets[previous].video.title);
 							allAssetsFiltered.unshift(allAssets[previous]);
 						}
-						console.log("skip next");
 						skipNext = true;
 						skipped++;
 					} else {
-						console.log("adding 1: " + allAssets[current].video.title);
 						allAssetsFiltered.unshift(allAssets[current]);
 					}
 				} else {
-					console.log("adding 0: " + allAssets[current].video.title);
 					allAssetsFiltered.unshift(allAssets[current]);
 				}
 			} else {
-				console.log("skipping: " + current);
 				skipNext = false;
 			}
 		}
-		console.log("Duplicate items skipped: " + skipped);
 		return allAssetsFiltered;
 	};
 
@@ -155,8 +145,11 @@ var ContentDataRetriever = (function() {
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
-							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", 'statistics')
-						.sort('statistics.bpm', 'desc')
+							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
+						.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
+						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+						.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
+						.sort(LGI.Guide.Broadcast.BPM, 'desc')
 						.findOne(function(response) {
 								menuItem.data = response;
 								menuItem.dataLoading = false;
