@@ -69,7 +69,6 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileUnloaded: function(event) {
-		console.log("Unload profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		Twitter.reset();
 		Facebook.reset();
 		this.controls.sideBarContainer.setProfileName("");
@@ -80,12 +79,10 @@ var MainScreen = new MAF.Class({
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
-		console.log("onMenuItemDataLoaded" + menuItem.mainMenuLabel + ", " + view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel);
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		} else {
-			console.log("reload again");
 			view.controls.assetCarousel.setLoading();
 			ContentDataRetriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex], false, view.onMenuItemDataLoaded, view);
 		}
@@ -167,7 +164,6 @@ var MainScreen = new MAF.Class({
 			},
 			events: {
 				onMenuChanged: function(eventData) {
-					console.log("menu item changed");
 					view.controls.assetCarousel.setLoading();
 					ContentDataRetriever.loadMenuData(eventData.payload.selectedMenuItem, false, view.onMenuItemDataLoaded, view);
 				}
@@ -220,7 +216,6 @@ var MainScreen = new MAF.Class({
 					}
 				},
 				onReloadItemsPressed: function(event) {
-					console.log("reload items pressed");
 					view.controls.assetCarousel.setLoading();
 					ContentDataRetriever.loadMenuData(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex],
 						true, view.onMenuItemDataLoaded, view);
@@ -230,7 +225,6 @@ var MainScreen = new MAF.Class({
 	},
 
 	updateView: function() {
-		console.log("update view: " + this.persist.returnFromPopup);
 		this.loading = false;
 		if (this.initializing !== true) {
 			if (ConfigurationStorageHandler.isAppFirstLoad()) {
@@ -243,6 +237,7 @@ var MainScreen = new MAF.Class({
 				});
 			}
 			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
+				this.controls.sideBarContainer.updateProfilePicture();
 				this.hideSidebar();
 				this.reloadMenu(this, true);
 			} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
@@ -254,7 +249,6 @@ var MainScreen = new MAF.Class({
 	},
 
 	reloadMenu: function(view, clearMenuItems) {
-		console.log("reload menu: " + clearMenuItems);
 		if (view.controls.verticalMenu.mainCollection.length <= 0 || clearMenuItems === true) {
 			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());
 		}
@@ -264,7 +258,6 @@ var MainScreen = new MAF.Class({
 	},
 
 	showBackground: function(view, isLive) {
-		console.log("showBackground: " + isLive);
 		if (isLive === true && view.controls.sideBarContainer.isCollapsed === true) {
 			view.elements.backgroundImageLive.show();
 			view.elements.backgroundImageNormal.hide();

@@ -301,12 +301,10 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		console.log("Preferences Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		this.bindData();
 	},
 
 	onProfileUnloaded: function(event) {
-		console.log("Preferences Unload profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow());
 		Twitter.reset();
 		Facebook.reset();
 	},
@@ -345,13 +343,17 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	setFocus: function() {
-		this.doneButton.focus();
+		this.doneButton.setFocus();
 	},
 
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
 			callbackParams.view.facebookButton.hide();
 			callbackParams.view.facebookText.show();
+			callbackParams.view.setFocus();
+			FacebookService.getProfilePicture(function(url) {
+				ConfigurationStorageHandler.updateProfileImage(url);
+			});
 		}
 	},
 
@@ -359,6 +361,7 @@ var PreferencesPopup = new MAF.Class({
 		if (result.screen_name !== undefined) {
 			callbackParams.view.twitterButton.hide();
 			callbackParams.view.twitterText.show();
+			callbackParams.view.setFocus();
 		}
 	},
 

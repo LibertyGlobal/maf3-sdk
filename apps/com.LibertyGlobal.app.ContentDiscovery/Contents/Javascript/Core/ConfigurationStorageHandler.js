@@ -50,7 +50,6 @@ var ConfigurationStorageHandler = (function() {
 		getVisibleMenuItems: function() {			
 			var menuItemsVisibleVar = Config.common.menuItemsVisibilityDefault;
 			var menuItemsVisible = currentAppData.get(visibleItemsSettingName);
-			screen.log("menu items: " + menuItemsVisible);
 			if (menuItemsVisible !== undefined) {
 				menuItemsVisibleVar = menuItemsVisible;
 			}
@@ -58,7 +57,6 @@ var ConfigurationStorageHandler = (function() {
 		},
 
 		updateVisibleMenuItems: function(visibleItems) {
-			screen.log("storing content time: " + visibleItems);
 			currentAppData.set(visibleItemsSettingName, visibleItems);
 			currentAppConfig.set(appProfileSetSettingName, "true");
 		},
@@ -66,7 +64,6 @@ var ConfigurationStorageHandler = (function() {
 		getContentTimeWindow: function() {
 			var contentTimeWindowVar = Config.common.contentTimeWindow;
 			var contentTimeWindow = currentAppData.get(contentTimeWindowSettingName);
-			screen.log("content time: " + contentTimeWindow);
 			if (contentTimeWindow !== undefined) {
 				contentTimeWindowVar = contentTimeWindow;
 			}
@@ -74,7 +71,6 @@ var ConfigurationStorageHandler = (function() {
 		},
 
 		updateContentTimeWindow: function(contentTimeWindow) {
-			screen.log("storing content time: " + contentTimeWindow);
 			currentAppData.set(contentTimeWindowSettingName, contentTimeWindow);
 			currentAppConfig.set(appProfileSetSettingName, "true");
 		},

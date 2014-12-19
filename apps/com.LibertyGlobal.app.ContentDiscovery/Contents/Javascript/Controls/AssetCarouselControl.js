@@ -34,7 +34,6 @@ var AssetCarouselControl = new MAF.Class({
 				},
 				events: {
 					onReload: function(event) {
-						console.log("onReload AssetCarouselControl");
 						view.fire("onReloadItemsPressed", {});
 						event.preventDefault();
 						event.stopPropagation();

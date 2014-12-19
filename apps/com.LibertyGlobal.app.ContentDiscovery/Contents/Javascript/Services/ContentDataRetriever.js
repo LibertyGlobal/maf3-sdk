@@ -18,35 +18,28 @@ var ContentDataRetriever = (function() {
 			allAssets = allAssets.concat(futureAssets);
 		}
 
-		for (var k = 0; k < allAssets.length; k++) {
-			console.log("item '" + allAssets[k].video.title + ", " + allAssets[k].start + "," + allAssets[k].end + "," + allAssets[k].channel.logicalPosition);
-		}
-
-		console.log("Both items: " + allAssets.length);
 		if (sortAssets === true) {
 			allAssets.sort(function(a, b) {
 				return (moment(a.start) - moment(b.start)) || (a.video.title.localeCompare(b.video.title));
 			});
 		}
-		console.log("Sorted items: " + allAssets.length);
+
 		if (uniqueAssets === true) {
 			allAssets = removeDuplicates(allAssets);
 		}
-		console.log("Unique items: " + allAssets.length);
+
 		if (shuffleAssets === true) {
 			allAssets = shuffleArray(allAssets);
 		}
-		console.log("shuffle items: " + allAssets.length);
+		
 		if (sortAssets === true) {
 			allAssets.sort(function(a, b) {
 				return ((moment(a.start) - moment(b.start)) || a.channel.logicalPosition - b.channel.logicalPosition);
 			});
 		}
-		console.log("re-sorted items: " + allAssets.length);
 
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
-		//console.log("data loaded: " + menuItem.mainMenuLabel);	
 		callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
 	};
 
@@ -109,7 +102,7 @@ var ContentDataRetriever = (function() {
 	};
 
 	var errorCallback = function(error) {
-		screen.log("GSDK: " + error);
+		//screen.log("GSDK: " + error);
 	};
 
 	return {

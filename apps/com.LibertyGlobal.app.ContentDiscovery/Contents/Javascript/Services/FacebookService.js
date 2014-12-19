@@ -11,7 +11,6 @@ var FacebookService = (function() {
 		},
 
 		postToTimeline: function(url, message, image, title, description, callback, callbackParams) {
-			//console.log("postToTimeline: " + url + ", " + message + ", " + image + ", " + title + ", " + description);
 			var body = {
 				message: message,
 				name: title,

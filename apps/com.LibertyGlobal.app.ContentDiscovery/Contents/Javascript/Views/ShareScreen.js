@@ -158,7 +158,6 @@ var ShareScreen = new MAF.Class({
 						event.preventDefault();
 						event.stopPropagation();
 					}
-					//console.log("data after: " + view.shareTextArray.join(''));
 					view.elements.ShareText.setText(view.encodeText(view.shareTextArray.join('')));
 				}
 			}

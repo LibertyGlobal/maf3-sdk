@@ -15,10 +15,8 @@ var ReminderHandler = (function() {
 			if (startTimeAsset > currentTime) {
 				var diff = moment(startTimeAsset - currentTime).utc();
 				var delayInSeconds = ((diff.hours() * 60) + diff.minutes() * 60) + diff.seconds();
-				console.log("Store notification in " + diff.hours() + ":" + diff.minutes() + ":" + diff.seconds() + " or " + delayInSeconds + " seconds, message:" + reminder.title + ", " + reminder.channelName + ":" + reminder.channelNr);
 
 				reminder.timer = new Timer(delayInSeconds, function() {
-					console.log("Notification: " + $_('Notification_Line1_Text', [reminder.title]) + ", " + $_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]));
 					widget.notify(widget.getUrl("Images/Icon.png"), [$_('App_Title'),
 							$_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]),
 							$_('Notification_Line1_Text', [reminder.title])
