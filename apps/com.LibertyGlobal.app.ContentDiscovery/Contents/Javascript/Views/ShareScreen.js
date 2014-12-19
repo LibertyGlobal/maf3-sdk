@@ -24,7 +24,7 @@ var ShareScreen = new MAF.Class({
 					view.currentItem = response[0];
 					view.elements.Poster.setSource(view.currentItem.video.imageLink.href.replace("https", "http"));
 					view.elements.Title.setText(view.currentItem.video.title);
-					view.shareTextArray = $_('ShareScreen_EmptyMessage_Text', [view.currentItem.video.title]).split();
+					view.shareTextArray = $_('ShareScreen_EmptyMessage_Text', [view.currentItem.video.title]).split("");
 					view.elements.ShareText.setText(view.shareTextArray.join(''));
 					view.controls.shareButton.focus();
 				}
@@ -140,11 +140,7 @@ var ShareScreen = new MAF.Class({
 				},
 				onKeyDown: function(event) {
 					//screen.log("key event: " + event.payload.key + ", " + event.payload.keyCode);
-					if (event.payload.key === "left") {
-						view.shareTextArray.pop();
-						event.preventDefault();
-						event.stopPropagation();
-					} else if (event.payload.key === "space") {
+					if (event.payload.key === "space") {
 						view.shareTextArray.push(' ');
 						event.preventDefault();
 						event.stopPropagation();
@@ -189,7 +185,10 @@ var ShareScreen = new MAF.Class({
 			button1Type: "check",
 			button2Text: $_('ShareScreen_ExcludeTwitter_Button'),
 			button2Type: "check",
-			button3Text: $_('ShareScreen_ClearAll_Button'),
+			button3Text: $_('ShareScreen_RemoveCharacter_Button'),
+			button4Text: $_('ShareScreen_ClearAll_Button'),
+			button4Visible: true,
+			buttonWidth: 250,
 			styles: {
 				height: 72,
 				width: 1002,
@@ -209,10 +208,22 @@ var ShareScreen = new MAF.Class({
 				onButtonSelect: function(eventData) {
 					switch (eventData.payload.action) {
 						case 1:
+							if (FacebookService.isPaired() !== true) {
+								view.controls.horizontalMenu.getButton(eventData.payload.action).setSelected(false);
+								FacebookService.pair(view.facebookPaired, view);
+							}
 							break;
 						case 2:
+							if (TwitterService.isPaired() !== true) {
+								view.controls.horizontalMenu.getButton(eventData.payload.action).setSelected(false);
+								TwitterService.pair(view.twitterPaired, view);
+							}
 							break;
 						case 3:
+							view.shareTextArray.pop();
+							view.elements.ShareText.setText(view.encodeText(view.shareTextArray.join('')));
+							break;
+						case 4:
 							view.shareTextArray = [];
 							view.elements.ShareText.setText("");
 							break;
@@ -276,7 +287,7 @@ var ShareScreen = new MAF.Class({
 					eventData.stopPropagation();
 				},
 				onSelect: function() {
-					view.shareToSocial(view, !view.controls.horizontalMenu.getButton(1).isSelected(), !view.controls.horizontalMenu.getButton(2).isSelected());
+					view.shareToSocial(view, view.controls.horizontalMenu.getButton(1).isSelected(), view.controls.horizontalMenu.getButton(2).isSelected());
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
@@ -352,9 +363,7 @@ var ShareScreen = new MAF.Class({
 				onSelect: function() {
 					if (view.controls.popupButton2.config.buttonText === $_('ShareScreen_Fail_Retry_Button')) {
 						view.elements.popup.hide();
-						view.shareToSocial(view, 
-							(view.facebookPosted === true && view.facebookResult === false), 
-							(view.twitterPosted === true && view.twitterResult === false));
+						view.shareToSocial(view, (view.facebookPosted === true && view.facebookResult === false), (view.twitterPosted === true && view.twitterResult === false));
 					} else {
 						view.elements.popup.hide();
 					}
@@ -363,6 +372,18 @@ var ShareScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
 		view.elements.popup.hide();
+	},
+
+	facebookPaired: function(result, callbackParams) {
+		if (result.first_name !== undefined) {
+			callbackParams.controls.horizontalMenu.getButton(1).setSelected(true);
+		}
+	},
+
+	twitterPaired: function(result, callbackParams) {
+		if (result.screen_name !== undefined) {
+			callbackParams.controls.horizontalMenu.getButton(2).setSelected(true);
+		}
 	},
 
 	shareToSocial: function(view, shareFacebook, shareTwitter) {
@@ -405,7 +426,7 @@ var ShareScreen = new MAF.Class({
 		view.showConfirmation(view);
 	},
 
-	showConfirmation: function(view) {	
+	showConfirmation: function(view) {
 		var requestFailed = true;
 		if (view.facebookPosted === true && view.twitterPosted === true) {
 			if (view.facebookResultReceived === true && view.twitterResultReceived === true) {
@@ -442,17 +463,17 @@ var ShareScreen = new MAF.Class({
 				view.updatePopupView(view, requestFailed);
 			}
 		}
-				
+
 	},
 
-	updatePopupView: function(view, requestFailed){
+	updatePopupView: function(view, requestFailed) {
 		view.elements.popup.show();
 		view.controls.popupButton2.setFocus();
 		if (requestFailed === true) {
 			view.controls.popupButton1.show();
 			view.controls.popupButton1.setButtonText($_('ShareScreen_Fail_Cancel_Button'));
 			view.controls.popupButton2.setButtonText($_('ShareScreen_Fail_Retry_Button'));
-			
+
 		} else {
 			view.controls.popupButton1.hide();
 			view.controls.popupButton2.setButtonText($_('ShareScreen_Success_Ok_Button'));
@@ -472,18 +493,14 @@ var ShareScreen = new MAF.Class({
 		view.elements.ShareText.setText("");
 		var facebookButton = view.controls.horizontalMenu.getButton(1);
 		var twitterButton = view.controls.horizontalMenu.getButton(2);
-		facebookButton.setDisabled(true);
-		facebookButton.setSelected(true);
-		twitterButton.setDisabled(true);
-		twitterButton.setSelected(true);
+		facebookButton.setSelected(false);
+		twitterButton.setSelected(false);
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
-				twitterButton.setDisabled(false);
-				twitterButton.setSelected(false);
+				twitterButton.setSelected(true);
 			}
 			if (FacebookService.isPaired() === true) {
-				facebookButton.setDisabled(false);
-				facebookButton.setSelected(false);
+				facebookButton.setSelected(true);
 			}
 		}
 		view.shareTextArray = [];

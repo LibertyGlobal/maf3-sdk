@@ -34,7 +34,7 @@ var HorizontalMenuControl = new MAF.Class({
 				styles: {
 					margin: 0,
 					paddingTop: 3,
-					width: this.width / 3,
+					width: this.config.buttonWidth,
 					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
@@ -65,7 +65,7 @@ var HorizontalMenuControl = new MAF.Class({
 				styles: {	
 					margin: 0,
 					paddingTop: 3,
-					width: this.width / 3,
+					width: this.config.buttonWidth,
 					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
@@ -84,18 +84,52 @@ var HorizontalMenuControl = new MAF.Class({
 								event.preventDefault();
 								event.stopPropagation();
 								break;
+							case 'right':
+								if(horizontalMenuControl.config.button4Visible === true)
+								{
+									horizontalMenuControl.focussedButton = 4;
+									horizontalMenuControl.button4.setFocus();
+									event.preventDefault();
+									event.stopPropagation();
+								}
+								break;
 						}						
 					}
 				},
 				styles: {
 					margin: 0,
 					paddingTop: 3,
-					width: this.width / 3,
+					width: this.config.buttonWidth,
 					height: this.height,
 					position: 'relative',
 					display: 'inline-block'
 				}
 			}).appendTo(this);			
+
+			this.button4 = new HorizontalMenuButtonControl({
+				buttonText: this.config.button4Text,
+				buttonType: this.config.button4Type,
+				events: {
+					onNavigate: function(event){
+						switch (event.payload.direction) {
+							case 'left':
+								horizontalMenuControl.focussedButton = 3;
+								horizontalMenuControl.button3.setFocus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+						}						
+					}
+				},
+				styles: {
+					margin: 0,
+					paddingTop: 3,
+					width: this.config.buttonWidth,
+					height: this.height,
+					position: 'relative',
+					display: 'inline-block'
+				}
+			}).appendTo(this);	
 		}
 	},
 
@@ -104,15 +138,19 @@ var HorizontalMenuControl = new MAF.Class({
 		focus: false,
 		showBackground: true,
 		width: 1000,
+		buttonWidth: 333,
 		button1Visible: true,
 		button2Visible: true,
 		button3Visible: true,
+		button4Visible: false,
 		button1Text: "",
 		button2Text: "",
 		button3Text: "",
+		button4Text: "",
 		button1Type: "text",
 		button2Type: "text",
-		button3Type: "text"
+		button3Type: "text",
+		button4Type: "text"
 	},
 
 	initialize: function() {
@@ -127,16 +165,20 @@ var HorizontalMenuControl = new MAF.Class({
 		{
 			this.setStyle("backgroundImage", "Images/horizontal_menu_background.png");
 		}
+		this.config.buttonWidth = this.config.buttonWidth;
 		this.config.button1Text = this.config.button1Text;	
 		this.config.button2Text = this.config.button2Text;	
-		this.config.button3Text = this.config.button3Text;	
+		this.config.button3Text = this.config.button3Text;
+		this.config.button4Text = this.config.button4Text;
 		this.config.button1Type = this.config.button1Type;	
 		this.config.button2Type = this.config.button2Type;
 		this.config.button3Type = this.config.button3Type;
+		this.config.button4Type = this.config.button4Type;
 		this.createContent();
 		this.config.button1Visible ? this.button1.show() : this.button1.hide();
 		this.config.button2Visible ? this.button2.show() : this.button2.hide();
-		this.config.button3Visible ? this.button3.show() : this.button3.hide();		
+		this.config.button3Visible ? this.button3.show() : this.button3.hide();
+		this.config.button4Visible ? this.button4.show() : this.button4.hide();	
 		this.focussedButton = 1;
 	},	
 
@@ -149,9 +191,11 @@ var HorizontalMenuControl = new MAF.Class({
 		this.button1.config.buttonText = this.config.button1Text;	
 		this.button2.config.buttonText = this.config.button2Text;	
 		this.button3.config.buttonText = this.config.button3Text;
+		this.button4.config.buttonText = this.config.button4Text;
 		this.button1.updateText();
 		this.button2.updateText();
 		this.button3.updateText();
+		this.button4.updateText();
 	},
 
 	getButton: function(buttonNr){
@@ -163,6 +207,8 @@ var HorizontalMenuControl = new MAF.Class({
 				return this.button2;
 			case 3:
 				return this.button3;
+			case 4:
+				return this.button4;
 		}
 		return null;
 	},
@@ -171,6 +217,7 @@ var HorizontalMenuControl = new MAF.Class({
 		delete this.button1;
 		delete this.button2;
 		delete this.button3;
+		delete this.button4;
 		this.parent();
 	}
 });

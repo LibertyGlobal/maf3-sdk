@@ -58,6 +58,7 @@ var ConfigurationStorageHandler = (function() {
 		},
 
 		updateVisibleMenuItems: function(visibleItems) {
+			screen.log("storing content time: " + visibleItems);
 			currentAppData.set(visibleItemsSettingName, visibleItems);
 			currentAppConfig.set(appProfileSetSettingName, "true");
 		},
@@ -73,6 +74,7 @@ var ConfigurationStorageHandler = (function() {
 		},
 
 		updateContentTimeWindow: function(contentTimeWindow) {
+			screen.log("storing content time: " + contentTimeWindow);
 			currentAppData.set(contentTimeWindowSettingName, contentTimeWindow);
 			currentAppConfig.set(appProfileSetSettingName, "true");
 		},

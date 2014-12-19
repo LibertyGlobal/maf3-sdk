@@ -46,7 +46,6 @@ var MainScreen = new MAF.Class({
 	onProfileLoaded: function(event) {
 		var view = this;
 		if (ConfigurationStorageHandler.isProfileSet()) {
-			console.log("Load profile: " + ConfigurationStorageHandler.getVisibleMenuItems() + ", " + ConfigurationStorageHandler.getContentTimeWindow() + ", " + this.controls);
 			this.controls.sideBarContainer.setProfileName(profile.name);
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
 			if(FacebookService.isPaired()===true)

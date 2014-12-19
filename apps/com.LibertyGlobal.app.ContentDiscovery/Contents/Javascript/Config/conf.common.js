@@ -2,7 +2,7 @@ Config.common = {
 	programDurationDisplayThreshold: 0.85, // 
 	progressBarUpdateFreq: 10000, 
 	contentTimeWindow: "30", // default content time window (minutes)
-	extendedContentTimeWindow: "150", // extendend content time window in case no items found in the default window (minutes)
+	extendedContentTimeWindow: "90", // extendend content time window in case no items found in the default window (minutes)
 	trendingItemsLimit: 16,
 	facebookDefaultUrl: "www.upc.nl",
 	broadcastApiUrl: 'http://api.uat.appdev.io/kraken/v2/schedule/',
