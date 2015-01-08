@@ -43,7 +43,6 @@ include('Javascript/Views/MainScreen.js');
 include('Javascript/Views/InfoScreen.js');
 include('Javascript/Views/FullBiography.js');
 include('Javascript/Views/FullSynopsis.js');
-include('Javascript/Views/EmptyScreen.js');
 include('Javascript/Views/PopupScreen.js');
 include('Javascript/Views/PreferencesPopup.js');
 include('Javascript/Views/ShareScreen.js');
@@ -61,7 +60,6 @@ MAF.application.init({
 		{ id: 'view-InfoScreen', viewClass: InfoScreen },
 		{ id: 'view-FullBiography', viewClass: FullBiography },
 		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
-		{ id: 'view-EmptyScreen', viewClass: EmptyScreen },
 		{ id: 'view-PopupScreen', viewClass: PopupScreen },
 		{ id: 'view-ShareScreen', viewClass: ShareScreen },
 		{ id: 'view-About', viewClass: MAF.views.AboutBox } // Use standard About view

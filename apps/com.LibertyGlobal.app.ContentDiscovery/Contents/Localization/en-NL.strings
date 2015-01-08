@@ -1,8 +1,8 @@
 // General
 "App_Title" = "Watson";
 "App_Description" = "Met Watson kun je makkelijk zien wat er nu op tv is of zo meteen gaat beginnen";
-"Notification_Line1_Text" = "HERINNERING: %s gaat zo beginnen.";
-"Notification_Line2_Text" = "Ga naar kanaal %s(%s) om het niet te missen.";
+"Notification_Line1_Text" = "%s begint zo meteen";
+"Notification_Line2_Text" = "op kanaal %s(%s)";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Films / Drama";
@@ -30,19 +30,19 @@
 "MenuItem_Music_MainMenu_Text" = "Muziek";
 "MenuItem_Education_MainMenu_Text" = "Educatie";
 "MenuItem_Trending_MainMenu_Text" = "Trending";
-"MenuItem_Recommendations_MainMenu_Text" = "Suggesties";
+"MenuItem_Recommendations_MainMenu_Text" = "Suggesties voor jou";
 "MenuItem_Recommendations_MainMenu_Profile_Text" = "Suggesties voor %s";
 "MenuItem_Shuffle_MainMenu_Text" = "Shuffle";
 "MainScreen_Asset_Focus_Genre" = "Genre: ";
-"MainScreen_Asset_Focus_Reminder" = "Druk op OK om een herinnering in te stellen";
-"MainScreen_Asset_Focus_Remove_Reminder" = "Druk op OK om een herinnering te verwijderen";
+"MainScreen_Asset_Focus_Reminder" = "Druk OK voor instellen herinnering";
+"MainScreen_Asset_Focus_Remove_Reminder" = "Druk OK voor verwijderen herinnering";
 "MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
-"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen %s programma's nu op tv, of programma's die beginnen binnen %s ";
+"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen programma's uit de categorie %s nu op tv, of programma's die beginnen binnen %s.";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
 "MainScreen_Asset_Focus_Hours" = "uur";
 "MainScreen_Asset_Focus_Minutes" = "minuten";
-"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Latere programma's";
-"MainScreen_Asset_Focus_Asset_Ended_Text" = "Dit programma is inmiddels afgelopen";
+"MainScreen_Asset_Focus_Asset_Ended_Text" = "Uh-oh, je hebt dit programma net gemist";
 "MainScreen_Asset_Focus_LoadingTitle" = "Even geduld a.u.b. de data wordt geladen";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";
 
@@ -81,7 +81,7 @@
 "PreferencesScreen_ConnectedFacebook_Text" = "Verbonden met Facebook";
 "PreferencesScreen_ConnectedTwitter_Text" = "Verbonden met Twitter";
 "PreferencesScreen_ContentTime_Title" = "Tijdvak*";
-"PreferencesScreen_ContentTime_SubTitle" = "Alles wat nu uitgezonden wordt, of begint over:";
+"PreferencesScreen_ContentTime_SubTitle" = "Alles wat nu uitgezonden wordt, of begint binnen:";
 "PreferencesScreen_ContentTime_30min_Text" = "30 minuten";
 "PreferencesScreen_ContentTime_60min_Text" = "1 uur";
 "PreferencesScreen_ContentTime_90min_Text" = "1,5 uur";
@@ -112,16 +112,16 @@
 "ShareScreen_ExcludeFacebook_Button" = "Facebook";
 "ShareScreen_ExcludeTwitter_Button" = "Twitter";
 "ShareScreen_ClearAll_Button" = "Alles wissen";
-"ShareScreen_RemoveCharacter_Button" = "Correctie";
+"ShareScreen_RemoveCharacter_Button" = "Delete";
 "ShareScreen_Send_Button" = "Verstuur";
 "ShareScreen_Back_Button" = "Hoofdpagina";
-"ShareScreen_Fail_Facebook" = "Your message could not be posted on facebook. Would you like to retry?";
-"ShareScreen_Fail_Twitter" = "Your message could not be posted on twitter. Would you like to retry?";
-"ShareScreen_Fail_Facebook_Twitter" = "Your message could not be posted. Would you like to retry?";
-"ShareScreen_Success_Facebook" = "Your message has succesfully been posted on Facebook";
-"ShareScreen_Success_Twitter" = "Your message has succesfully been posted on Twitter";
-"ShareScreen_Success_Facebook_Twitter" = "Your message has succesfully been posted on Facebook and Twitter";
-"ShareScreen_Fail_Retry_Button" = "Retry";
+"ShareScreen_Fail_Facebook" = "Je bericht kon niet worden geplaatst op Facebook. Wil je het opnieuw proberen?";
+"ShareScreen_Fail_Twitter" = "Je bericht kon niet worden geplaatst op Twitter. Wil je het opnieuw proberen?";
+"ShareScreen_Fail_Facebook_Twitter" = "Je bericht kon niet worden gepost. Wil je het opnieuw proberen?";
+"ShareScreen_Success_Facebook" = "Je bericht is succesvol geplaatst op Facebook";
+"ShareScreen_Success_Twitter" = "Je bericht is succesvol geplaatst op Twitter";
+"ShareScreen_Success_Facebook_Twitter" = "Je bericht is succesvol geplaatst op Facebook en Twitter";
+"ShareScreen_Fail_Retry_Button" = "Probeer opnieuw";
 "ShareScreen_Fail_Cancel_Button" = "Cancel";
 "ShareScreen_Success_Ok_Button" = "OK";
 

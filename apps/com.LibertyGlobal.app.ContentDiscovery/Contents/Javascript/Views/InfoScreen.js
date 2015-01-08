@@ -103,9 +103,7 @@ var InfoScreen = new MAF.Class({
 					switch (eventData.payload.action) {
 						case 1:
 							if (view.isLive) {
-								MAF.HostEventManager.send("exitToDock");
-								// MAF.application.loadView('view-EmptyScreen', { 
-								// "channelNr": view.asset.channel.logicalPosition });
+								MAF.application.exitToLive();
 							} else {
 								if (ReminderHandler.isReminderSet(view.asset.id) === true) {
 									ReminderHandler.removeReminder(view.asset.id);

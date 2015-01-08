@@ -270,6 +270,7 @@ var CastScreen = new MAF.Class({
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;
 		delete this.controls.backButton;
+		delete this.cast.alsoKnown;
 		delete this.cast;
 	}
 });

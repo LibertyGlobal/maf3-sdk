@@ -2,7 +2,7 @@
 "App_Title" = "Watson";
 "App_Description" = "Find what's on TV now in a personalised way.";
 "Notification_Line1_Text" = "REMINDER: %s is about to start";
-"Notification_Line2_Text" = "Switch to channel %s(%s) to watch";
+"Notification_Line2_Text" = "on channel %s(%s)";
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Movies / Drama";
@@ -37,10 +37,10 @@
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add a reminder";
 "MainScreen_Asset_Focus_Remove_Reminder" = "Press OK to remove reminder";
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
-"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s ";
+"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s.";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
 "MainScreen_Asset_Focus_Hours" = "hours";
 "MainScreen_Asset_Focus_Minutes" = "minutes";
-"MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Look for content further ahead";
 "MainScreen_Asset_Focus_Asset_Ended_Text" = "Whoops, it seems you've missed this one";
 "MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";
@@ -124,7 +124,6 @@
 "ShareScreen_Fail_Retry_Button" = "Retry";
 "ShareScreen_Fail_Cancel_Button" = "Cancel";
 "ShareScreen_Success_Ok_Button" = "OK";
-
 
 // Cast info screen
 "CastInfoScreen_DateOfBirth_Text" = "Date of birth:";

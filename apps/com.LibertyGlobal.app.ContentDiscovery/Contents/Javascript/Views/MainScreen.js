@@ -30,11 +30,14 @@ var MainScreen = new MAF.Class({
 							if (this.loading === false) {
 								this.loading = true; // avoid multiple clicks
 								var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
-								MAF.application.loadView('view-InfoScreen', {
-									"assetId": selectedAsset.id
-								});
-								event.preventDefault();
-								event.stopPropagation();
+								if(selectedAsset !== undefined)
+								{
+									MAF.application.loadView('view-InfoScreen', {
+										"assetId": selectedAsset.id
+									});
+									event.preventDefault();
+									event.stopPropagation();
+								}
 							}
 						}
 					}
@@ -194,10 +197,7 @@ var MainScreen = new MAF.Class({
 					if (view.controls.sideBarContainer.isCollapsed === true) {
 						if (eventData.payload.asset !== undefined && eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
-								MAF.HostEventManager.send("exitToDock");
-								// TODO remove including empty screen MAF.application.loadView('view-EmptyScreen', {
-								// "channelNr": eventData.payload.asset.channel.logicalPosition
-								// });
+								MAF.application.exitToLive();
 							} else {
 								if(ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {
 									ReminderHandler.removeReminder(eventData.payload.asset.id);
@@ -237,6 +237,8 @@ var MainScreen = new MAF.Class({
 				});
 			}
 			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
+				this.controls.sideBarContainer.setProfileName(profile.name);
+			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
 				this.controls.sideBarContainer.updateProfilePicture();
 				this.hideSidebar();
 				this.reloadMenu(this, true);
