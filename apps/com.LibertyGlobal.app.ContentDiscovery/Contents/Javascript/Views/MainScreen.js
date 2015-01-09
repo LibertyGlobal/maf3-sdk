@@ -11,12 +11,15 @@ var MainScreen = new MAF.Class({
 		view.fnOnProfileLoaded = view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', view);
 		view.fnOnProfileUnloaded = view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', view);
 		ChannelHandler.initialize(view.onChannelInitializeComplete, view);
-
 	},
 
 	onChannelInitializeComplete: function(view) {
 		MenuHandler.initialize();
-		view.initializing = false;
+		view.initializing = false;				
+		if(profile.name !== "")
+		{
+			view.updateProfileSettings(view, profile.name);
+		}
 		view.updateView();
 	},
 
@@ -55,9 +58,10 @@ var MainScreen = new MAF.Class({
 			{
 				FacebookService.getProfilePicture(function(url) { 
 					ConfigurationStorageHandler.updateProfileImage(url);
-					view.controls.sideBarContainer.updateProfilePicture();
+					view.updateProfileSettings(view, profile.name);
 				});
 			}
+			this.updateProfileSettings(this, profile.name);
 			this.hideSidebar();
 			this.reloadMenu(this, true);
 		} else {
@@ -74,10 +78,8 @@ var MainScreen = new MAF.Class({
 	onProfileUnloaded: function(event) {
 		Twitter.reset();
 		Facebook.reset();
-		this.controls.sideBarContainer.setProfileName("");
 		ConfigurationStorageHandler.updateProfileImage("");
-		MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text"));
-		this.controls.sideBarContainer.updateProfilePicture();
+		this.updateProfileSettings(this, "");
 		this.reloadMenu(this, true);
 	},
 
@@ -237,9 +239,7 @@ var MainScreen = new MAF.Class({
 				});
 			}
 			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
-				this.controls.sideBarContainer.setProfileName(profile.name);
-			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
-				this.controls.sideBarContainer.updateProfilePicture();
+				this.updateProfileSettings(this, profile.name);
 				this.hideSidebar();
 				this.reloadMenu(this, true);
 			} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
@@ -257,6 +257,19 @@ var MainScreen = new MAF.Class({
 		view.controls.assetCarousel.updateVideo();
 		view.controls.assetCarousel.updateReminder();
 		view.showBackground(view, view.controls.assetCarousel.isLive);
+	},
+
+	updateProfileSettings: function(view, profileName) {
+		this.controls.sideBarContainer.setProfileName(profileName);
+		if(profileName !== "" && profileName !== undefined)
+		{
+			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profileName]));
+		}
+		else
+		{
+			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text"));
+		}
+		this.controls.sideBarContainer.updateProfilePicture();
 	},
 
 	showBackground: function(view, isLive) {

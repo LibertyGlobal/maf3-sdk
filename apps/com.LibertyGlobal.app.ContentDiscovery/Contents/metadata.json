@@ -1,10 +1,10 @@
 {
 	"identifier": "com.libertyglobal.app.ContentDiscovery",
-	"name": "Watson (v0.0.48)",
-	"version": "0.0.48",
+	"name": "Watson (v0.0.51)",
+	"version": "0.0.51",
 	"author": "Liberty Global",
 	"company": "Liberty Global",
-	"copyright": "Liberty Global 2015",	
+	"copyright": "Liberty Global 2015",
 	"description": "App_Description",
 	"categories": [
 		"video"

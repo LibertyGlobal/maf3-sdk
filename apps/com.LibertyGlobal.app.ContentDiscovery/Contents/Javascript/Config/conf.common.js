@@ -5,7 +5,8 @@ Config.common = {
 	extendedContentTimeWindow: "90", // extendend content time window in case no items found in the default window (minutes)
 	trendingItemsLimit: 16,
 	facebookDefaultUrl: "www.upc.nl",
-	broadcastApiUrl: 'http://api.uat.appdev.io/kraken/v2/schedule/',
+	//http://test.appdev.io/kraken/v2/schedule/data/NL/broadcasts.json
+	broadcastApiUrl: 'http://test.appdev.io/kraken/v2/schedule/',
 	country: "NL",
 	language: "nl",
 	ageRatingSchemeFile: "apps/com.libertyglobal.app.ContentDiscovery/Contents/Javascript/Config/AgeRatingScheme.xml",

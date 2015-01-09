@@ -21,6 +21,7 @@ var AssetDetailControl = new MAF.Class({
 					width: 258
 				}
 			}).appendTo(this.PosterContainer);
+			this.PosterContainer.hide();
 
 			this.Title = new MAF.element.Text({
 				styles: {
