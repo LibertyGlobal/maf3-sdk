@@ -5,7 +5,7 @@ var FacebookService = (function() {
 		},
 
 		pair: function(callback, callbackParams) {
-			Facebook.api('me', function(result) {
+			Facebook.api('v2.2/me', function(result) {
 				callback(result, callbackParams);
 			});
 		},
@@ -19,7 +19,7 @@ var FacebookService = (function() {
 			};
 			if (image && image.toLowerCase().indexOf("http") > -1) body.picture = image;
 			if (description) body.description = description;
-			Facebook.api('/me/feed', 'post', body,
+			Facebook.api('v2.2/me/feed', 'post', body,
 				function(response) {
 					if (response.id)
 						callback(true, callbackParams);
@@ -35,7 +35,7 @@ var FacebookService = (function() {
 				width: 58,
 				type: 'square'
 			};
-			Facebook.api('/me/picture?redirect=0', 'get', body,
+			Facebook.api('v2.2/me/picture?redirect=0', 'get', body,
 				function(response) {
 					if (response.data !== undefined)
 					{

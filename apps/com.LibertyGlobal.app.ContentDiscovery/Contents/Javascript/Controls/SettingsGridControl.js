@@ -69,6 +69,10 @@ var SettingsGridControl = new MAF.Class({
 	},
 
 	suicide: function() {
+		for (var i = 0; i < this.cells.length; i++) {
+			delete this.cells[i];
+		}
+		this.cells = null;
 		this.parent();
 	}
 

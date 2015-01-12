@@ -1,6 +1,6 @@
 // General
 "App_Title" = "Watson";
-"App_Description" = "Met Watson kun je makkelijk zien wat er nu op tv is of zo meteen gaat beginnen";
+"App_Description" = "Met Watson ontdek je de leukste programma’s die nu op tv zijn of zo meteen gaan beginnen";
 "Notification_Line1_Text" = "%s begint zo meteen";
 "Notification_Line2_Text" = "op kanaal %s(%s)";
 

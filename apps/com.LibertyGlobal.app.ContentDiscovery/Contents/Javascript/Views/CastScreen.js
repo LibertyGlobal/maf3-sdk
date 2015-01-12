@@ -7,35 +7,18 @@ var CastScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		view.cast = this.persist.cast;
-		view.cast.name = "Amy Adams";
-		view.cast.dateofBirth = "20 August 1974";
-		view.cast.placeOfBirth = "Vincenza, Italy";
-		view.cast.biography = "Amy Lou Adams was born in Italy, to American parents Kathryn (Hicken) and Richard Kent Adams, while her father was a U.S. serviceman. She was raised in a Mormon family of seven children in Castle Rock, Colorado, and has English, as well as Danish, German, and Norwegian, ancestry. Adams sang in the school choir at Douglas County High School and was an apprentice dancer at a local dance company, with the ambition of becoming a ballerina. However, she worked as a greeter at The Gap and as a Hooters hostess to support herself before finding work as a dancer at Boulder's Dinner Theatre and Country Dinner Playhouse in such productions as Brigadoon and A Chorus Line. It was there that she was spotted by a Minneapolis dinner-theater director who asked her to move to Chanhassen, Minnesota for more regional dinner theater work.";
-		view.cast.alsoKnown = [{
-			name: "Test1",
-			image: ""
-		}, {
-			name: "Test2",
-			image: ""
-		}, {
-			name: "Test3",
-			image: ""
-		}, {
-			name: "Test4",
-			image: ""
-		}];
 	},
 
 	updateData: function(view) {
-		if (view.cast.alsoKnown.length > 0) {
-			view.controls.coverBar.changeDataset(view.cast.alsoKnown);
-			view.controls.coverBar.show();
-			view.elements.coverBarTitle.show();
-		}
-		view.elements.Title.setText(view.cast.name);
-		view.elements.Prop1Value.setText(view.cast.dateofBirth);
-		view.elements.Prop2Value.setText(view.cast.placeOfBirth);
-		view.elements.Biography.setText(view.cast.biography);
+		// if (view.cast.alsoKnown.length > 0) {
+		// 	view.controls.coverBar.changeDataset(view.cast.alsoKnown);
+		// 	view.controls.coverBar.show();
+		// 	view.elements.coverBarTitle.show();
+		// }
+		view.elements.Title.setText("Amy Adams");
+		view.elements.Prop1Value.setText("20 August 1974");
+		view.elements.Prop2Value.setText("Vincenza, Italy");
+		view.elements.Biography.setText("Amy Lou Adams was born in Italy, to American parents Kathryn (Hicken) and Richard Kent Adams, while her father was a U.S. serviceman. She was raised in a Mormon family of seven children in Castle Rock, Colorado, and has English, as well as Danish, German, and Norwegian, ancestry. Adams sang in the school choir at Douglas County High School and was an apprentice dancer at a local dance company, with the ambition of becoming a ballerina. However, she worked as a greeter at The Gap and as a Hooters hostess to support herself before finding work as a dancer at Boulder's Dinner Theatre and Country Dinner Playhouse in such productions as Brigadoon and A Chorus Line. It was there that she was spotted by a Minneapolis dinner-theater director who asked her to move to Chanhassen, Minnesota for more regional dinner theater work.");
 
 		view.controls.horizontalMenu.show();
 		view.controls.horizontalMenu.setFocus();
