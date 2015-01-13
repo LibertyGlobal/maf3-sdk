@@ -55,20 +55,6 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.facebookText = new MAF.element.Text({
-				text: $_('PreferencesScreen_ConnectedFacebook_Text'),
-				styles: {
-					color: '#FFFFFF',
-					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
-					fontSize: 36,
-					vOffset: 450,
-					hOffset: 75,
-					width: 500,
-					height: 66
-				}
-			}).appendTo(view);
-			view.facebookText.hide();
-
 			view.facebookButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectFacebook_Button'),
 				styles: {
@@ -106,20 +92,6 @@ var PreferencesPopup = new MAF.Class({
 					}
 				}
 			}).appendTo(view);
-
-			view.twitterText = new MAF.element.Text({
-				text: $_('PreferencesScreen_ConnectedTwitter_Text'),
-				styles: {
-					color: '#FFFFFF',
-					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
-					fontSize: 36,
-					vOffset: 450,
-					hOffset: 570,
-					width: 500,
-					height: 66
-				}
-			}).appendTo(view);
-			view.twitterText.hide();
 
 			view.twitterButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectTwitter_Button'),
@@ -314,22 +286,18 @@ var PreferencesPopup = new MAF.Class({
 		this.twitterButton.show();
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
-				this.twitterButton.hide();
-				this.twitterText.show();
+				this.twitterButton.setDisabled(true);
 			}
 			else
 			{
-				this.twitterButton.show();
-				this.twitterText.hide();
+				this.twitterButton.setDisabled(false);
 			}
 			if (FacebookService.isPaired() === true) {
-				this.facebookButton.hide();
-				this.facebookText.show();
+				this.facebookButton.setDisabled(true);
 			}
 			else
 			{
-				this.facebookButton.show();
-				this.facebookText.hide();
+				this.facebookButton.setDisabled(false);
 			}
 		}
 
@@ -348,8 +316,7 @@ var PreferencesPopup = new MAF.Class({
 
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
-			callbackParams.view.facebookButton.hide();
-			callbackParams.view.facebookText.show();
+			callbackParams.view.facebookButton.setDisabled(true);
 			callbackParams.view.setFocus();
 			FacebookService.getProfilePicture(function(url) {
 				ConfigurationStorageHandler.updateProfileImage(url);
@@ -359,8 +326,7 @@ var PreferencesPopup = new MAF.Class({
 
 	twitterPaired: function(result, callbackParams) {
 		if (result.screen_name !== undefined) {
-			callbackParams.view.twitterButton.hide();
-			callbackParams.view.twitterText.show();
+			callbackParams.view.twitterButton.setDisabled(true);
 			callbackParams.view.setFocus();
 		}
 	},
@@ -381,8 +347,6 @@ var PreferencesPopup = new MAF.Class({
 		delete this.ContentTimesGrid;
 		delete this.ContentTimeFooter;
 		delete this.doneButton;
-		delete this.facebookText;
-		delete this.twitterText;
 		this.parent();
 	}
 });

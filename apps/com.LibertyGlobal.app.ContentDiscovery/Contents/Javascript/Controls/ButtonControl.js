@@ -10,18 +10,18 @@ var ButtonControl = new MAF.Class({
 				case 'focus':
 					this.buttonImage.setSource("Images/button_focus.png");
 					this.buttonText.setStyles({
-						color: '#706abf'
-					});			
+						color: '#203538'
+					});
 					break;
 				case 'blur':
-					this.buttonImage.setSource("Images/button.png");	
+					this.buttonImage.setSource("Images/button.png");
 					this.buttonText.setStyles({
 						color: '#c0bcc5'
-					});	
+					});
 					break;
 			}
 		},
-		createContent: function() {	
+		createContent: function() {
 			this.buttonImage = new MAF.element.Image({
 				source: 'Images/button.png',
 				styles: {
@@ -29,15 +29,15 @@ var ButtonControl = new MAF.Class({
 					heigth: 66
 				}
 			}).appendTo(this);
-			
-			this.buttonText  = new MAF.element.Text({
+
+			this.buttonText = new MAF.element.Text({
 				text: this.config.buttonText,
 				theme: false,
 				anchorStyle: 'center',
-				styles: {	
+				styles: {
 					color: '#c0bcc5',
 					fontFamily: 'InterstatePro-Light',
-					fontSize: 30,				
+					fontSize: 30,
 					hAlign: 'center',
 					vAlign: 'center'
 				}
@@ -48,23 +48,39 @@ var ButtonControl = new MAF.Class({
 	config: {
 		render: true,
 		focus: true,
+		disabled: false,
 		buttonText: ""
 	},
 
-	initialize: function() {		
+	initialize: function() {
 		this.parent();
 		this.config.buttonText = this.config.buttonText;		
-		this.createContent();		
+		this.createContent();
+		setDisabled(this.config.disabled);
 	},
 
-	setFocus: function() { 
+	setFocus: function() {
 		this.focus();
 	},
 
-	setButtonText: function(text)
-	{
+	setButtonText: function(text) {
 		this.buttonText.setText(text);
 		this.config.buttonText = text;
+	},
+
+	setDisabled: function(disabled) {
+		this.config.disabled = this.config.disabled;
+		if (disabled === true) {
+			this.buttonImage.source = 'Images/button_disabled.png';
+			this.buttonText.setStyles({
+				color: '#6f797f'
+			});
+		} else {
+			this.buttonImage.source = 'Images/button.png';
+			this.buttonText.setStyles({
+				color: '#c0bcc5'
+			});
+		}
 	},
 
 	suicide: function() {

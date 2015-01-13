@@ -110,7 +110,7 @@ var ContentDataRetriever = (function() {
 			switch (menuItem.itemType) {
 				case 'category':
 					LGI.Guide.Broadcast.create()
-						.limit(500)
+						.limit(500)						
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
