@@ -14,7 +14,7 @@ var AssetCarouselCellControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
-				aspect: 'auto',
+				aspect: 'crop',
 				styles: {
 					height: 300,
 					width: 211

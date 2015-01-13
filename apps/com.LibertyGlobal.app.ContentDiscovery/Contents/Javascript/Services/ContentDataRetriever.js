@@ -141,7 +141,6 @@ var ContentDataRetriever = (function() {
 					break;
 				case 'trending':
 					LGI.Guide.Broadcast.create()
-						.limit(Config.common.trendingItemsLimit)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,

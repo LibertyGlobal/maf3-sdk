@@ -365,6 +365,7 @@ var ShareScreen = new MAF.Class({
 						view.shareToSocial(view, (view.facebookPosted === true && view.facebookResult === false), (view.twitterPosted === true && view.twitterResult === false));
 					} else {
 						view.elements.popup.hide();
+						MAF.application.previousView();						
 					}
 					view.controls.shareButton.setFocus();
 				}
