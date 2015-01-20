@@ -56,7 +56,7 @@ var ButtonControl = new MAF.Class({
 		this.parent();
 		this.config.buttonText = this.config.buttonText;		
 		this.createContent();
-		setDisabled(this.config.disabled);
+		this.setDisabled(this.config.disabled);
 	},
 
 	setFocus: function() {

@@ -131,7 +131,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 				this.Synopsis.setText(data.video.shortSynopsis);
 				this.updateReminder();
 
-				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = InitializationHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if (logoUrl !== "") {
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();

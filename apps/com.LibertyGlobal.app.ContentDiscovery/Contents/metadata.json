@@ -1,7 +1,7 @@
 {
 	"identifier": "com.libertyglobal.app.ContentDiscovery",
-	"name": "Watson (v0.0.53)",
-	"version": "0.0.53",
+	"name": "Watson (v0.0.57)",
+	"version": "0.0.57",
 	"author": "Liberty Global",
 	"company": "Liberty Global",
 	"copyright": "Liberty Global 2015",
@@ -10,6 +10,7 @@
 		"video"
 	],
 	"background": true,
+	"profile": true,
 	"scripts": "Javascript/init.js",
 	"images": {
 		"about": "Images/Icon.png",

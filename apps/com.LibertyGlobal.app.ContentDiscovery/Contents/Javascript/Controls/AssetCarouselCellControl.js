@@ -73,7 +73,7 @@ var AssetCarouselCellControl = new MAF.Class({
 				this.PosterContainer.show();
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 			
-				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = InitializationHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if(logoUrl!=="")
 				{
 					this.Channel.setSource(logoUrl);

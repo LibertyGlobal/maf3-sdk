@@ -1,4 +1,5 @@
 var ContentDataRetriever = (function() {
+	var entitlementsFieldName = 'channel.entitlementCodes';
 	var callbackAfterLoaded;
 	var callbackAfterLoadedParams;
 
@@ -101,7 +102,7 @@ var ContentDataRetriever = (function() {
 			callbackAfterLoadedParams = callbackParams;
 
 			menuItem.dataLoading = true;
-			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
+			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";			
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ConfigurationStorageHandler.getContentTimeWindow();
 			delete menuItem.data;
 			menuItem.data = null;
@@ -110,13 +111,14 @@ var ContentDataRetriever = (function() {
 			switch (menuItem.itemType) {
 				case 'category':
 					LGI.Guide.Broadcast.create()
-						.limit(500)						
+						.limit(500)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
 						.filter(LGI.Guide.Broadcast.START.greaterThan(currentTime))
 						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
 								var futureAssets = response;
@@ -130,6 +132,7 @@ var ContentDataRetriever = (function() {
 									.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
 									.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 									.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuItem.categoryFilters))
+									.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 									.sort(LGI.Guide.Broadcast.START)
 									.findOne(function(response2) {
 											var activeAssets = response2;
@@ -145,21 +148,66 @@ var ContentDataRetriever = (function() {
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
 							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
-						.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
-						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
-						.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
+						.filter(LGI.Guide.Broadcast.START.greaterThan(currentTime))
+						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))						
+						//.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
+						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 						.sort(LGI.Guide.Broadcast.BPM, 'desc')
 						.findOne(function(response) {
-								menuItem.data = response;
-								menuItem.dataLoading = false;
-								callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
+								var futureAssets = response;
+
+								LGI.Guide.Broadcast.create()
+									.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
+										LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
+										"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
+										LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
+									.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
+									.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+									//.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
+									.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
+									.sort(LGI.Guide.Broadcast.BPM, 'desc')
+									.findOne(function(response2) {
+											var activeAssets = response2;
+											parseData(menuItem, activeAssets, futureAssets, true, true, false);
+										},
+										errorCallback);
 							},
 							errorCallback);
 					break;
 				case 'recommendations':
-					menuItem.data = [];
-					menuItem.dataLoading = false;
-					callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
+					if (InitializationHandler.customerId !== undefined) {
+						var startTime = moment().utc().subtract('minutes', parseInt(Config.common.extendedContentTimeWindow, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
+						var request = LGI.Guide.Broadcast.create()
+							.limit(500)
+							.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
+								LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.CATEGORY, "video.subcategory",
+								"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
+							.filter(LGI.Guide.Broadcast.START.equalTo(startTime))
+							.filter(LGI.Guide.Broadcast.END.equalTo(timeWindowEndTime))
+							.filter("genre=" + menuItem.categoryFilters)
+							.sort(LGI.Guide.Broadcast.START);
+						request._buildURLFromElements();						
+						var requestUrl = request._requestURL.replace("data/NL/", "data/NL/household/" + InitializationHandler.customerId + "/");
+
+						new Request({
+							url: requestUrl,
+							proxy: false,
+							headers: {
+								'X-Auth-Id': Config.common.broadcastApiAuthId,
+								'X-Auth-Key': Config.common.broadcastApiAuthKey
+							},
+							onSuccess: function(requestResult) {
+								var activeAssets = requestResult;
+								parseData(menuItem, activeAssets, null, true, true, false);								
+							},
+							onFailure: function(error) {
+								screen.log("failure1: " + error);
+							},
+							onError: function(error) {
+								screen.log("error1:" + error);
+							}
+						}).send();
+					}
 					break;
 				case 'shuffle':
 					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
@@ -171,6 +219,7 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
 						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 						.filter(LGI.Guide.Broadcast.CATEGORY.equalTo(menuConfig))
+						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
 								var activeAssets = response;

@@ -10,7 +10,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnInfoButtonPress = view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', view);
 		view.fnOnProfileLoaded = view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', view);
 		view.fnOnProfileUnloaded = view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', view);
-		ChannelHandler.initialize(view.onChannelInitializeComplete, view);
+		InitializationHandler.initialize(view.onChannelInitializeComplete, view);
 	},
 
 	onChannelInitializeComplete: function(view) {
@@ -316,7 +316,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnProfileLoaded = null;
 		view.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		view.fnOnProfileUnloaded = null;
-		ChannelHandler.cleanUp();
+		InitializationHandler.cleanUp();
 		MenuHandler.cleanUp();
 		delete view.controls.sideBarContainer;
 		delete view.elements.rightContainer;

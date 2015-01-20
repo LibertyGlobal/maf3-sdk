@@ -134,7 +134,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 				this.OkView.setText($_('MainScreen_Asset_Focus_OkView'));
 
-				var logoUrl = ChannelHandler.getChannelLogoMedium(data.channel.logicalPosition);
+				var logoUrl = InitializationHandler.getChannelLogoMedium(data.channel.logicalPosition);
 				if (logoUrl !== "") {
 					this.Channel.setSource(logoUrl);
 					this.Channel.show();

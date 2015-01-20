@@ -72,6 +72,7 @@ var ConfigurationStorageHandler = (function() {
 
 		updateContentTimeWindow: function(contentTimeWindow) {
 			currentAppData.set(contentTimeWindowSettingName, contentTimeWindow);
+			screen.log("        " + moment().format("HH:mm:ss") + ", store timewindow: " + contentTimeWindow);
 			currentAppConfig.set(appProfileSetSettingName, "true");
 		},
 

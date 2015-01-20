@@ -7,7 +7,7 @@ var ReminderHandler = (function() {
 		},
 
 		setReminder: function(id, start, title, channelName, channelNr) {
-			var reminder = new AssetReminder(id, start, title, channelName, channelNr);
+			var reminder = new Reminder(id, start, title, channelName, channelNr);
 			var list = reminders;
 			var startTimeAsset = moment(reminder.start).utc();
 			if (startTimeAsset.isValid() === false) return;

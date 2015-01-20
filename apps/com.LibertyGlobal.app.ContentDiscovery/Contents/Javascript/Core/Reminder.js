@@ -1,4 +1,4 @@
-function AssetReminder(assetId, start, title, channelName, channelNr) {
+function Reminder(assetId, start, title, channelName, channelNr) {
 	this.assetId = assetId;
 	this.start = start;
 	this.title = title;
