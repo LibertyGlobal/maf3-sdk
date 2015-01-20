@@ -102,7 +102,7 @@ var ContentDataRetriever = (function() {
 			callbackAfterLoadedParams = callbackParams;
 
 			menuItem.dataLoading = true;
-			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";			
+			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ConfigurationStorageHandler.getContentTimeWindow();
 			delete menuItem.data;
 			menuItem.data = null;
@@ -148,29 +148,13 @@ var ContentDataRetriever = (function() {
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
 							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
-						.filter(LGI.Guide.Broadcast.START.greaterThan(currentTime))
-						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))						
-						//.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
+						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
+						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 						.sort(LGI.Guide.Broadcast.BPM, 'desc')
 						.findOne(function(response) {
-								var futureAssets = response;
-
-								LGI.Guide.Broadcast.create()
-									.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
-										LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
-										"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
-										LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
-									.filter(LGI.Guide.Broadcast.START.lessThan(currentTime))
-									.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
-									//.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
-									.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
-									.sort(LGI.Guide.Broadcast.BPM, 'desc')
-									.findOne(function(response2) {
-											var activeAssets = response2;
-											parseData(menuItem, activeAssets, futureAssets, true, true, false);
-										},
-										errorCallback);
+								var activeAssets = response;
+								parseData(menuItem, activeAssets, null, true, true, false);
 							},
 							errorCallback);
 					break;
@@ -186,7 +170,7 @@ var ContentDataRetriever = (function() {
 							.filter(LGI.Guide.Broadcast.END.equalTo(timeWindowEndTime))
 							.filter("genre=" + menuItem.categoryFilters)
 							.sort(LGI.Guide.Broadcast.START);
-						request._buildURLFromElements();						
+						request._buildURLFromElements();
 						var requestUrl = request._requestURL.replace("data/NL/", "data/NL/household/" + InitializationHandler.customerId + "/");
 
 						new Request({
@@ -198,7 +182,7 @@ var ContentDataRetriever = (function() {
 							},
 							onSuccess: function(requestResult) {
 								var activeAssets = requestResult;
-								parseData(menuItem, activeAssets, null, true, true, false);								
+								parseData(menuItem, activeAssets, null, true, true, false);
 							},
 							onFailure: function(error) {
 								screen.log("failure1: " + error);

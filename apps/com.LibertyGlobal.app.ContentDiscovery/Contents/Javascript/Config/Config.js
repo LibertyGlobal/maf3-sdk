@@ -20,6 +20,7 @@ var Config = (function () {
 		},
 
 		getEnv: function () {
+
 			// see if there is an env set in the query string:
 			var qsEnv = (function () {
 				var match,
@@ -54,7 +55,7 @@ var Config = (function () {
 
 		load: function (environment) {
 			var env = environment || this.getEnv();
-			//log("Loading env: "+env);			
+			//log("Loading env: "+env);	
 			values = merge(this.common, this[env]);
 		}
 	};

@@ -27,7 +27,7 @@ var MainScreen = new MAF.Class({
 		switch (event.type) {
 			case "onWidgetKeyPress":
 				if (event.payload !== undefined) {
-					if (event.payload.keyCode === 457 || event.payload.keyCode === 36) // info button or home button on keyboard
+					if (event.payload.keyCode === Config.get('infoButtonKeyCode')) // info button or home button on keyboard
 					{
 						if (this.controls.sideBarContainer.isCollapsed === true) {
 							if (this.loading === false) {

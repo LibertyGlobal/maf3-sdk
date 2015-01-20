@@ -35,9 +35,11 @@ var InitializationHandler = (function() {
 			handler.onInitializeCompleteViewRef = view;
 			if (profile.uid !== undefined) {
 				InitializationHandler.customerId = profile.uid.substr(0, profile.uid.indexOf('_'));
+			}			
+			if(Config.getEnv() === 'dev')
+			{
+				handler.customerId = Config.get('customerId');
 			}
-			// TODO remove
-			// handler.customerId = '7883969';
 
 			new Request({
 				url: Config.common.channelApiUrl,

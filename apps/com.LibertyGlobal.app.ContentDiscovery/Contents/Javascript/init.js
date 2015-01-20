@@ -3,6 +3,8 @@ include('Javascript/Theme.js');
 
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
+include('Javascript/Config/conf.live.js');
+include('Javascript/Config/conf.dev.js');
 include('Javascript/Config/AgeRatingScheme.js');
 
 include('Javascript/Core/AgeRatingConfig.js');
