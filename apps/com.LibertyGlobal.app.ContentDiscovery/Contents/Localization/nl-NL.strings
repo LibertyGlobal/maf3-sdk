@@ -1,0 +1,154 @@
+// General
+"App_Title" = "Watson";
+"App_Description" = "Met Watson ontdek je de leukste programma's die nu op tv zijn of zo meteen gaan beginnen";
+"Notification_Line1_Text" = "%s begint zo meteen";
+"Notification_Line2_Text" = "op kanaal %s(%s)";
+
+// Preferences page
+"MenuItem_Movies_Preference_Text" = "Films / Drama";
+"MenuItem_Arts_Preference_Text" = "Kunst / Cultuur";
+"MenuItem_News_Preference_Text" = "Nieuws";
+"MenuItem_Children_Preference_Text" = "Kinderen";
+"MenuItem_Social_Preference_Text" = "Social";
+"MenuItem_Sports_Preference_Text" = "Sport";
+"MenuItem_Show_Preference_Text" = "TV Show";
+"MenuItem_Music_Preference_Text" = "Muziek";
+"MenuItem_Education_Preference_Text" = "Educatie";
+// items below should not be options on the preferences screen
+"MenuItem_Trending_Preference_Text" = "Trending";
+"MenuItem_Recommendations_Preference_Text" = "Suggesties";
+"MenuItem_Shuffle_Preference_Text" = "Shuffle";
+
+// Main page
+"MenuItem_Movies_MainMenu_Text" = "Films / Drama";
+"MenuItem_Arts_MainMenu_Text" = "Kunst";
+"MenuItem_News_MainMenu_Text" = "Nieuws";
+"MenuItem_Children_MainMenu_Text" = "Kinderen";
+"MenuItem_Social_MainMenu_Text" = "Social";
+"MenuItem_Sports_MainMenu_Text" = "Sport";
+"MenuItem_Show_MainMenu_Text" = "TV Show";
+"MenuItem_Music_MainMenu_Text" = "Muziek";
+"MenuItem_Education_MainMenu_Text" = "Educatie";
+"MenuItem_Trending_MainMenu_Text" = "Trending";
+"MenuItem_Recommendations_MainMenu_Text" = "Suggesties voor jou";
+"MenuItem_Recommendations_MainMenu_Profile_Text" = "Suggesties voor %s";
+"MenuItem_Shuffle_MainMenu_Text" = "Shuffle";
+"MainScreen_Asset_Focus_Genre" = "Genre: ";
+"MainScreen_Asset_Focus_Reminder" = "Druk OK voor instellen herinnering";
+"MainScreen_Asset_Focus_Remove_Reminder" = "Druk OK voor verwijderen herinnering";
+"MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
+"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen programma's uit de categorie %s nu op tv, of programma's die beginnen binnen %s ";
+"MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
+"MainScreen_Asset_Focus_Hours" = "uur.";
+"MainScreen_Asset_Focus_Minutes" = "minuten.";
+"MainScreen_Asset_Focus_ShowLaterContent_Button" = "Latere programma's";
+"MainScreen_Asset_Focus_Asset_Ended_Text" = "Uh-oh, je hebt dit programma net gemist";
+"MainScreen_Asset_Focus_LoadingTitle" = "Even geduld a.u.b. de data wordt geladen";
+"MainScreen_Asset_Focus_LoadingSubTitle" = " ";
+
+// InfoScreen
+"InfoScreen_Asset_Duration_Text" = "Tijdsduur:";
+"InfoScreen_Asset_Genre_Text" = "Genre:";
+"InfoScreen_Asset_Language_Text" = "Taal:";
+"InfoScreen_Asset_Subtitles_Text" = "Ondertiteling:";
+"InfoScreen_Asset_Rating_Text" = "Geschikt voor:";
+"InfoScreen_Asset_Year_Produced_Text" = "Productie jaar:";
+"InfoScreen_Button_Set_Reminder_Text" = "Herinnering instellen";
+"InfoScreen_Button_Remove_Reminder_Text" = "Herinnering verwijderen";
+"InfoScreen_Button_View_Now_Text" = "View now";
+"InfoScreen_Button_Share_Text" = "Delen";
+"InfoScreen_Button_Full_Synopsis_Text" = "Volledige synopsis";
+"InfoScreen_Cast_Text" = "CAST";
+"InfoScreen_Imdb_Text" = "/10";
+
+// Sidebar
+"Sidebar_SwitchProfileButton" = "Kies ander profiel";
+"Sidebar_EditProfileButton" = "Profiel instellingen";
+"Sidebar_AboutAppButton" = "Over deze app";
+"Sidebar_ExitButton" = "Sluiten";
+
+// Welcome screen
+"WelcomeScreen_Title" = "Welkom bij de Watson app";
+"WelcomeScreen_Text" = "Deze app laat zien welke programma's op het punt staan te beginnen of net begonnen zijn. Door een profiel aan te maken kan je de app persoonlijk instellen en zal de app suggesties geven gebaseerd op je kijkgedrag.";
+"WelcomeScreen_SetProfile_Button" = "Profiel aanmaken";
+"WelcomeScreen_Skip_Button" = "Overslaan";
+
+// Preferences
+"PreferencesScreen_Title" = "Profiel instellingen";
+"PreferencesScreen_MenuItems_Title" = "Menu items";
+"PreferencesScreen_ConnectFacebook_Button" = "Verbinden met Facebook";
+"PreferencesScreen_ConnectTwitter_Button" = "Verbinden met Twitter";
+"PreferencesScreen_ConnectedFacebook_Text" = "Verbonden met Facebook";
+"PreferencesScreen_ConnectedTwitter_Text" = "Verbonden met Twitter";
+"PreferencesScreen_ContentTime_Title" = "Tijdvak*";
+"PreferencesScreen_ContentTime_SubTitle" = "Alles wat nu uitgezonden wordt, of begint binnen:";
+"PreferencesScreen_ContentTime_30min_Text" = "30 minuten";
+"PreferencesScreen_ContentTime_60min_Text" = "1 uur";
+"PreferencesScreen_ContentTime_90min_Text" = "1,5 uur";
+"PreferencesScreen_ContentTime_Footer" = "*Het tijdvak heeft alleen betrekking op de begintijd van programma's";
+"PreferencesScreen_Close_Button" = "Klaar";
+
+// Facebook login
+"FacebookScreen_Title" = "Facebook login";
+"FacebookScreen_LineBefore_Text" = "Ga naar facebook.com/devices en vul de volgende code in:";
+"FacebookScreen_LineAfter_Text" = "Zodra je deze code hebt ingevuld zal de app automatisch naar een andere pagina gaan.";
+"FacebookScreen_Back_Button" = "Cancel";
+
+// Twitter login
+"TwitterScreen_Title" = "Twitter login";
+"TwitterScreen_LineBefore_Text" = "";
+"TwitterScreen_LineAfter_Text" = "";
+"TwitterScreen_Back_Button" = "Cancel";
+
+// App Info screen
+"AppInfoScreen_Title" = "App info";
+"AppInfoScreen_Text" = "Deze app is gemaakt door Liberty Global";
+"AppInfoScreen_Back_Button" = "Hoofdpagina";
+
+// Share screen
+"ShareScreen_Title" = "";
+"ShareScreen_EmptyMessage_Text" = "Ik ben %s aan het kijken.";
+"ShareScreen_Message_Footer" = "Gepost met behulp van de Watson app";
+"ShareScreen_ExcludeFacebook_Button" = "Facebook";
+"ShareScreen_ExcludeTwitter_Button" = "Twitter";
+"ShareScreen_ClearAll_Button" = "Alles wissen";
+"ShareScreen_RemoveCharacter_Button" = "Delete";
+"ShareScreen_Send_Button" = "Verstuur";
+"ShareScreen_Back_Button" = "Hoofdpagina";
+"ShareScreen_Fail_Facebook" = "Je bericht kon niet worden geplaatst op Facebook. Wil je het opnieuw proberen?";
+"ShareScreen_Fail_Twitter" = "Je bericht kon niet worden geplaatst op Twitter. Wil je het opnieuw proberen?";
+"ShareScreen_Fail_Facebook_Twitter" = "Je bericht kon niet worden gepost. Wil je het opnieuw proberen?";
+"ShareScreen_Success_Facebook" = "Je bericht is succesvol geplaatst op Facebook";
+"ShareScreen_Success_Twitter" = "Je bericht is succesvol geplaatst op Twitter";
+"ShareScreen_Success_Facebook_Twitter" = "Je bericht is succesvol geplaatst op Facebook en Twitter";
+"ShareScreen_Fail_Retry_Button" = "Probeer opnieuw";
+"ShareScreen_Fail_Cancel_Button" = "Cancel";
+"ShareScreen_Success_Ok_Button" = "OK";
+
+// Cast info screen
+"CastInfoScreen_DateOfBirth_Text" = "Geboortedatum:";
+"CastInfoScreen_PlaceOfBirth_Text" = "Geboorteplaats:";
+"CastInfoScreen_FullBiography_Button" = "Volledige biografie";
+"CastInfoScreen_AlsoKnownFor_Text" = "OOK BEKEND VAN";
+"CastInfoScreen_Back_Button" = "Hoofdpagina";
+
+// Cast full biography screen
+"CastFullBiographyScreen_Back_Button" = "Hoofdpagina";
+
+// Full synopsis screen
+"FullSynopsisScreen_Pagination" = "Pagina %s van %s";
+"FullSynopsisScreen_Back_Button" = "Hoofdpagina";
+
+// Languages
+"language_EN" = "English";
+"language_NL" = "Nederlands";
+"language_FR" = "Francais";
+"language_PL" = "Polski";
+"language_IT" = "Italiano";
+"language_RO" = "Roman";
+"language_HU" = "Magyar";
+"language_DE" = "Deutsch";
+"language_CZ" = "Cestina";
+"language_IR" = "Irish";
+"language_SK" = "Slovencina";
+"language_ES" = "Espanol";
