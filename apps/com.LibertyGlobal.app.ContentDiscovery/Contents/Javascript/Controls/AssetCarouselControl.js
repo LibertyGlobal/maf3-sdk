@@ -160,6 +160,7 @@ var AssetCarouselControl = new MAF.Class({
 
 	initialize: function() {
 		this.parent();
+		this.timer = null;
 		this.cells = [];
 		this.generateCells();
 		this.menuItemText = "";
@@ -197,6 +198,28 @@ var AssetCarouselControl = new MAF.Class({
 	updateReminder: function() {
 		if (this.futureFocusContainer.visible) {
 			this.futureFocusContainer.updateReminder();
+		}
+	},
+
+	startAutoNavigate: function() {
+		var carousel = this;
+		this.stopAutoNavigate();
+		if(this.timer === null)
+		{
+			this.timer = new Timer(Config.common.carouselAutoNavigateToggleTimeout, function() {
+				if(carousel.visible===true)
+				{
+					carousel.doNavigate('right');
+				}
+			});
+			this.timer.start();
+		}
+	},
+
+	stopAutoNavigate: function() {
+		if (this.timer !== null) {
+			this.timer.stop();
+			this.timer = null;
 		}
 	},
 
@@ -254,6 +277,10 @@ var AssetCarouselControl = new MAF.Class({
 	},
 
 	suicide: function() {
+		if (this.timer !== null) {
+			this.timer.stop();
+			this.timer = null;
+		}
 		this.mainCollection = null;
 		this.cells = null;
 		this.menuItemText = null;

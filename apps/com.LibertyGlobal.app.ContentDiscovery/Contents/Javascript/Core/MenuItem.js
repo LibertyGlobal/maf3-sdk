@@ -1,10 +1,11 @@
-function MenuItem(itemName, itemType, categoryFilters, preferenceLabel, mainMenuLabel) {
+function MenuItem(itemName, itemType, categoryFilters, preferenceLabel, mainMenuLabel, autoNavigate) {
 	this.itemName = itemName; // unique item name
 	this.itemType = itemType; // item type (standard is 'category', special types for shuffle, trending and recommendations)
 	this.categoryFilters = categoryFilters; // categories to include in the query for this menu item
 	this.data = []; // data items for this menu
 	this.dataTimeframe = ""; // data time window used for retrieving data (minutes)
 	this.dataLoading = false; // currently loading data
+	this.autoNavigate = (autoNavigate !== 'undefined') ? autoNavigate : false;
 	this.mainMenuLabel = mainMenuLabel; // text for preference menu
 	this.preferenceLabel = preferenceLabel; // text for main menu
 	this.cleanUp = function () {

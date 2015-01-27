@@ -37,10 +37,10 @@
 "MainScreen_Asset_Focus_Reminder" = "Druk OK voor instellen herinnering";
 "MainScreen_Asset_Focus_Remove_Reminder" = "Druk OK voor verwijderen herinnering";
 "MainScreen_Asset_Focus_OkView" = "Druk op OK om te kijken";
-"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen programma's uit de categorie %s nu op tv, of programma's die beginnen binnen %s.";
+"MainScreen_Asset_Focus_NoDataTitle" = "Er zijn helaas geen programma's uit de categorie %s nu op tv, of programma's die beginnen binnen %s ";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "Je kunt het tijdvak aanpassen in de instellingen, of andere categori&euml;n proberen.";
-"MainScreen_Asset_Focus_Hours" = "uur";
-"MainScreen_Asset_Focus_Minutes" = "minuten";
+"MainScreen_Asset_Focus_Hours" = "uur.";
+"MainScreen_Asset_Focus_Minutes" = "minuten.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Latere programma's";
 "MainScreen_Asset_Focus_Asset_Ended_Text" = "Uh-oh, je hebt dit programma net gemist";
 "MainScreen_Asset_Focus_LoadingTitle" = "Even geduld a.u.b. de data wordt geladen";

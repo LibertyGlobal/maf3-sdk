@@ -17,7 +17,7 @@ var ReminderHandler = (function() {
 				var delayInSeconds = ((diff.hours() * 60) + diff.minutes() * 60) + diff.seconds();
 
 				reminder.timer = new Timer(delayInSeconds, function() {
-					widget.notify(widget.getUrl("Images/Icon.png"), [$_('App_Title'),
+					widget.notify(widget.getUrl("Images/Icon_notification.png"), [$_('App_Title'),
 							$_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]),
 							$_('Notification_Line1_Text', [reminder.title])
 						],

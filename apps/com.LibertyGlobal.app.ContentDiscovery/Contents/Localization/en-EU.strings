@@ -37,10 +37,10 @@
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add a reminder";
 "MainScreen_Asset_Focus_Remove_Reminder" = "Press OK to remove reminder";
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
-"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s.";
+"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s ";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
-"MainScreen_Asset_Focus_Hours" = "hours";
-"MainScreen_Asset_Focus_Minutes" = "minutes";
+"MainScreen_Asset_Focus_Hours" = "hours.";
+"MainScreen_Asset_Focus_Minutes" = "minutes.";
 "MainScreen_Asset_Focus_ShowLaterContent_Button" = "Look for content further ahead";
 "MainScreen_Asset_Focus_Asset_Ended_Text" = "Whoops, it seems you've missed this one";
 "MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";

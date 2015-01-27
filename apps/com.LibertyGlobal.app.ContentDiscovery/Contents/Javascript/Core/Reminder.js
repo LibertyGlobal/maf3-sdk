@@ -6,29 +6,10 @@ function Reminder(assetId, start, title, channelName, channelNr) {
 	this.channelNr = channelNr;
 	this.timer = null;
 
-	this.startTimer = function() {
-		if(this.timer === null)
-		{
-			this.timer = new Timer();
-			this.timer.start();
-		}
-	};
-
-	this.cleanupTimer = function() {
+	this.cleanUp = function() {
 		if (this.timer !== null) {
 			this.timer.stop();
 			this.timer = null;
 		}
-	};
-
-	this.timeoutCallback = function() {
-		this.timer.stop();
-		this.timer = null;
-
-
-	};
-
-	this.cleanUp = function() {
-		this.cleanupTimer();
 	};
 }

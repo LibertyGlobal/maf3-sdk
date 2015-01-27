@@ -81,6 +81,16 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 					hOffset: 346
 				}
 			}).appendTo(this);
+			this.ReminderImage = new MAF.element.Image({
+				source: 'Images/UPC_Picto_Reminder_black.png',
+				styles: {
+					vOffset: 119,
+					hOffset: 527,
+					height: 30,
+					width: 30
+				}
+			}).appendTo(this);
+			this.ReminderImage.hide();
 			this.Synopsis = new MAF.element.TextField({
 				totalLines: 7,
 				visibleLines: 7,
@@ -146,14 +156,17 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 			this.StartEnd.setText('');
 			this.Synopsis.setText('');
 			this.Reminder.setText('');
+			this.ReminderImage.hide();
 		}
 	},
 
 	updateReminder: function() {
 		if (ReminderHandler.isReminderSet(this.currentAssetId) === true) {
 			this.Reminder.setText($_('MainScreen_Asset_Focus_Remove_Reminder'));
+			this.ReminderImage.show();
 		} else {
 			this.Reminder.setText($_('MainScreen_Asset_Focus_Reminder'));
+			this.ReminderImage.hide();
 		}
 	},
 
@@ -165,6 +178,7 @@ var AssetCarouselCellFutureFocusControl = new MAF.Class({
 		delete this.Genre;
 		delete this.GenreValue;
 		delete this.StartEnd;
+		delete this.ReminderImage;
 		delete this.Synopsis;
 		delete this.Reminder;
 		delete this.InfoImage;

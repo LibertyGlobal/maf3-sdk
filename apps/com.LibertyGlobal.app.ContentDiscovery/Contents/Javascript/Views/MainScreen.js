@@ -10,6 +10,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnInfoButtonPress = view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', view);
 		view.fnOnProfileLoaded = view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', view);
 		view.fnOnProfileUnloaded = view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', view);
+		ConfigurationStorageHandler.initialize();
 		InitializationHandler.initialize(view.onChannelInitializeComplete, view);
 	},
 
@@ -51,7 +52,7 @@ var MainScreen = new MAF.Class({
 
 	onProfileLoaded: function(event) {
 		var view = this;
-		if (ConfigurationStorageHandler.isProfileSet()) {
+		if (ConfigurationStorageHandler.isProfileSet(profile.name)) {
 			this.controls.sideBarContainer.setProfileName(profile.name);
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
 			if(FacebookService.isPaired()===true)
@@ -65,6 +66,7 @@ var MainScreen = new MAF.Class({
 			this.hideSidebar();
 			this.reloadMenu(this, true);
 		} else {
+			ConfigurationStorageHandler.createProfile(profile.name);
 			MAF.application.loadView('view-PopupScreen', {
 				"popupName": "preferences",
 				"redirectPage": "view-MainScreen",
@@ -86,6 +88,7 @@ var MainScreen = new MAF.Class({
 	onMenuItemDataLoaded: function(menuItem, view) {
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
+			(menuItem.autoNavigate === true) ? view.controls.assetCarousel.startAutoNavigate() : view.controls.assetCarousel.stopAutoNavigate();
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		} else {
 			view.controls.assetCarousel.setLoading();
@@ -250,9 +253,18 @@ var MainScreen = new MAF.Class({
 		}
 	},
 
-	reloadMenu: function(view, clearMenuItems) {
+	unselectView: function() {
+		this.controls.assetCarousel.stopAutoNavigate();
+	},
+
+	reloadMenu: function(view, clearMenuItems) {		
 		if (view.controls.verticalMenu.mainCollection.length <= 0 || clearMenuItems === true) {
 			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());
+		}
+		else
+		{
+			(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].autoNavigate === true) ? 
+				view.controls.assetCarousel.startAutoNavigate() : view.controls.assetCarousel.stopAutoNavigate();
 		}
 		view.controls.assetCarousel.updateVideo();
 		view.controls.assetCarousel.updateReminder();

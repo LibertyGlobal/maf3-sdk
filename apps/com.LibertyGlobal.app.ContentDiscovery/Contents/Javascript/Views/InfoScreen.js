@@ -31,8 +31,10 @@ var InfoScreen = new MAF.Class({
 					} else {
 						if (ReminderHandler.isReminderSet(view.asset.id) === true) {
 							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
+							view.controls.assetDetails.ReminderImage.show();
 						} else {
 							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+							view.controls.assetDetails.ReminderImage.hide();
 						}
 					}
 					view.controls.horizontalMenu.updateButtonText();
@@ -108,6 +110,7 @@ var InfoScreen = new MAF.Class({
 								if (ReminderHandler.isReminderSet(view.asset.id) === true) {
 									ReminderHandler.removeReminder(view.asset.id);
 									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
+									view.controls.assetDetails.ReminderImage.hide();
 								} else {
 									ReminderHandler.setReminder(
 										view.asset.id,
@@ -116,6 +119,7 @@ var InfoScreen = new MAF.Class({
 										view.asset.channel.name,
 										view.asset.channel.logicalPosition);
 									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
+									view.controls.assetDetails.ReminderImage.show();
 								}
 								view.controls.horizontalMenu.updateButtonText();
 							}

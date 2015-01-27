@@ -1,94 +1,143 @@
 var ConfigurationStorageHandler = (function() {
-	var visibleItemsSettingName = "VisibleMenuItems";
-	var contentTimeWindowSettingName = "ContentTimeWindow";
-	var profileImageUrlSettingName = "ProfileImage";
-	var appFirstLoadSettingName = "AppFirstLoad";
-	var appProfileSetSettingName = "AppProfileSet";
-	var remindersStorageSettingName = "AppReminderStorage";
+	var configSettings = null;
+	var contentDiscoverySettingsName = "contentDisc";
 
 	return {
-		initialize: function() {},
+		initialize: function() {
+			this.retrieveSettings();
+		},
+
+		storeSettings: function() {
+			currentAppConfig.set(contentDiscoverySettingsName, this.configSettings);
+		},
+
+		retrieveSettings: function() {
+			this.configSettings = currentAppConfig.get(contentDiscoverySettingsName);
+			if (this.configSettings === null || this.configSettings === undefined) {
+				this.configSettings = {
+					isAppFirstLoad: true,
+					menuItemsVisible: Config.common.menuItemsVisibilityDefault,
+					contentTimeWindow: Config.common.contentTimeWindow,
+					profileImage: 'Images/sidebar_profile_image.png',
+					profiles: []
+				};
+			}
+		},
+
+		getProfile: function(name) {
+			var profileObj = null;
+			for (var i = 0; i < this.configSettings.profiles.length; i++) {
+				if (this.configSettings.profiles[i].name === name) {
+					profileObj = this.configSettings.profiles[i];
+					break;
+				}
+			}
+			return profileObj;
+		},
+
+		isAppFirstLoad: function() {
+			if (this.configSettings.isAppFirstLoad === true) {
+				this.configSettings.isAppFirstLoad = false;
+				this.storeSettings();
+			}
+			return this.configSettings.isAppFirstLoad;
+		},
 
 		isSelected: function() {
 			return (profile.name !== '');
 		},
 
-		getAppReminderStorage: function() {
-			var reminders = [];
-			var remindersFromStorage = currentAppConfig.get(remindersStorageSettingName);			
-			if (remindersFromStorage !== undefined) {
-				contentTimeWindowVar = remindersFromStorage;
-			}
-			return reminders;
-		},
-
-		setAppReminderStorage: function(reminders) {
-			currentAppData.set(remindersStorageSettingName, reminders);
-		},
-
-		isAppFirstLoad: function() {
-			var firstLoad = false;
-			var isAppFirstLoad = currentAppConfig.get(appFirstLoadSettingName) || "true";
-			if(isAppFirstLoad === "true")
-			{
-				firstLoad = true;
-				currentAppConfig.set(appFirstLoadSettingName, "false");
-			}
-			return firstLoad;
-		},
-
 		isAppProfileSet: function() {
-			return (currentAppConfig.get(appProfileSetSettingName) === "true");
+			return this.configSettings.profiles.length > 0;
 		},
 
-		isProfileSet: function() {
-			var menuItemsVisible = currentAppData.get(visibleItemsSettingName);
-			var contentTimeWindow = currentAppData.get(contentTimeWindowSettingName);
-			return (menuItemsVisible !== undefined && contentTimeWindow !== undefined);
+		createProfile: function(profileName) {
+			var profileObj = {
+				name: profileName,
+				menuItemsVisible: Config.common.menuItemsVisibilityDefault,
+				contentTimeWindow: Config.common.contentTimeWindow,
+				profileImage: 'Images/sidebar_profile_image.png'
+			};
+			this.configSettings.profiles.push(profileObj);
+			this.storeSettings();
 		},
 
-		getVisibleMenuItems: function() {			
-			var menuItemsVisibleVar = Config.common.menuItemsVisibilityDefault;
-			var menuItemsVisible = currentAppData.get(visibleItemsSettingName);
-			if (menuItemsVisible !== undefined) {
-				menuItemsVisibleVar = menuItemsVisible;
+		isProfileSet: function(profileName) {
+			return this.getProfile(profileName) !== null;
+		},
+
+		getVisibleMenuItems: function() {
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				return profileObj.menuItemsVisible;
+			} else {
+				return this.configSettings.menuItemsVisible;
 			}
-			return menuItemsVisibleVar;
 		},
 
 		updateVisibleMenuItems: function(visibleItems) {
-			currentAppData.set(visibleItemsSettingName, visibleItems);
-			currentAppConfig.set(appProfileSetSettingName, "true");
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				profileObj.menuItemsVisible = visibleItems;
+			} else {
+				this.configSettings.menuItemsVisible = visibleItems;
+			}
+			this.storeSettings();
 		},
 
 		getContentTimeWindow: function() {
-			var contentTimeWindowVar = Config.common.contentTimeWindow;
-			var contentTimeWindow = currentAppData.get(contentTimeWindowSettingName);
-			if (contentTimeWindow !== undefined) {
-				contentTimeWindowVar = contentTimeWindow;
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				return profileObj.contentTimeWindow;
+			} else {
+				return this.configSettings.contentTimeWindow;
 			}
-			return contentTimeWindowVar;
 		},
 
 		updateContentTimeWindow: function(contentTimeWindow) {
-			currentAppData.set(contentTimeWindowSettingName, contentTimeWindow);
-			screen.log("        " + moment().format("HH:mm:ss") + ", store timewindow: " + contentTimeWindow);
-			currentAppConfig.set(appProfileSetSettingName, "true");
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				profileObj.contentTimeWindow = contentTimeWindow;
+			} else {
+				this.configSettings.contentTimeWindow = contentTimeWindow;
+			}
+			this.storeSettings();
 		},
 
 		getProfileImage: function() {
-			var profileImageVar = 'Images/sidebar_profile_image.png';
-			var profileImage = currentAppData.get(profileImageUrlSettingName);
-			if (profileImage !== undefined) {
-				profileImageVar = profileImage;
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				return profileObj.profileImage;
+			} else {
+				return this.configSettings.profileImage;
 			}
-			return profileImageVar;
 		},
 
 		updateProfileImage: function(url) {
-			currentAppData.set(profileImageUrlSettingName, url);
+			if (profile !== null && profile.name !== '' && profile.name !== undefined) {
+				var profileObj = this.getProfile(profile.name);
+				profileObj.profileImage = url;
+			} else {
+				this.configSettings.profileImage = url;
+			}
+			this.storeSettings();
 		},
 
-		cleanUp: function() {}
+		// getAppReminderStorage: function() {
+		// 	var reminders = [];
+		// 	var remindersFromStorage = currentAppConfig.get(remindersStorageSettingName);			
+		// 	if (remindersFromStorage !== undefined) {
+		// 		contentTimeWindowVar = remindersFromStorage;
+		// 	}
+		// 	return reminders;
+		// },
+
+		// setAppReminderStorage: function(reminders) {
+		// 	currentAppData.set(remindersStorageSettingName, reminders);
+		// },
+
+		cleanUp: function() {
+			delete this.configSettings;
+		}
 	};
 })();

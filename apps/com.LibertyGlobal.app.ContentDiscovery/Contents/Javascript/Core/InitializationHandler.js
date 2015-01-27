@@ -34,7 +34,7 @@ var InitializationHandler = (function() {
 			handler.onInitializeComplete = onInitializeComplete;
 			handler.onInitializeCompleteViewRef = view;
 			if (profile.uid !== undefined) {
-				InitializationHandler.customerId = profile.uid.substr(0, profile.uid.indexOf('_'));
+				handler.customerId = profile.uid.substr(0, profile.uid.indexOf('_'));
 			}			
 			if(Config.getEnv() === 'dev')
 			{
@@ -53,10 +53,6 @@ var InitializationHandler = (function() {
 								handler.checkInitializationComplete(handler);
 							}
 						}
-					}
-					else
-					{
-						screen.log("channelApiUrl failure: " + request.status);
 					}
 				}
 			}).send();
@@ -77,6 +73,7 @@ var InitializationHandler = (function() {
 					}
 					else
 					{
+						screen.log("customerApiUrl failure: " + Config.common.customerApiUrl.replace('customerId', handler.customerId) + ", " + handler.customerId);
 						screen.log("customerApiUrl failure: " + request.status);
 					}
 				}

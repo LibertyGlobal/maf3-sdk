@@ -144,6 +144,7 @@ var ContentDataRetriever = (function() {
 					break;
 				case 'trending':
 					LGI.Guide.Broadcast.create()
+						.limit(100)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
@@ -151,6 +152,7 @@ var ContentDataRetriever = (function() {
 						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
 						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
 						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
+						.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
 						.sort(LGI.Guide.Broadcast.BPM, 'desc')
 						.findOne(function(response) {
 								var activeAssets = response;
@@ -183,12 +185,6 @@ var ContentDataRetriever = (function() {
 							onSuccess: function(requestResult) {
 								var activeAssets = requestResult;
 								parseData(menuItem, activeAssets, null, true, true, false);
-							},
-							onFailure: function(error) {
-								screen.log("failure1: " + error);
-							},
-							onError: function(error) {
-								screen.log("error1:" + error);
 							}
 						}).send();
 					}
