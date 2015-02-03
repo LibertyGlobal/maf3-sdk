@@ -73,10 +73,10 @@ var WelcomePopup = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
-		if (ConfigurationStorageHandler.isProfileSet(profile.name)) {
+		ConfigurationStorageHandler.retrieveProfileSettings();
+		if (ConfigurationStorageHandler.isProfileSet()) {
 			this.fire('onWelcomeClosed', {});
 		} else {
-			ConfigurationStorageHandler.createProfile(profile.name);
 			MAF.application.loadView('view-PopupScreen', {
 				"popupName": "preferences",
 				"redirectPage": "view-MainScreen",

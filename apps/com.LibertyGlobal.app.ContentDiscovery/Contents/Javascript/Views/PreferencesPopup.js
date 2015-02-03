@@ -26,19 +26,19 @@ var PreferencesPopup = new MAF.Class({
 					fontFamily: 'InterstatePro-Light, sans-serif',
 					fontSize: 36,
 					width: 'inherit' - 150,
-					vOffset: 115,
+					vOffset: 105,
 					hOffset: 75
 				}
 			}).appendTo(view);
 
 			view.MenuItemsGrid = new SettingsGridControl({
-				rows: 3,
+				rows: 4,
 				columns: 3,
 				styles: {
 					hOffset: 60,
-					vOffset: 170,
+					vOffset: 160,
 					width: 1500,
-					height: 240
+					height: 280
 				},
 				events: {
 					onNavigateDownRight: function(eventData) {
@@ -58,8 +58,8 @@ var PreferencesPopup = new MAF.Class({
 			view.facebookButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectFacebook_Button'),
 				styles: {
-					vOffset: 438,
-					hOffset: 75,
+					vOffset: 468,
+					hOffset: 70,
 					width: 379,
 					height: 66
 				},
@@ -78,7 +78,7 @@ var PreferencesPopup = new MAF.Class({
 								break;
 							case "up":
 							case "left":
-								view.MenuItemsGrid.focusCell(3);
+								view.MenuItemsGrid.focusCell(4);
 								view.MenuItemsGrid.focus();
 								break;
 						}
@@ -96,7 +96,7 @@ var PreferencesPopup = new MAF.Class({
 			view.twitterButton = new ButtonControl({
 				buttonText: $_('PreferencesScreen_ConnectTwitter_Button'),
 				styles: {
-					vOffset: 438,
+					vOffset: 468,
 					hOffset: 570,
 					width: 379,
 					height: 66
@@ -108,12 +108,12 @@ var PreferencesPopup = new MAF.Class({
 								if (FacebookService.isPaired() !== true) {
 									view.facebookButton.setFocus();
 								} else {
-									view.MenuItemsGrid.focusCell(3);
+									view.MenuItemsGrid.focusCell(4);
 									view.MenuItemsGrid.focus();
 								}
 								break;
 							case "up":
-								view.MenuItemsGrid.focusCell(3);
+								view.MenuItemsGrid.focusCell(4);
 								view.MenuItemsGrid.focus();
 								break;
 							case "right":
@@ -162,9 +162,9 @@ var PreferencesPopup = new MAF.Class({
 				columns: 3,
 				styles: {
 					hOffset: 60,
-					vOffset: 640,
+					vOffset: 650,
 					width: 1500,
-					height: 80
+					height: 70
 				},
 				events: {
 					onNavigateUpLeft: function(eventData) {
@@ -191,7 +191,7 @@ var PreferencesPopup = new MAF.Class({
 					fontFamily: 'InterstatePro-ExtraLight, sans-serif',
 					fontSize: 26,
 					width: 'inherit' - 150,
-					vOffset: 725,
+					vOffset: 730,
 					hOffset: 75
 				}
 			}).appendTo(view);
@@ -273,6 +273,7 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	onProfileLoaded: function(event) {
+		ConfigurationStorageHandler.retrieveProfileSettings();
 		this.bindData();
 	},
 

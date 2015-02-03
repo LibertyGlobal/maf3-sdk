@@ -5,7 +5,7 @@ function MenuItem(itemName, itemType, categoryFilters, preferenceLabel, mainMenu
 	this.data = []; // data items for this menu
 	this.dataTimeframe = ""; // data time window used for retrieving data (minutes)
 	this.dataLoading = false; // currently loading data
-	this.autoNavigate = (autoNavigate !== 'undefined') ? autoNavigate : false;
+	this.autoNavigate = autoNavigate;
 	this.mainMenuLabel = mainMenuLabel; // text for preference menu
 	this.preferenceLabel = preferenceLabel; // text for main menu
 	this.cleanUp = function () {

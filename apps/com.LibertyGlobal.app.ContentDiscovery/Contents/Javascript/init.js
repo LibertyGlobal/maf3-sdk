@@ -54,6 +54,12 @@ Config.load();
 LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
 LGI.Guide.config.region = Config.common.country;
 
+(function channelEvents() {
+    var icon = widget.getUrl("Images/Icon_notification.png"),
+        msg = ['APP Title', 'Line 2', 'Line 1'];
+    widget.notify(icon, msg, MAF.Notification.CALL2ACTION);
+}).subscribeTo(MAF.mediaplayer, 'onChannelChange');
+
 // Init application with view config
 MAF.application.init({
 	views: [

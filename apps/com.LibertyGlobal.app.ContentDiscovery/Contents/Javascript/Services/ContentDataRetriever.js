@@ -93,7 +93,7 @@ var ContentDataRetriever = (function() {
 	};
 
 	var errorCallback = function(error) {
-		//screen.log("GSDK: " + error);
+		screen.log("GSDK: " + error);
 	};
 
 	return {
@@ -161,6 +161,7 @@ var ContentDataRetriever = (function() {
 							errorCallback);
 					break;
 				case 'recommendations':
+					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 					if (InitializationHandler.customerId !== undefined) {
 						var startTime = moment().utc().subtract('minutes', parseInt(Config.common.extendedContentTimeWindow, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 						var request = LGI.Guide.Broadcast.create()
@@ -170,7 +171,7 @@ var ContentDataRetriever = (function() {
 								"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK)
 							.filter(LGI.Guide.Broadcast.START.equalTo(startTime))
 							.filter(LGI.Guide.Broadcast.END.equalTo(timeWindowEndTime))
-							.filter("genre=" + menuItem.categoryFilters)
+							.filter("genre=" + menuConfig)
 							.sort(LGI.Guide.Broadcast.START);
 						request._buildURLFromElements();
 						var requestUrl = request._requestURL.replace("data/NL/", "data/NL/household/" + InitializationHandler.customerId + "/");

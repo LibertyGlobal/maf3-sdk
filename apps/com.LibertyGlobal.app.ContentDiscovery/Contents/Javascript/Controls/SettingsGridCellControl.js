@@ -39,7 +39,7 @@ var SettingsGridCellControl = new MAF.Class({
 			this.container = new MAF.element.Container({
 				styles: {
 					width: '100%',
-					height: 80
+					height: 70
 				}
 			}).appendTo(this);
 
@@ -47,8 +47,8 @@ var SettingsGridCellControl = new MAF.Class({
 				source: "Images/checkbox.png",
 				hideWhileLoading: true,
 				styles: {
-					width: 49,
-					height: 49,
+					width: 45,
+					height: 45,
 					hOffset: 15,
 					vOffset: 15
 				}
@@ -62,14 +62,14 @@ var SettingsGridCellControl = new MAF.Class({
 					fontFamily: 'InterstatePro-ExtraLight',
 					fontSize: 36,
 					hOffset: 75,
-					vOffset: 20
+					vOffset: 15
 				}
 			}).appendTo(this.container);
 
 			this.highlight = new MAF.element.Container({
 				styles: {
 					width: this.width - 6,
-					height: this.height - 6,
+					height: this.height - 2,
 					vOffset: -1000,
 					hOffset: 3,
 					borderWidth:3,

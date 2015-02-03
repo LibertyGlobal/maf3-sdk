@@ -6,6 +6,7 @@
 
 // Preferences page
 "MenuItem_Movies_Preference_Text" = "Movies / Drama";
+"MenuItem_Series_Preference_Text" = "Series";
 "MenuItem_Arts_Preference_Text" = "Arts / Culture";
 "MenuItem_News_Preference_Text" = "News";
 "MenuItem_Children_Preference_Text" = "Children";
@@ -21,6 +22,7 @@
 
 // Main page
 "MenuItem_Movies_MainMenu_Text" = "Movies / Drama";
+"MenuItem_Series_MainMenu_Text" = "Series";
 "MenuItem_Arts_MainMenu_Text" = "Arts";
 "MenuItem_News_MainMenu_Text" = "News";
 "MenuItem_Children_MainMenu_Text" = "Children";

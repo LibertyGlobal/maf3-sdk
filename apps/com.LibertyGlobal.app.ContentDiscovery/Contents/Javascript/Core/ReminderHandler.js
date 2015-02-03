@@ -1,4 +1,6 @@
 var ReminderHandler = (function() {
+	var handleCall2Action = false;
+	var handleCall2ActionChannelNr = null;
 	var reminders = [];
 
 	return {
@@ -7,6 +9,7 @@ var ReminderHandler = (function() {
 		},
 
 		setReminder: function(id, start, title, channelName, channelNr) {
+			var reminderHandler = this;
 			var reminder = new Reminder(id, start, title, channelName, channelNr);
 			var list = reminders;
 			var startTimeAsset = moment(reminder.start).utc();
@@ -17,6 +20,18 @@ var ReminderHandler = (function() {
 				var delayInSeconds = ((diff.hours() * 60) + diff.minutes() * 60) + diff.seconds();
 
 				reminder.timer = new Timer(delayInSeconds, function() {
+					// reminderHandler.handleCall2Action = true;
+					// reminderHandler.handleCall2ActionChannelNr = reminder.channelNr;
+					// screen.log("c2aTimer start: " + reminder.channelNr);
+					// var c2aTimer = new Timer(Config.common.call2ActionMessageDisplayTimeout,
+					// 	function() {
+					// 		screen.log("c2aTimer timeout");
+					// 		reminderHandler.handleCall2Action = false;
+					// 		reminderHandler.handleCall2ActionChannelNr = null;
+					// 		c2aTimer.stop();
+					// 		c2aTimer = null;
+					// 	});
+					// c2aTimer.start();
 					widget.notify(widget.getUrl("Images/Icon_notification.png"), [$_('App_Title'),
 							$_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]),
 							$_('Notification_Line1_Text', [reminder.title])

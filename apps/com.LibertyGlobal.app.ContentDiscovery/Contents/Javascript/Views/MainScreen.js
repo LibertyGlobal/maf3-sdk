@@ -3,6 +3,13 @@ var MainScreen = new MAF.Class({
 	Extends: MAF.system.FullscreenView,
 
 	initialize: function() {
+		//screen.log("reminderhandler: " + ReminderHandler.handleCall2Action + ", " + ReminderHandler.handleCall2ActionChannelNr);
+		// if (ReminderHandler.handleCall2Action !== null && ReminderHandler.handleCall2Action !== undefined) {
+		// 	if (ReminderHandler.handleCall2Action === true) {
+		// 		MAF.mediaplayer.setChannelByNumber(ReminderHandler.handleCall2ActionChannelNr);
+		// 		MAF.application.exitToLive();
+		// 	}
+		// }
 		var view = this;
 		view.loading = false;
 		view.parent();
@@ -16,9 +23,8 @@ var MainScreen = new MAF.Class({
 
 	onChannelInitializeComplete: function(view) {
 		MenuHandler.initialize();
-		view.initializing = false;				
-		if(profile.name !== "")
-		{
+		view.initializing = false;
+		if (profile.name !== "") {
 			view.updateProfileSettings(view, profile.name);
 		}
 		view.updateView();
@@ -34,8 +40,7 @@ var MainScreen = new MAF.Class({
 							if (this.loading === false) {
 								this.loading = true; // avoid multiple clicks
 								var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
-								if(selectedAsset !== undefined)
-								{
+								if (selectedAsset !== undefined) {
 									MAF.application.loadView('view-InfoScreen', {
 										"assetId": selectedAsset.id
 									});
@@ -52,12 +57,12 @@ var MainScreen = new MAF.Class({
 
 	onProfileLoaded: function(event) {
 		var view = this;
-		if (ConfigurationStorageHandler.isProfileSet(profile.name)) {
+		ConfigurationStorageHandler.retrieveProfileSettings();
+		if (ConfigurationStorageHandler.isProfileSet()) {
 			this.controls.sideBarContainer.setProfileName(profile.name);
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
-			if(FacebookService.isPaired()===true)
-			{
-				FacebookService.getProfilePicture(function(url) { 
+			if (FacebookService.isPaired() === true) {
+				FacebookService.getProfilePicture(function(url) {
 					ConfigurationStorageHandler.updateProfileImage(url);
 					view.updateProfileSettings(view, profile.name);
 				});
@@ -66,7 +71,6 @@ var MainScreen = new MAF.Class({
 			this.hideSidebar();
 			this.reloadMenu(this, true);
 		} else {
-			ConfigurationStorageHandler.createProfile(profile.name);
 			MAF.application.loadView('view-PopupScreen', {
 				"popupName": "preferences",
 				"redirectPage": "view-MainScreen",
@@ -88,7 +92,7 @@ var MainScreen = new MAF.Class({
 	onMenuItemDataLoaded: function(menuItem, view) {
 		if (menuItem.mainMenuLabel === view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel) {
 			view.controls.assetCarousel.changeDataset(menuItem);
-			(menuItem.autoNavigate === true) ? view.controls.assetCarousel.startAutoNavigate() : view.controls.assetCarousel.stopAutoNavigate();
+			(menuItem.autoNavigate === true) ? view.controls.assetCarousel.startAutoNavigate(): view.controls.assetCarousel.stopAutoNavigate();
 			view.showBackground(view, view.controls.assetCarousel.isLive);
 		} else {
 			view.controls.assetCarousel.setLoading();
@@ -99,11 +103,15 @@ var MainScreen = new MAF.Class({
 	createView: function() {
 		var view = this;
 		view.elements.backgroundImageNormal = new MAF.element.Image({
-			source: 'Images/background_main.jpg'
+			source: 'Images/background_main.jpg',
+			aspect: 'source',
+			manageWaitIndicator: true
 		}).appendTo(view);
 
 		view.elements.backgroundImageLive = new MAF.element.Image({
-			source: 'Images/background_main_live.png'
+			source: 'Images/background_main_live.png',
+			aspect: 'source',
+			manageWaitIndicator: true
 		}).appendTo(view);
 		view.elements.backgroundImageLive.hide();
 
@@ -190,6 +198,7 @@ var MainScreen = new MAF.Class({
 					view.showBackground(view, eventData.payload.isLiveAsset);
 				},
 				onNavigateLeft: function() {
+					view.controls.assetCarousel.stopAutoNavigate();
 					view.showSidebar();
 				},
 				onNavigateUp: function() {
@@ -204,15 +213,14 @@ var MainScreen = new MAF.Class({
 							if (view.controls.assetCarousel.isLive === true) {
 								MAF.application.exitToLive();
 							} else {
-								if(ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {
+								if (ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {
 									ReminderHandler.removeReminder(eventData.payload.asset.id);
-								}
-								else {
+								} else {
 									ReminderHandler.setReminder(
-										eventData.payload.asset.id, 
-										eventData.payload.asset.start, 
-										eventData.payload.asset.video.title, 
-										eventData.payload.asset.channel.name, 
+										eventData.payload.asset.id,
+										eventData.payload.asset.start,
+										eventData.payload.asset.video.title,
+										eventData.payload.asset.channel.name,
 										eventData.payload.asset.channel.logicalPosition);
 								}
 								view.controls.assetCarousel.updateReminder();
@@ -232,7 +240,7 @@ var MainScreen = new MAF.Class({
 	updateView: function() {
 		this.loading = false;
 		if (this.initializing !== true) {
-			if (ConfigurationStorageHandler.isAppFirstLoad()) {
+			if (ConfigurationStorageHandler.checkAppFirstLoad() === true) {
 				MAF.application.loadView('view-PopupScreen', {
 					"popupName": "welcome",
 					"redirectPage": "view-MainScreen",
@@ -257,14 +265,12 @@ var MainScreen = new MAF.Class({
 		this.controls.assetCarousel.stopAutoNavigate();
 	},
 
-	reloadMenu: function(view, clearMenuItems) {		
+	reloadMenu: function(view, clearMenuItems) {
 		if (view.controls.verticalMenu.mainCollection.length <= 0 || clearMenuItems === true) {
 			view.controls.verticalMenu.changeDataset(MenuHandler.getVisualMenuItems());
-		}
-		else
-		{
-			(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].autoNavigate === true) ? 
-				view.controls.assetCarousel.startAutoNavigate() : view.controls.assetCarousel.stopAutoNavigate();
+		} else {
+			(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].autoNavigate === true) ?
+			view.controls.assetCarousel.startAutoNavigate(): view.controls.assetCarousel.stopAutoNavigate();
 		}
 		view.controls.assetCarousel.updateVideo();
 		view.controls.assetCarousel.updateReminder();
@@ -273,12 +279,9 @@ var MainScreen = new MAF.Class({
 
 	updateProfileSettings: function(view, profileName) {
 		this.controls.sideBarContainer.setProfileName(profileName);
-		if(profileName !== "" && profileName !== undefined)
-		{
+		if (profileName !== "" && profileName !== undefined) {
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profileName]));
-		}
-		else
-		{
+		} else {
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text"));
 		}
 		this.controls.sideBarContainer.updateProfilePicture();
