@@ -3,6 +3,7 @@ var ConfigurationStorageHandler = (function() {
 	var configProfileSettings = null;
 	var contentDiscoverySettingsName = "contentDisc";
 	var contentDiscoveryProfileSettingsName = " contentDiscProfile";
+	var defaultProfileImage = "Images/sidebar_profile_image.png";
 
 	return {
 		initialize: function() {
@@ -37,9 +38,9 @@ var ConfigurationStorageHandler = (function() {
 				}
 				this.configProfileSettings = {
 					profileSet: false,
-					menuItemsVisible: Config.common.menuItemsVisibilityDefault,
-					contentTimeWindow: Config.common.contentTimeWindow,
-					profileImage: 'Images/sidebar_profile_image.png'
+					menuItemsVisible: Config.get('menuItemsVisibilityDefault'),
+					contentTimeWindow: Config.get('contentTimeWindow'),
+					profileImage: defaultProfileImage
 				};
 			}
 		},

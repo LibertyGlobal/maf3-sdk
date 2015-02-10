@@ -10,7 +10,7 @@ var ContentDataRetriever = (function() {
 			//console.log("item '" + activeAssets[i].video.title + "', " + moment(activeAssets[i].start).format("HH:mm") + ", " +  moment(activeAssets[i].end).format("HH:mm") +
 			//", current progress: " + currentProgress +
 			//", skipped: " + (currentProgress >= Config.common.programDurationDisplayThreshold));
-			if (currentProgress < Config.common.programDurationDisplayThreshold) {
+			if (currentProgress < Config.get('programDurationDisplayThreshold')) {
 				allAssets.push(activeAssets[i]);
 			}
 		}
@@ -103,7 +103,7 @@ var ContentDataRetriever = (function() {
 
 			menuItem.dataLoading = true;
 			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
-			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.common.extendedContentTimeWindow : ConfigurationStorageHandler.getContentTimeWindow();
+			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.get('extendedContentTimeWindow') : ConfigurationStorageHandler.getContentTimeWindow();
 			delete menuItem.data;
 			menuItem.data = null;
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
@@ -163,7 +163,7 @@ var ContentDataRetriever = (function() {
 				case 'recommendations':
 					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 					if (InitializationHandler.customerId !== undefined) {
-						var startTime = moment().utc().subtract('minutes', parseInt(Config.common.extendedContentTimeWindow, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
+						var startTime = moment().utc().subtract('minutes', parseInt(Config.get('extendedContentTimeWindow'), 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 						var request = LGI.Guide.Broadcast.create()
 							.limit(500)
 							.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
@@ -180,8 +180,8 @@ var ContentDataRetriever = (function() {
 							url: requestUrl,
 							proxy: false,
 							headers: {
-								'X-Auth-Id': Config.common.broadcastApiAuthId,
-								'X-Auth-Key': Config.common.broadcastApiAuthKey
+								'X-Auth-Id': Config.get('broadcastApiAuthId'),
+								'X-Auth-Key': Config.get('broadcastApiAuthKey')
 							},
 							onSuccess: function(requestResult) {
 								var activeAssets = requestResult;

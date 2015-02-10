@@ -290,7 +290,7 @@ var AssetDetailControl = new MAF.Class({
 		if (data !== null) {
 			this.clearData();
 			if (data.video !== null) {
-				var categories = Config.common.InfoScreenMovieSerieCategory.split(',');
+				var categories = Config.get('InfoScreenMovieSerieCategory').split(',');
 				if (categories.indexOf(data.video.category) > -1) {
 					// movies/series info screen
 					if (data.video.retrievedImdb !== undefined) {

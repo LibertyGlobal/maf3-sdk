@@ -206,7 +206,7 @@ var AssetCarouselControl = new MAF.Class({
 		this.stopAutoNavigate();
 		if(this.timer === null)
 		{
-			this.timer = new Timer(Config.common.carouselAutoNavigateToggleTimeout, function() {
+			this.timer = new Timer(Config.get('carouselAutoNavigateToggleTimeout'), function() {
 				if(carousel.visible===true)
 				{
 					carousel.doNavigate('right');

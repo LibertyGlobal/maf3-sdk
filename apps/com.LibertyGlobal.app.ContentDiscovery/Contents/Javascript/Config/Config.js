@@ -57,6 +57,10 @@ var Config = (function () {
 			var env = environment || this.getEnv();
 			//log("Loading env: "+env);	
 			values = merge(this.common, this[env]);
+		},
+
+		loadCountryConfig: function(countryCode) {
+			values = merge(values, this[countryCode]);
 		}
 	};
 })();

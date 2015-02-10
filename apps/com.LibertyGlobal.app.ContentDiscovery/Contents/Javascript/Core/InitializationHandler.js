@@ -42,7 +42,7 @@ var InitializationHandler = (function() {
 			}
 
 			new Request({
-				url: Config.common.channelApiUrl,
+				url: Config.get('channelApiUrl'),
 				onComplete: function(request) {
 					if (request.status === 200) {
 						var listOfChannels = JSON.parse(request.response);
@@ -57,12 +57,14 @@ var InitializationHandler = (function() {
 				}
 			}).send();
 
+			var url = Config.get('customerApiUrl').replace('customerId', handler.customerId);
+			url = url.replace('countryCode', profile.countryCode.toUpperCase());
 			new Request({
-				url: Config.common.customerApiUrl.replace('customerId', handler.customerId),
+				url: url,
 				proxy: false,
 				headers: {
-					'X-Auth-Id': Config.common.broadcastApiAuthId,
-					'X-Auth-Key': Config.common.broadcastApiAuthKey
+					'X-Auth-Id': Config.get('broadcastApiAuthId'),
+					'X-Auth-Key': Config.get('broadcastApiAuthKey')
 				},
 				onComplete: function(request) {
 					if (request.status === 200) {
@@ -73,7 +75,7 @@ var InitializationHandler = (function() {
 					}
 					else
 					{
-						screen.log("customerApiUrl failure: " + Config.common.customerApiUrl.replace('customerId', handler.customerId) + ", " + handler.customerId);
+						screen.log("customerApiUrl failure: " + url + ", " + handler.customerId);
 						screen.log("customerApiUrl failure: " + request.status);
 					}
 				}

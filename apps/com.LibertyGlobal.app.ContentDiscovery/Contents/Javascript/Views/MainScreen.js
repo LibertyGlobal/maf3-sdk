@@ -84,9 +84,9 @@ var MainScreen = new MAF.Class({
 	onProfileUnloaded: function(event) {
 		Twitter.reset();
 		Facebook.reset();
-		ConfigurationStorageHandler.updateProfileImage("");
+		ConfigurationStorageHandler.updateProfileImage(ConfigurationStorageHandler.defaultProfileImage);
 		this.updateProfileSettings(this, "");
-		this.reloadMenu(this, true);
+		this.reloadMenu(this, false);
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
@@ -250,13 +250,15 @@ var MainScreen = new MAF.Class({
 				});
 			}
 			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
+				this.persist.returnFromPopup = null;
 				this.updateProfileSettings(this, profile.name);
 				this.hideSidebar();
 				this.reloadMenu(this, true);
 			} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
+				this.persist.returnFromPopup = null;
 				this.hideSidebar();
 			} else {
-				this.reloadMenu(this);
+				this.reloadMenu(this, false);
 			}
 		}
 	},

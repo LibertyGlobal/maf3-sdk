@@ -144,7 +144,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 				this.stopProgressInterval();
 				this.timerId = setInterval(function() {
 					view.updateProgress(view);
-				}, Config.common.progressBarUpdateFreq);
+				}, Config.get('progressBarUpdateFreq'));
 			}
 		} else {
 			this.displayData = null;

@@ -1,11 +1,13 @@
-// Theme
 include('Javascript/Theme.js');
+
+include('Javascript/Config/AgeRatingScheme.js');
 
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
 include('Javascript/Config/conf.live.js');
 include('Javascript/Config/conf.dev.js');
-include('Javascript/Config/AgeRatingScheme.js');
+include('Javascript/Config/conf.NL.js');
+include('Javascript/Config/conf.IE.js');
 
 include('Javascript/Core/AgeRatingConfig.js');
 include('Javascript/Core/InitializationHandler.js');
@@ -51,8 +53,9 @@ include('Javascript/Views/ShareScreen.js');
 include('Javascript/Views/WelcomePopup.js');
 
 Config.load();
-LGI.Guide.config.APIURL = Config.common.broadcastApiUrl;
-LGI.Guide.config.region = Config.common.country;
+Config.loadCountryConfig(profile.countryCode.toUpperCase());
+LGI.Guide.config.APIURL = Config.get('broadcastApiUrl');
+LGI.Guide.config.region = profile.countryCode.toUpperCase();
 
 (function channelEvents() {
     var icon = widget.getUrl("Images/Icon_notification.png"),

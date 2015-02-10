@@ -397,7 +397,7 @@ var ShareScreen = new MAF.Class({
 		{
 			view.facebookPosted = true;
 			FacebookService.postToTimeline(
-				Config.common.facebookDefaultUrl,
+				Config.get('facebookDefaultUrl'),
 				view.shareTextArray.join(''),
 				view.currentItem.video.imageLink.href,
 				view.currentItem.video.title,
