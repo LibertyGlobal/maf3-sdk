@@ -95,12 +95,10 @@ var MenuCarouselControl = new MAF.Class({
 		this.parent();
 		this.generateCells();
 		this.mainCollection = [];
-		console.log("MenuCarouselControl initialize ");
 		this.focusIndex = 0;
 	},
 
 	changeDataset: function(data) {
-		console.log("MenuCarouselControl changeDataset ");
 		this.focusIndex = 0;
 		this.mainCollection = [].concat(data);
 		this.updateCells();

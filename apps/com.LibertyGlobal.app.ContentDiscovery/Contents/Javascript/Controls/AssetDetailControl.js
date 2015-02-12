@@ -299,8 +299,8 @@ var AssetDetailControl = new MAF.Class({
 					}
 
 					if (data.video.year !== undefined) {
-						this.Prop6Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
-						this.Prop6Value.setText(data.video.year);
+						this.Prop5Text.setText($_('InfoScreen_Asset_Year_Produced_Text'));
+						this.Prop5Value.setText(data.video.year);
 					}
 				} else {
 					this.Prop6Text.setText("");
@@ -326,11 +326,10 @@ var AssetDetailControl = new MAF.Class({
 						this.Prop3Value.setText(data.video.language);
 					}
 				}
-				this.Prop4Text.setText($_('InfoScreen_Asset_Subtitles_Text'));
-				this.Prop4Value.setText("TODO Value 4");
-				this.Prop5Text.setText($_('InfoScreen_Asset_Rating_Text'));
+				debugger;
+				this.Prop4Text.setText($_('InfoScreen_Asset_Rating_Text'));
 				if (data.video.ageRating !== undefined) {
-					this.Prop5Value.setText(AgeRatingConfig(data.video.ageRating));
+					this.Prop4Value.setText(AgeRatingConfig(data.video.ageRating));
 				}
 
 				this.Poster.setSource(data.video.imageLink.href);

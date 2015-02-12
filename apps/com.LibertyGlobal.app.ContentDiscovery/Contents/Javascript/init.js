@@ -52,6 +52,7 @@ include('Javascript/Views/PreferencesPopup.js');
 include('Javascript/Views/ShareScreen.js');
 include('Javascript/Views/WelcomePopup.js');
 
+screen.log("country - language: " + profile.countryCode + " - " +  profile.languageCode);
 Config.load();
 Config.loadCountryConfig(profile.countryCode.toUpperCase());
 LGI.Guide.config.APIURL = Config.get('broadcastApiUrl');
