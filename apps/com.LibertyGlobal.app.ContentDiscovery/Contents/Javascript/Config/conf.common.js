@@ -4,10 +4,10 @@ Config.common = {
 	call2ActionMessageDisplayTimeout: 12,
 	contentTimeWindow: "30", // default content time window (minutes)
 	extendedContentTimeWindow: "90", // extendend content time window in case no items found in the default window (minutes)	
-	broadcastApiUrl: 'http://api.appdev.io/kraken/v2/schedule/',	
+	broadcastApiUrl: 'http://lgi.io/kraken/v2/schedule/',	
 	broadcastApiAuthId: 'dc573c37',
 	broadcastApiAuthKey: 'f4521ced0cb9af73374731a77b2f21f6',
-	customerApiUrl: 'http://api.appdev.io/kraken/v2/customer/countryCode/customers/customerId/entitlements',
+	customerApiUrl: 'http://lgi.io/kraken/v2/customer/countryCode/customers/customerId/entitlements',
 	ageRatingSchemeFile: "apps/com.libertyglobal.app.ContentDiscovery/Contents/Javascript/Config/AgeRatingScheme.xml",
 	carouselAutoNavigateToggleTimeout: 8, // seconds
 	InfoScreenMovieSerieCategory: 'movies,series'

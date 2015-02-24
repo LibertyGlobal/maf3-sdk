@@ -1,7 +1,6 @@
 include('Javascript/Theme.js');
 
 include('Javascript/Config/AgeRatingScheme.js');
-
 include('Javascript/Config/Config.js');
 include('Javascript/Config/conf.common.js');
 include('Javascript/Config/conf.live.js');
@@ -54,13 +53,13 @@ Config.loadCountryConfig(profile.countryCode.toUpperCase());
 LGI.Guide.config.APIURL = Config.get('broadcastApiUrl');
 LGI.Guide.config.region = profile.countryCode.toUpperCase();
 
-(function channelEvents() {
-	var icon = widget.getUrl("Images/Icon_notification.png"),
-		msg = ['APP Title', 'Line 2', 'Line 1'];
-	widget.notify(icon, msg, MAF.Notification.CALL2ACTION);
-}).subscribeTo(MAF.mediaplayer, 'onChannelChange');
+// TODO used to test C2A, remove
+// (function channelEvents() {
+// var icon = widget.getUrl("Images/Icon_notification.png"),
+// msg = ['APP Title', 'Line 2', 'Line 1'];
+// widget.notify(icon, msg, MAF.Notification.CALL2ACTION);
+// }).subscribeTo(MAF.mediaplayer, 'onChannelChange');
 
-// Init application with view config
 MAF.application.init({
 	views: [{
 			id: 'view-MainScreen',
@@ -91,11 +90,3 @@ MAF.application.init({
 	defaultViewId: 'view-MainScreen',
 	settingsViewId: 'view-AppInfoScreen'
 });
-
-//(function() {
-//ReminderHandler.initialize();
-//}).subscribeTo(MAF.application, 'onApplicationStartup');
-
-//(function() {
-//ReminderHandler.cleanUp();
-//}).subscribeTo(MAF.application, 'onApplicationShutdown');

@@ -139,7 +139,6 @@ var ShareScreen = new MAF.Class({
 					}
 				},
 				onKeyDown: function(event) {
-					//screen.log("key event: " + event.payload.key + ", " + event.payload.keyCode);
 					if (event.payload.key === "space") {
 						view.shareTextArray.push(' ');
 						event.preventDefault();

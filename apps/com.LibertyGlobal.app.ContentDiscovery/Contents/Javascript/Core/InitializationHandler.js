@@ -73,11 +73,11 @@ var InitializationHandler = (function() {
 						handler.entitlementsInitialized = true;
 						handler.checkInitializationComplete(handler);
 					}
-					else
-					{
-						screen.log("customerApiUrl failure: " + url + ", " + handler.customerId);
-						screen.log("customerApiUrl failure: " + request.status);
-					}
+					// else
+					// {
+					// screen.log("customerApiUrl failure: " + url + ", " + handler.customerId);
+					// screen.log("customerApiUrl failure: " + request.status);
+					// }
 				}
 			}).send();
 		},

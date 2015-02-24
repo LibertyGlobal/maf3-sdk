@@ -5,10 +5,10 @@ var MainScreen = new MAF.Class({
 	initialize: function() {
 		//screen.log("reminderhandler: " + ReminderHandler.handleCall2Action + ", " + ReminderHandler.handleCall2ActionChannelNr);
 		// if (ReminderHandler.handleCall2Action !== null && ReminderHandler.handleCall2Action !== undefined) {
-		// 	if (ReminderHandler.handleCall2Action === true) {
-		// 		MAF.mediaplayer.setChannelByNumber(ReminderHandler.handleCall2ActionChannelNr);
-		// 		MAF.application.exitToLive();
-		// 	}
+		// if (ReminderHandler.handleCall2Action === true) {
+		// MAF.mediaplayer.setChannelByNumber(ReminderHandler.handleCall2ActionChannelNr);
+		// MAF.application.exitToLive();
+		// }
 		// }
 		var view = this;
 		view.loading = false;

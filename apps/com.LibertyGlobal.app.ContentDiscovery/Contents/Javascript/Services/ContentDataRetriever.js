@@ -101,7 +101,7 @@ var ContentDataRetriever = (function() {
 	};
 
 	var errorCallback = function(error) {
-		screen.log("GSDK: " + error);
+		//screen.log("GSDK: " + error);
 	};
 
 	return {

@@ -5,7 +5,6 @@ var ReminderHandler = (function() {
 
 	return {
 		initialize: function() {
-			//reminders = ConfigurationStorageHandler.getAppReminderStorage();
 		},
 
 		setReminder: function(id, start, title, channelName, channelNr) {
@@ -24,13 +23,13 @@ var ReminderHandler = (function() {
 					// reminderHandler.handleCall2ActionChannelNr = reminder.channelNr;
 					// screen.log("c2aTimer start: " + reminder.channelNr);
 					// var c2aTimer = new Timer(Config.common.call2ActionMessageDisplayTimeout,
-					// 	function() {
-					// 		screen.log("c2aTimer timeout");
-					// 		reminderHandler.handleCall2Action = false;
-					// 		reminderHandler.handleCall2ActionChannelNr = null;
-					// 		c2aTimer.stop();
-					// 		c2aTimer = null;
-					// 	});
+					// function() {
+					// screen.log("c2aTimer timeout");
+					// reminderHandler.handleCall2Action = false;
+					// reminderHandler.handleCall2ActionChannelNr = null;
+					// c2aTimer.stop();
+					// c2aTimer = null;
+					// });
 					// c2aTimer.start();
 					widget.notify(widget.getUrl("Images/Icon_notification.png"), [$_('App_Title'),
 							$_('Notification_Line2_Text', [reminder.channelName, reminder.channelNr]),
@@ -65,7 +64,6 @@ var ReminderHandler = (function() {
 		},
 
 		isReminderSet: function(assetId) {
-			console.log("Check reminder set: " + assetId + ", " + reminders.length);
 			var found = false;
 			for (var i = 0; i < reminders.length; i++)
 				if (reminders[i].assetId === assetId)
@@ -74,7 +72,6 @@ var ReminderHandler = (function() {
 		},
 
 		cleanUp: function() {
-			//ConfigurationStorageHandler.setAppReminderStorage(reminders);
 			for (var i = 0; i < reminders.length; i++) {
 				if (reminders[i].timer !== null && reminders[i].timer !== undefined) {
 					reminders[i].timer.stop();
