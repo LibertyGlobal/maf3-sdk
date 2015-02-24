@@ -27,9 +27,6 @@ include('Javascript/Controls/MenuCarouselControl.js');
 include('Javascript/Controls/HorizontalMenuButtonControl.js');
 include('Javascript/Controls/HorizontalMenuControl.js');
 include('Javascript/Controls/ButtonControl.js');
-include('Javascript/Controls/CoverBarControl.js');
-include('Javascript/Controls/CoverBarItemControl.js');
-include('Javascript/Controls/CoverBarItemFocusControl.js');
 include('Javascript/Controls/AssetDetailControl.js');
 include('Javascript/Controls/AssetCarouselCellControl.js');
 include('Javascript/Controls/AssetCarouselCellEmptyFocusControl.js');
@@ -52,29 +49,44 @@ include('Javascript/Views/PreferencesPopup.js');
 include('Javascript/Views/ShareScreen.js');
 include('Javascript/Views/WelcomePopup.js');
 
-screen.log("country - language: " + profile.countryCode + " - " +  profile.languageCode);
 Config.load();
 Config.loadCountryConfig(profile.countryCode.toUpperCase());
 LGI.Guide.config.APIURL = Config.get('broadcastApiUrl');
 LGI.Guide.config.region = profile.countryCode.toUpperCase();
 
 (function channelEvents() {
-    var icon = widget.getUrl("Images/Icon_notification.png"),
-        msg = ['APP Title', 'Line 2', 'Line 1'];
-    widget.notify(icon, msg, MAF.Notification.CALL2ACTION);
+	var icon = widget.getUrl("Images/Icon_notification.png"),
+		msg = ['APP Title', 'Line 2', 'Line 1'];
+	widget.notify(icon, msg, MAF.Notification.CALL2ACTION);
 }).subscribeTo(MAF.mediaplayer, 'onChannelChange');
 
 // Init application with view config
 MAF.application.init({
-	views: [
-		{ id: 'view-MainScreen', viewClass: MainScreen },
-		{ id: 'view-CastScreen', viewClass: CastScreen },
-		{ id: 'view-InfoScreen', viewClass: InfoScreen },
-		{ id: 'view-FullBiography', viewClass: FullBiography },
-		{ id: 'view-FullSynopsis', viewClass: FullSynopsis },
-		{ id: 'view-PopupScreen', viewClass: PopupScreen },
-		{ id: 'view-ShareScreen', viewClass: ShareScreen },
-		{ id: 'view-About', viewClass: MAF.views.AboutBox } // Use standard About view
+	views: [{
+			id: 'view-MainScreen',
+			viewClass: MainScreen
+		}, {
+			id: 'view-CastScreen',
+			viewClass: CastScreen
+		}, {
+			id: 'view-InfoScreen',
+			viewClass: InfoScreen
+		}, {
+			id: 'view-FullBiography',
+			viewClass: FullBiography
+		}, {
+			id: 'view-FullSynopsis',
+			viewClass: FullSynopsis
+		}, {
+			id: 'view-PopupScreen',
+			viewClass: PopupScreen
+		}, {
+			id: 'view-ShareScreen',
+			viewClass: ShareScreen
+		}, {
+			id: 'view-About',
+			viewClass: MAF.views.AboutBox
+		} // Use standard About view
 	],
 	defaultViewId: 'view-MainScreen',
 	settingsViewId: 'view-AppInfoScreen'
@@ -87,4 +99,3 @@ MAF.application.init({
 //(function() {
 //ReminderHandler.cleanUp();
 //}).subscribeTo(MAF.application, 'onApplicationShutdown');
-

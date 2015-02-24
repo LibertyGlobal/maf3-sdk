@@ -17,6 +17,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnInfoButtonPress = view.onInfoButtonPress.subscribeTo(MAF.application, 'onWidgetKeyPress', view);
 		view.fnOnProfileLoaded = view.onProfileLoaded.subscribeTo(MAF.application, 'onLoadProfile', view);
 		view.fnOnProfileUnloaded = view.onProfileUnloaded.subscribeTo(MAF.application, 'onUnloadProfile', view);
+		view.fnOnDialogCancelled = view.onDialogCancelledEvent.subscribeTo(MAF.application, 'onDialogCancelled', view);
 		ConfigurationStorageHandler.initialize();
 		InitializationHandler.initialize(view.onChannelInitializeComplete, view);
 	},
@@ -82,11 +83,19 @@ var MainScreen = new MAF.Class({
 	},
 
 	onProfileUnloaded: function(event) {
-		Twitter.reset();
-		Facebook.reset();
-		ConfigurationStorageHandler.updateProfileImage(ConfigurationStorageHandler.defaultProfileImage);
-		this.updateProfileSettings(this, "");
-		this.reloadMenu(this, false);
+		// not used as it is not sure that the profile dialog is closed already when this event occurs, 
+		// moved code to onDialogDoneEvent as work around for this
+	},
+
+	onDialogCancelledEvent: function(event, data) {
+		if (!profile.name || profile.name === "") {
+			Twitter.reset();
+			Facebook.reset();
+			ConfigurationStorageHandler.updateProfileImage(ConfigurationStorageHandler.defaultProfileImage);
+			this.updateProfileSettings(this, "");
+			this.hideSidebar();
+			this.reloadMenu(this, true);
+		}
 	},
 
 	onMenuItemDataLoaded: function(menuItem, view) {
@@ -333,6 +342,8 @@ var MainScreen = new MAF.Class({
 		view.fnOnProfileLoaded = null;
 		view.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');
 		view.fnOnProfileUnloaded = null;
+		view.fnOnDialogCancelled.unsubscribeFrom(MAF.application, 'onDialogCancelled');
+		view.fnOnDialogCancelled = null;
 		InitializationHandler.cleanUp();
 		MenuHandler.cleanUp();
 		delete view.controls.sideBarContainer;

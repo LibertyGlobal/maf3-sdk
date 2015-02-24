@@ -26,6 +26,15 @@ var InfoScreen = new MAF.Class({
 					view.isLive = (moment() > moment(response[0].start) && moment() < moment(response[0].end));
 					view.controls.assetDetails.changeData(response[0]);
 
+					if (view.asset.video.cast !== undefined) {
+						if (view.asset.video.cast.data.length > 0) {
+							view.elements.coverBar.changeDataset(view.asset.video.cast.data);
+							view.elements.coverBar.show();
+							view.elements.coverBarTitle.show();
+						}
+					}
+
+					view.controls.assetDetails.ReminderImage.hide();
 					if (view.isLive) {
 						view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text');
 					} else {
@@ -39,15 +48,7 @@ var InfoScreen = new MAF.Class({
 					}
 					view.controls.horizontalMenu.updateButtonText();
 					view.controls.horizontalMenu.show();
-					view.controls.horizontalMenu.setFocus();
-
-					if (view.asset.video.cast !== undefined) {
-						if (view.asset.video.cast.data.length > 0) {
-							view.controls.coverBar.changeDataset(view.asset.video.cast.data);
-							view.controls.coverBar.show();
-							view.elements.coverBarTitle.show();
-						}
-					}
+					view.controls.horizontalMenu.setFocus();					
 				}
 			});
 	},
@@ -153,25 +154,100 @@ var InfoScreen = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 		view.elements.coverBarTitle.hide();
 
-		view.controls.coverBar = new CoverBarControl({
-			styles: {
+		view.elements.coverBar = new MAF.element.SlideCarousel({
+			visibleCells: 6,
+			focusIndex: 1,
+			slideDuration: 0.2,
+			styles:{
+				width: 1500,
 				height: 380,
-				width: 'inherit',
 				vOffset: 645,
 				hOffset: 45
 			},
+			cellCreator: function () {
+				var cell = new MAF.element.SlideCarouselCell({
+					styles: {
+						height: 380,
+						width: 250
+					},
+					events: {
+						onFocus: function () {
+							this.PosterBorderContainer.animate({
+								borderStyle: 'solid'
+							});
+						},
+						onBlur: function(){
+							this.PosterBorderContainer.animate({
+								borderStyle: 'none'
+							});
+						}
+					}
+				});
+
+				cell.PosterContainer = new MAF.element.Container({
+				styles: {
+					height: 294,
+					width: 204,
+					marginTop: 5,
+					marginLeft: 5,
+					backgroundColor: '#b2bfcb'
+				}
+				}).appendTo(cell);
+				cell.Poster = new MAF.element.Image({
+					aspect: 'auto',
+					styles: {
+						margin: 1,
+						height: 292,
+						width: 202
+					}
+				}).appendTo(cell.PosterContainer);
+				cell.PosterBorderContainer = new MAF.element.Container({
+				styles: {
+					height: 300,
+					width: 210,
+					vOffset: 2,
+					hOffset: 2,
+					borderWidth:3,
+					borderColor:'#FFFFFF'
+				}
+				}).appendTo(cell);
+
+				cell.Title = new MAF.element.TextField({
+					totalLines: 2,
+					visibleLines: 2,
+					styles: {
+						color: '#aca7b2',
+						fontFamily: 'UPCDigital-Regular',
+						fontSize: 24,
+						vOffset: 304,
+						height: 70,
+						width: 204,
+						wrap: true,
+						truncation: 'end'
+					}
+				}).appendTo(cell);
+				return cell;
+			},
+			cellUpdater: function(cell, data){
+				cell.Title.setText(data.name);
+				cell.Poster.setSource(data.image);
+			},
 			events: {
-				onNavigateUp: function() {
-					view.controls.horizontalMenu.setFocus();
+				onDatasetChanged: function(){
+					this.getCurrentCell().focus();
+					this.animate({
+						opacity: 1,
+						duration: 0.2
+					});
 				},
-				onCastSelect: function(eventData) {
+				onSelect: function(){
 					MAF.application.loadView('view-CastScreen', {
-						"cast": eventData.payload.cast
+						"name": this.getCurrentCell().Title.text
 					});
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
-		view.controls.coverBar.hide();
+		view.elements.coverBar.hide();
 	},
 
 	updateView: function() {
@@ -195,7 +271,7 @@ var InfoScreen = new MAF.Class({
 	},
 
 	destroyView: function() {
-		delete this.controls.coverBar;
+		delete this.elements.coverBar;
 		delete this.controls.assetDetails;
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;

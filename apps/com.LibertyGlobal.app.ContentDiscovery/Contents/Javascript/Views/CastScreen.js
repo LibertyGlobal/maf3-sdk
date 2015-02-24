@@ -6,16 +6,29 @@ var CastScreen = new MAF.Class({
 	initialize: function() {
 		var view = this;
 		view.parent();
-		view.cast = this.persist.cast;
+		view.alsoKnown = [{
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}, {
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}, {
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}, {
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}, {
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}, {
+			image: "https://lgi-assets.s3.amazonaws.com/images/02afa29bf26e115a2eaef5db0e80a203ec2a1b79.jpg"
+		}];
 	},
 
 	updateData: function(view) {
-		// if (view.cast.alsoKnown.length > 0) {
-		// 	view.controls.coverBar.changeDataset(view.cast.alsoKnown);
-		// 	view.controls.coverBar.show();
-		// 	view.elements.coverBarTitle.show();
-		// }
-		view.elements.Title.setText("Amy Adams");
+
+		if (view.alsoKnown.length > 0) {
+			view.elements.coverBar.changeDataset(view.alsoKnown);
+			view.elements.coverBar.show();
+			view.elements.coverBarTitle.show();
+		}
+		view.elements.Title.setText(view.persist.name);
 		view.elements.Prop1Value.setText("20 August 1974");
 		view.elements.Prop2Value.setText("Vincenza, Italy");
 		view.elements.Biography.setText("Amy Lou Adams was born in Italy, to American parents Kathryn (Hicken) and Richard Kent Adams, while her father was a U.S. serviceman. She was raised in a Mormon family of seven children in Castle Rock, Colorado, and has English, as well as Danish, German, and Norwegian, ancestry. Adams sang in the school choir at Douglas County High School and was an apprentice dancer at a local dance company, with the ambition of becoming a ballerina. However, she worked as a greeter at The Gap and as a Hooters hostess to support herself before finding work as a dancer at Boulder's Dinner Theatre and Country Dinner Playhouse in such productions as Brigadoon and A Chorus Line. It was there that she was spotted by a Minneapolis dinner-theater director who asked her to move to Chanhassen, Minnesota for more regional dinner theater work.");
@@ -186,29 +199,57 @@ var CastScreen = new MAF.Class({
 				fontFamily: 'InterstatePro-ExtraLight, sans-serif',
 				fontSize: 33.3,
 				height: 50,
-				vOffset: 580,
+				vOffset: 600,
 				hOffset: 50
 			}
 		}).appendTo(this.elements.rightContainer);
 		view.elements.coverBarTitle.hide();
 
-		view.controls.coverBar = new CoverBarControl({
-			showText: false,
+		view.elements.coverBar = new MAF.element.Grid({
+			rows: 1,
+			columns: 6,
 			styles: {
 				height: 380,
-				width: 'inherit',
-				vOffset: 625,
+				width: 1500,
+				vOffset: 645,
 				hOffset: 45
 			},
-			events: {}
+			cellCreator: function() {
+				var cell = new MAF.element.GridCell({
+					height: 380,
+					width: 250
+				});
+
+				cell.PosterContainer = new MAF.element.Container({
+					styles: {
+						height: 294,
+						width: 204,
+						marginTop: 5,
+						marginLeft: 5,
+						backgroundColor: '#b2bfcb'
+					}
+				}).appendTo(cell);
+				cell.Poster = new MAF.element.Image({
+					aspect: 'auto',
+					styles: {
+						margin: 1,
+						height: 292,
+						width: 202
+					}
+				}).appendTo(cell.PosterContainer);
+				return cell;
+			},
+			cellUpdater: function(cell, data) {
+				cell.Poster.setSource(data.image);
+			}
 		}).appendTo(this.elements.rightContainer);
-		view.controls.coverBar.hide();
+		view.elements.coverBar.hide();
 
 		view.controls.backButton = new ButtonControl({
 			buttonText: $_('CastInfoScreen_Back_Button'),
 			styles: {
 				vOffset: 960,
-				hOffset: 45,
+				hOffset: 48,
 				width: 379,
 				height: 66
 			},
@@ -240,6 +281,7 @@ var CastScreen = new MAF.Class({
 	},
 
 	destroyView: function() {
+		delete this.alsoKnown;
 		delete this.elements.Title;
 		delete this.elements.PosterContainer;
 		delete this.elements.Poster;
@@ -249,11 +291,9 @@ var CastScreen = new MAF.Class({
 		delete this.elements.Prop2Value;
 		delete this.elements.Biography;
 		delete this.elements.coverBarTitle;
-		delete this.controls.coverBar;
+		delete this.elements.coverBar;
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;
 		delete this.controls.backButton;
-		delete this.cast.alsoKnown;
-		delete this.cast;
 	}
 });

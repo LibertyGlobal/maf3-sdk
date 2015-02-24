@@ -63,6 +63,7 @@ var AssetDetailControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.ReminderImage = new MAF.element.Image({
+				aspect: 'source',
 				source: 'Images/UPC_Picto_Reminder.png',
 				styles: {
 					vOffset: 101,
@@ -326,7 +327,6 @@ var AssetDetailControl = new MAF.Class({
 						this.Prop3Value.setText(data.video.language);
 					}
 				}
-				debugger;
 				this.Prop4Text.setText($_('InfoScreen_Asset_Rating_Text'));
 				if (data.video.ageRating !== undefined) {
 					this.Prop4Value.setText(AgeRatingConfig(data.video.ageRating));
@@ -349,12 +349,12 @@ var AssetDetailControl = new MAF.Class({
 	},
 
 	clearData: function() {
+		this.ReminderImage.hide();
 		this.PosterContainer.hide();
 		this.ImdbContainer.hide();
 		this.Channel.hide();
 		this.Prop1Text.setText('');
-		this.Prop1Value.setText('');
-		this.ReminderImage.hide();
+		this.Prop1Value.setText('');		
 		this.Prop2Text.setText('');
 		this.Prop2Value.setText('');
 		this.Prop3Text.setText('');

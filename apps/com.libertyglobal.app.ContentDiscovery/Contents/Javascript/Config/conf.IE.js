@@ -4,17 +4,17 @@ Config.IE = {
 	menuItemsVisibilityDefault: [ 'movies', 'series', 'sports', 'news', 'kids' ], // default menu items when no profile preferences set	
 	menuItemsCategoryNames: { 
 		'recommendations': '',
-		'movies': 'speelfilm',
+		'movies': 'movie',
 		'series': 'drama',
 		'trending': '',
 		'shuffle': '',
-		'sports': 'sport',
-		'arts': 'kunst',
-		'news': 'nieuws',
+		'sports': 'sports',
+		'arts': 'arts',
+		'news': 'news',
 		'kids': 'kids',
-		'social': 'maatschappelijk',
+		'social': 'social',
 		'show': 'show',
-		'music': 'muziek',
-		'education': 'educatie'
+		'music': 'music',
+		'education': 'educational'
 	}
 };

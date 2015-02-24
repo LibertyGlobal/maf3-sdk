@@ -5,18 +5,10 @@ var ContentDataRetriever = (function() {
 
 	var parseData = function(menuItem, activeAssets, futureAssets, sortAssets, uniqueAssets, shuffleAssets) {
 		var allAssets = [];
-		for (var i = 0; i < activeAssets.length; i++) {
-			var currentProgress = (moment().utc() - moment(activeAssets[i].start)) / (moment(activeAssets[i].end) - moment(activeAssets[i].start));
-			//console.log("item '" + activeAssets[i].video.title + "', " + moment(activeAssets[i].start).format("HH:mm") + ", " +  moment(activeAssets[i].end).format("HH:mm") +
-			//", current progress: " + currentProgress +
-			//", skipped: " + (currentProgress >= Config.common.programDurationDisplayThreshold));
-			if (currentProgress < Config.get('programDurationDisplayThreshold')) {
-				allAssets.push(activeAssets[i]);
-			}
-		}
+		allAssets = allAssets.concat(removeAlmostEnded(activeAssets));
 
 		if (futureAssets !== null) {
-			allAssets = allAssets.concat(futureAssets);
+			allAssets = allAssets.concat(removeAlmostEnded(futureAssets));
 		}
 
 		if (sortAssets === true) {
@@ -44,6 +36,22 @@ var ContentDataRetriever = (function() {
 		callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
 	};
 
+	var removeAlmostEnded = function(assets)
+	{
+		var allAssetsFiltered = [];
+		var treshold = Config.get('programDurationDisplayThreshold');
+		for (var i = 0; i < assets.length; i++) {
+			var currentProgress = (moment().utc() - moment(assets[i].start)) / (moment(assets[i].end) - moment(assets[i].start));
+			//console.log("item '" + activeAssets[i].video.title + "', " + moment(activeAssets[i].start).format("HH:mm") + ", " +  moment(activeAssets[i].end).format("HH:mm") +
+			//", current progress: " + currentProgress +
+			//", skipped: " + (currentProgress >= Config.common.programDurationDisplayThreshold));
+			if (currentProgress < treshold) {
+				allAssetsFiltered.push(assets[i]);
+			}
+		}
+		return allAssetsFiltered;
+	};
+
 	var removeDuplicates = function(allAssets) {
 		var allAssetsFiltered = [];
 		var skipped = 0;
@@ -52,7 +60,7 @@ var ContentDataRetriever = (function() {
 			var current = i;
 			var previous = i - 1;
 			if (skipNext !== true) {
-				if (previous > 0) {
+				if (previous >= 0) {
 					if (allAssets[current].start === allAssets[previous].start &&
 						allAssets[current].end === allAssets[previous].end &&
 						allAssets[current].video.title === allAssets[previous].video.title) {
@@ -103,10 +111,12 @@ var ContentDataRetriever = (function() {
 
 			menuItem.dataLoading = true;
 			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
+			var currentTimeMin2Hours = moment().utc().subtract('minutes', 120).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.get('extendedContentTimeWindow') : ConfigurationStorageHandler.getContentTimeWindow();
 			delete menuItem.data;
 			menuItem.data = null;
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
+			var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 
 			switch (menuItem.itemType) {
 				case 'category':
@@ -148,20 +158,34 @@ var ContentDataRetriever = (function() {
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
 							LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
 							"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
-							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM)
+							LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM, "video.statistics.bpm")
 						.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
-						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTime))
+						.filter(LGI.Guide.Broadcast.END.greaterThan(currentTimeMin2Hours))
 						.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
 						.filter(LGI.Guide.Broadcast.BPM.greaterThan(0))
 						.sort(LGI.Guide.Broadcast.BPM, 'desc')
 						.findOne(function(response) {
-								var activeAssets = response;
-								parseData(menuItem, activeAssets, null, true, true, false);
+								var bpmAssets = response;
+								LGI.Guide.Broadcast.create()
+									.limit(100)
+									.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
+										LGI.Guide.Broadcast.END, LGI.Guide.Broadcast.CHANNEL, LGI.Guide.Broadcast.POPULARITY,
+										"video.shortSynopsis", LGI.Guide.Broadcast.IMAGE_LINK,
+										LGI.Guide.Broadcast.CATEGORY, "video.subcategory", LGI.Guide.Broadcast.BPM, "video.statistics.bpm")
+									.filter(LGI.Guide.Broadcast.START.lessThan(timeWindowEndTime))
+									.filter(LGI.Guide.Broadcast.END.greaterThan(currentTimeMin2Hours))
+									.filter(entitlementsFieldName + "=" + InitializationHandler.entitlements.join(','))
+									.filter("video.statistics.bpm>0")
+									.sort("video.statistics.bpm", 'desc')
+									.findOne(function(response2) {
+											var videoBpmAssets = response2;
+											parseData(menuItem, bpmAssets, videoBpmAssets, true, true, false);
+										},
+										errorCallback);							
 							},
 							errorCallback);
 					break;
 				case 'recommendations':
-					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 					if (InitializationHandler.customerId !== undefined) {
 						var startTime = moment().utc().subtract('minutes', parseInt(Config.get('extendedContentTimeWindow'), 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 						var request = LGI.Guide.Broadcast.create()
@@ -191,7 +215,6 @@ var ContentDataRetriever = (function() {
 					}
 					break;
 				case 'shuffle':
-					var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 					LGI.Guide.Broadcast.create()
 						.limit(500)
 						.fields(LGI.Guide.Video.ID, LGI.Guide.Broadcast.TITLE, LGI.Guide.Broadcast.START,
