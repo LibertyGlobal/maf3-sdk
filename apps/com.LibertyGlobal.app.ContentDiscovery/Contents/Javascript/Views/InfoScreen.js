@@ -34,16 +34,16 @@ var InfoScreen = new MAF.Class({
 						}
 					}
 
-					view.controls.assetDetails.ReminderImage.hide();
+					view.ReminderImage.hide();
 					if (view.isLive) {
 						view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text');
 					} else {
 						if (ReminderHandler.isReminderSet(view.asset.id) === true) {
 							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
-							view.controls.assetDetails.ReminderImage.show();
+							view.ReminderImage.show();
 						} else {
 							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
-							view.controls.assetDetails.ReminderImage.hide();
+							view.ReminderImage.hide();
 						}
 					}
 					view.controls.horizontalMenu.updateButtonText();
@@ -81,6 +81,17 @@ var InfoScreen = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 		view.controls.assetDetails.clearData();
 
+		this.ReminderImage = new MAF.element.Image({
+				source: 'Images/UPC_Picto_Reminder.png',
+				styles: {
+					vOffset: 181,
+					hOffset: 700,
+					height: 30,
+					width: 30
+				}
+			}).appendTo(this.elements.rightContainer);
+		this.ReminderImage.hide();
+
 		view.controls.horizontalMenu = new HorizontalMenuControl({
 			width: 1000,
 			button1Text: $_('InfoScreen_Button_Set_Reminder_Text'),
@@ -111,7 +122,7 @@ var InfoScreen = new MAF.Class({
 								if (ReminderHandler.isReminderSet(view.asset.id) === true) {
 									ReminderHandler.removeReminder(view.asset.id);
 									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Set_Reminder_Text');
-									view.controls.assetDetails.ReminderImage.hide();
+									view.ReminderImage.hide();
 								} else {
 									ReminderHandler.setReminder(
 										view.asset.id,
@@ -120,7 +131,7 @@ var InfoScreen = new MAF.Class({
 										view.asset.channel.name,
 										view.asset.channel.logicalPosition);
 									view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
-									view.controls.assetDetails.ReminderImage.show();
+									view.ReminderImage.show();
 								}
 								view.controls.horizontalMenu.updateButtonText();
 							}
@@ -253,6 +264,7 @@ var InfoScreen = new MAF.Class({
 	updateView: function() {
 		var view = this;
 		view.controls.assetDetails.clearData();
+		view.ReminderImage.hide();
 		view.assetId = this.persist.assetId;
 		this.updateData(view);
 	},
@@ -272,7 +284,8 @@ var InfoScreen = new MAF.Class({
 
 	destroyView: function() {
 		delete this.elements.coverBar;
-		delete this.controls.assetDetails;
+		delete this.controls.assetDetails;		
+		delete this.ReminderImage;
 		delete this.controls.horizontalMenu;
 		delete this.controls.sideBarContainer;
 		delete this.casts;

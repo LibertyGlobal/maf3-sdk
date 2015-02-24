@@ -66,7 +66,7 @@ var PageableTextGridControl = new MAF.Class({
 			if (this.textGrid.getPageCount() > 1) {
 				
 				this.pageLeft.show();
-				this.pageRight.setStyles({ hOffset: 0 });
+				this.pageLeft.setStyles({ hOffset: 0 });
 				this.pageRight.show();
 				this.pageRight.setStyles({ hOffset: this.width - 96 });
 				this.pageIndicator.visible = true;

@@ -61,18 +61,7 @@ var AssetDetailControl = new MAF.Class({
 					wrap: true,
 					truncation: 'end'
 				}
-			}).appendTo(this);
-			this.ReminderImage = new MAF.element.Image({
-				aspect: 'source',
-				source: 'Images/UPC_Picto_Reminder.png',
-				styles: {
-					vOffset: 101,
-					hOffset: 650,
-					height: 30,
-					width: 30
-				}
-			}).appendTo(this);
-			this.ReminderImage.hide();
+			}).appendTo(this);			
 
 			this.Prop2Text = new MAF.element.Text({
 				styles: {
@@ -349,7 +338,6 @@ var AssetDetailControl = new MAF.Class({
 	},
 
 	clearData: function() {
-		this.ReminderImage.hide();
 		this.PosterContainer.hide();
 		this.ImdbContainer.hide();
 		this.Channel.hide();
@@ -379,7 +367,6 @@ var AssetDetailControl = new MAF.Class({
 		delete this.Channel;
 		delete this.Prop1Text;
 		delete this.Prop1Value;
-		delete this.ReminderImage;
 		delete this.Prop2Text;
 		delete this.Prop2Value;
 		delete this.Prop3Text;

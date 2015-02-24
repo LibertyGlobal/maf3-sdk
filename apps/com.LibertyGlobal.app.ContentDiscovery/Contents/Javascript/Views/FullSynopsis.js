@@ -10,7 +10,6 @@ var FullSynopsis = new MAF.Class({
 
 	updateData: function(view) {
 		if (this.persist.asset !== undefined) {
-			view.controls.assetDetails.ReminderImage.hide();
 			view.controls.assetDetails.changeData(this.persist.asset);
 			view.elements.synopsisText.setText(this.persist.asset.video.synopsis);
 			view.controls.backButton.focus();
