@@ -8,6 +8,11 @@ include('Javascript/Config/conf.dev.js');
 include('Javascript/Config/conf.NL.js');
 include('Javascript/Config/conf.IE.js');
 
+include('Javascript/Services/ContentDataRetriever.js');
+include('Javascript/Services/FacebookService.js');
+include('Javascript/Services/TwitterService.js');
+include('Javascript/Services/DataStorageService.js');
+
 include('Javascript/Core/AgeRatingConfig.js');
 include('Javascript/Core/InitializationHandler.js');
 include('Javascript/Core/MenuItem.js');
@@ -15,6 +20,7 @@ include('Javascript/Core/MenuHandler.js');
 include('Javascript/Core/ConfigurationStorageHandler.js');
 include('Javascript/Core/Reminder.js');
 include('Javascript/Core/ReminderHandler.js');
+include('Javascript/Core/ReportingHandler.js');
 
 include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
@@ -32,10 +38,6 @@ include('Javascript/Controls/AssetCarouselCellEmptyFocusControl.js');
 include('Javascript/Controls/AssetCarouselCellCurrentFocusControl.js');
 include('Javascript/Controls/AssetCarouselCellFutureFocusControl.js');
 include('Javascript/Controls/AssetCarouselControl.js');
-
-include('Javascript/Services/ContentDataRetriever.js');
-include('Javascript/Services/FacebookService.js');
-include('Javascript/Services/TwitterService.js');
 
 include('Javascript/Views/AppInfoPopup.js');
 include('Javascript/Views/CastScreen.js');

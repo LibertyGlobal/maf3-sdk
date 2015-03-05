@@ -20,6 +20,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnDialogCancelled = view.onDialogCancelledEvent.subscribeTo(MAF.application, 'onDialogCancelled', view);
 		ConfigurationStorageHandler.initialize();
 		InitializationHandler.initialize(view.onChannelInitializeComplete, view);
+		ReportingHandler.clearCounters();
 	},
 
 	onChannelInitializeComplete: function(view) {
@@ -42,8 +43,10 @@ var MainScreen = new MAF.Class({
 								this.loading = true; // avoid multiple clicks
 								var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
 								if (selectedAsset !== undefined) {
+									ReportingHandler.increaseCounterDetails();
 									MAF.application.loadView('view-InfoScreen', {
-										"assetId": selectedAsset.id
+										"assetId": selectedAsset.id,
+										"menuLabel": this.controls.verticalMenu.mainCollection[this.controls.verticalMenu.focusIndex].mainMenuLabel
 									});
 									event.preventDefault();
 									event.stopPropagation();
@@ -164,6 +167,7 @@ var MainScreen = new MAF.Class({
 								});
 								break;
 							case "exit":
+								ReportingHandler.sendUsageReport("-", "close");
 								MAF.HostEventManager.send("exitToDock");
 								break;
 						}
@@ -220,6 +224,7 @@ var MainScreen = new MAF.Class({
 					if (view.controls.sideBarContainer.isCollapsed === true) {
 						if (eventData.payload.asset !== undefined && eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
+								ReportingHandler.sendUsageReport(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel, "tuneFromMain");
 								MAF.application.exitToLive();
 							} else {
 								if (ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {

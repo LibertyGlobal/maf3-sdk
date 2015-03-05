@@ -7,6 +7,7 @@ var InfoScreen = new MAF.Class({
 		var view = this;
 		view.parent();
 		view.assetId = this.persist.assetId;
+		view.menuLabel = this.persist.menuLabel;
 		view.isLive = false;
 		view.asset = null;
 	},
@@ -109,7 +110,7 @@ var InfoScreen = new MAF.Class({
 					switch (event.payload.direction) {
 						case 'down':
 							if (view.asset.video.cast.data.length > 0) {
-								view.controls.coverBar.setFocus();
+								view.elements.coverBar.focus();
 							}
 							event.preventDefault();
 							event.stopPropagation();
@@ -120,6 +121,7 @@ var InfoScreen = new MAF.Class({
 					switch (eventData.payload.action) {
 						case 1:
 							if (view.isLive) {
+								ReportingHandler.sendUsageReport(view.menuLabel, "tuneFromDetails");
 								MAF.application.exitToLive();
 							} else {
 								if (ReminderHandler.isReminderSet(view.asset.id) === true) {
@@ -255,6 +257,7 @@ var InfoScreen = new MAF.Class({
 					});
 				},
 				onSelect: function(){
+					ReportingHandler.increaseCounterBio();
 					MAF.application.loadView('view-CastScreen', {
 						"name": this.getCurrentCell().Title.text
 					});

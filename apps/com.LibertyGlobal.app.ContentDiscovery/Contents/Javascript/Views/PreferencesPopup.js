@@ -236,6 +236,8 @@ var PreferencesPopup = new MAF.Class({
 						}
 						ConfigurationStorageHandler.updateVisibleMenuItems(menuItems);
 						ConfigurationStorageHandler.updateContentTimeWindow(contentTime);
+						ReportingHandler.sendProfileReport(view.twitterButton.disabled, view.facebookButton.disabled,
+							menuItems, contentTime);
 						view.fire('onPreferencesClosed', {});
 					}
 				}
@@ -288,16 +290,12 @@ var PreferencesPopup = new MAF.Class({
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
 				this.twitterButton.setDisabled(true);
-			}
-			else
-			{
+			} else {
 				this.twitterButton.setDisabled(false);
 			}
 			if (FacebookService.isPaired() === true) {
 				this.facebookButton.setDisabled(true);
-			}
-			else
-			{
+			} else {
 				this.facebookButton.setDisabled(false);
 			}
 		}
