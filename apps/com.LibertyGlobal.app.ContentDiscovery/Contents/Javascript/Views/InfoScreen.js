@@ -3,7 +3,7 @@ var InfoScreen = new MAF.Class({
 	Extends: MAF.system.FullscreenView,
 
 	// Add array of items on constructor of the class
-	initialize: function() {
+	initView: function() {
 		var view = this;
 		view.parent();
 		view.assetId = this.persist.assetId;
@@ -34,11 +34,14 @@ var InfoScreen = new MAF.Class({
 						}
 					}
 
+					//screen.log("hide reminder");
 					view.ReminderImage.hide();
 					if (view.isLive) {
+						//screen.log("is live");
 						view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_View_Now_Text');
 					} else {
 						if (ReminderHandler.isReminderSet(view.asset.id) === true) {
+							//screen.log("reminder set");
 							view.controls.horizontalMenu.config.button1Text = $_('InfoScreen_Button_Remove_Reminder_Text');
 							view.ReminderImage.show();
 						} else {

@@ -71,7 +71,7 @@
 
 // Welcome screen
 "WelcomeScreen_Title" = "Welcome to the Watson app";
-"WelcomeScreen_Text" = "This app can help you to find programmes and movies that are about to start, or have just begun. If you create a profile the app can personalise the suggestions it provides and allow you to personalise the app.";
+"WelcomeScreen_Text" = "This app can help you find programmes and movies that are about to start, or have just begun. If you create a profile the app can personalise the suggestions it provides and allow you to personalise the app.";
 "WelcomeScreen_SetProfile_Button" = "Set Profile";
 "WelcomeScreen_Skip_Button" = "Skip";
 

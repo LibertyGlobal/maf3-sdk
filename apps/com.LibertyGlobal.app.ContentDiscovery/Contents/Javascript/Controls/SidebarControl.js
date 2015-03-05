@@ -225,8 +225,7 @@ var SidebarControl = new MAF.Class({
 		this.collapse();
 		this.isCollapsed = true;
 		this.focussedButton = "switch";
-		this.collapsedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
-		this.expandedprofileImage.setSource(ConfigurationStorageHandler.getProfileImage());
+		this.updateProfilePicture();
 	},
 
 	setProfileName: function(profileName) {

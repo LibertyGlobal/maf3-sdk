@@ -2,7 +2,7 @@ var MainScreen = new MAF.Class({
 	ClassName: 'MainScreen',
 	Extends: MAF.system.FullscreenView,
 
-	initialize: function() {
+	initView: function() {
 		//screen.log("reminderhandler: " + ReminderHandler.handleCall2Action + ", " + ReminderHandler.handleCall2ActionChannelNr);
 		// if (ReminderHandler.handleCall2Action !== null && ReminderHandler.handleCall2Action !== undefined) {
 		// if (ReminderHandler.handleCall2Action === true) {
@@ -200,7 +200,7 @@ var MainScreen = new MAF.Class({
 				height: 498,
 				width: 'inherit',
 				vOffset: 296,
-				hOffset: 10
+				hOffset: 0
 			},
 			events: {
 				onAssetChanged: function(eventData) {

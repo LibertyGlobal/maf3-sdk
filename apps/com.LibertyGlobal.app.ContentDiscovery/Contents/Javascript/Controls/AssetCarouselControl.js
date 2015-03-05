@@ -24,12 +24,36 @@ var AssetCarouselControl = new MAF.Class({
 
 		generateCells: function() {
 			var view = this;
+			this.leftArrow = new MAF.element.Image({
+				source: 'Images/arrow_left.png',
+				styles: {
+					height: 63,
+					width: 63,
+					vOffset: 200,
+					hOffset: 0
+				}
+			}).appendTo(this);
+			this.leftArrow.hide();
+
+			this.rightArrow = new MAF.element.Image({
+				source: 'Images/arrow_right.png',
+				aspect: 'crop',
+				styles: {
+					height: 63,
+					width: 63,
+					vOffset: 200,
+					hOffset: 930
+				}
+			}).appendTo(this);
+			this.rightArrow.hide();
+
 			this.emptyFocusContainer = new AssetCarouselCellEmptyFocusControl({
 				styles: {
 					backgroundImage: 'Images/asset_background_future_focus.png',
 					backgroundColor: '#FFFFFF',
 					height: 474,
 					width: 843,
+					hOffset: 75,
 					padding: 5
 				},
 				events: {
@@ -46,6 +70,7 @@ var AssetCarouselControl = new MAF.Class({
 					backgroundColor: '#FFFFFF',
 					height: 474,
 					width: 843,
+					hOffset: 75,
 					padding: 5
 				}
 			}).appendTo(this);
@@ -53,6 +78,7 @@ var AssetCarouselControl = new MAF.Class({
 				styles: {
 					height: 498,
 					width: 843,
+					hOffset: 75,
 					borderStyle: 'solid',
 					borderWidth: 4,
 					borderColor: '#FFFFFF',
@@ -64,7 +90,7 @@ var AssetCarouselControl = new MAF.Class({
 					height: 'inherit',
 					width: 215,
 					vOffset: 45,
-					hOffset: 890
+					hOffset: 1010
 				}
 			}).appendTo(this);
 			this.cells.push(this.asset1Container);
@@ -73,7 +99,7 @@ var AssetCarouselControl = new MAF.Class({
 					height: 'inherit',
 					width: 215,
 					vOffset: 45,
-					hOffset: 1150
+					hOffset: 1270
 				}
 			}).appendTo(this);
 			this.cells.push(this.asset2Container);
@@ -82,7 +108,7 @@ var AssetCarouselControl = new MAF.Class({
 					height: 'inherit',
 					width: 215,
 					vOffset: 45,
-					hOffset: 1410
+					hOffset: 1530
 				}
 			}).appendTo(this);
 			this.cells.push(this.asset3Container);
@@ -91,12 +117,12 @@ var AssetCarouselControl = new MAF.Class({
 					height: 'inherit',
 					width: 215,
 					vOffset: 45,
-					hOffset: 1670
+					hOffset: 1790
 				}
 			}).appendTo(this);
 			this.cells.push(this.asset4Container);
 		},
-		displayFocussed: function(focussedData, menuItem) {
+		displayFocussed: function(focussedData, menuItem) {			
 			this.emptyFocusContainer.hide();
 			this.futureFocusContainer.hide();
 			this.currentFocusContainer.hide();
@@ -127,10 +153,21 @@ var AssetCarouselControl = new MAF.Class({
 			}
 		},
 		updateCells: function() {
+			this.leftArrow.hide();
+			this.rightArrow.hide();
 			for (var i = 0; i < this.cells.length; i++) {
 				this.cells[i].changeData(null);
 			}
 			this.displayFocussed(null);
+
+			if(this.focusIndex>0)
+			{
+				this.leftArrow.show();
+			}
+			if(this.mainCollection.length>0)
+			{
+				this.rightArrow.show();
+			}
 
 			var pos = 0; // unfocussed cells
 			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length - 1;
@@ -252,7 +289,16 @@ var AssetCarouselControl = new MAF.Class({
 		if (direction) {
 			switch (direction) {
 				case 'left':
-					this.fire('onNavigateLeft');
+					if (this.focusIndex - 1 >= 0)
+					{
+						this.focusIndex--;
+						this.updateCells();
+					}
+					else
+					{
+						this.focusIndex = 0;
+						this.fire('onNavigateLeft');
+					}
 					break;
 				case 'right':
 					if (this.focusIndex + 1 < this.mainCollection.length)
@@ -289,6 +335,8 @@ var AssetCarouselControl = new MAF.Class({
 		delete this.menuItemText;
 		delete this.menuItemTimeWindow;
 		delete this.mainCollection;
+		delete this.leftArrow;
+		delete this.rightArrow;
 		delete this.currentFocusContainer;
 		delete this.futureFocusContainer;
 		delete this.emptyFocusContainer;

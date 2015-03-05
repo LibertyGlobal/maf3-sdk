@@ -127,7 +127,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 		if (data !== null) {
 			this.displayData = data;
 			if (data.video !== null) {
-				MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
+				MAF.mediaplayer.setViewportBounds(319, 301, 836, 374);
 				MAF.mediaplayer.setChannelByNumber(data.channel.logicalPosition);
 				
 				this.Title.setText(data.video.title);
@@ -157,7 +157,7 @@ var AssetCarouselCellCurrentFocusControl = new MAF.Class({
 	},
 
 	updateVideo: function() {
-		MAF.mediaplayer.setViewportBounds(254, 301, 836, 374);
+		MAF.mediaplayer.setViewportBounds(319, 301, 836, 374);
 	},
 
 	updateProgress: function(view) {

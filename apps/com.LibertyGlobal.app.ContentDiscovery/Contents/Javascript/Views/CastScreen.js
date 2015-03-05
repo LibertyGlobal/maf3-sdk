@@ -3,7 +3,7 @@ var CastScreen = new MAF.Class({
 	Extends: MAF.system.FullscreenView,
 
 	// Add array of items on constructor of the class
-	initialize: function() {
+	initView: function() {
 		var view = this;
 		view.parent();
 		view.alsoKnown = [{
