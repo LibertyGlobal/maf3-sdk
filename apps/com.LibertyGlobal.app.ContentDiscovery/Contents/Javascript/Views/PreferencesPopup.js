@@ -236,7 +236,7 @@ var PreferencesPopup = new MAF.Class({
 						}
 						ConfigurationStorageHandler.updateVisibleMenuItems(menuItems);
 						ConfigurationStorageHandler.updateContentTimeWindow(contentTime);
-						ReportingHandler.sendProfileReport(view.twitterButton.disabled, view.facebookButton.disabled,
+						ReportingHandler.sendProfileReport(FacebookService.isPaired(), TwitterService.isPaired(),
 							menuItems, contentTime);
 						view.fire('onPreferencesClosed', {});
 					}

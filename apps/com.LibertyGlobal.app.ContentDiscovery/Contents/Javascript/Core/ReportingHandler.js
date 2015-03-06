@@ -23,7 +23,7 @@ var ReportingHandler = {
 		var parameters = '';
 		parameters = parameters.concat("scId=", profile.household);
 		parameters = parameters.concat("&userId=", profile.household);
-		parameters = parameters.concat("&MafProfileName=", (profile.name !== undefined && profile.name !== '') ? this.hashString(profile.name) : "");
+		parameters = parameters.concat("&MafProfileName=", (profile.name !== undefined && profile.name !== '') ? md5(profile.name).toString() : "");
 		parameters = parameters.concat("&connectFb=", (connectFacebook === true) ? "1" : "0");
 		parameters = parameters.concat("&connectTw=", (connectTwitter === true) ? "1" : "0");
 		parameters = parameters.concat("&timeWindow=", timeWindow);
@@ -54,24 +54,6 @@ var ReportingHandler = {
 		parameters = parameters.concat("&counterReminders=", ReminderHandler.getReminderCount());
 
 		DataStorageService.postToDataStorage(appModuleName, parameters);
-	},
-
-	hashString: function(s) {
-		// TODO
-		// var hash = 0,
-		// strlen = s.length,
-		// i,
-		// c;
-		// if (strlen === 0) {
-		// return hash;
-		// }
-		// for (i = 0; i < strlen; i++) {
-		// c = s.charCodeAt(i);
-		// hash = ((hash << 5) - hash) + c;
-		// hash = hash & hash; // Convert to 32bit integer
-		// }
-		// return hash;
-		return s;
 	},
 
 	cleanUp: function() {}

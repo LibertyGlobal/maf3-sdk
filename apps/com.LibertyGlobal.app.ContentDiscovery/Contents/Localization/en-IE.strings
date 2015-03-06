@@ -1,6 +1,6 @@
 // General
 "App_Title" = "Watson";
-"App_Description" = "Find what's on TV now in a personalised way.";
+"App_Description" = "Find out what's on TV now!";
 "Notification_Line1_Text" = "REMINDER: %s is about to start";
 "Notification_Line2_Text" = "on channel %s(%s)";
 
@@ -39,11 +39,11 @@
 "MainScreen_Asset_Focus_Reminder" = "Press OK to add a reminder";
 "MainScreen_Asset_Focus_Remove_Reminder" = "Press OK to remove reminder";
 "MainScreen_Asset_Focus_OkView" = "Press OK to view";
-"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there is no %s content that has started just now, or about to start within %s ";
+"MainScreen_Asset_Focus_NoDataTitle" = "Unfortunately there are no %s programmes on right now, or about to start within %s ";
 "MainScreen_Asset_Focus_NoDataSubTitle" = "You can try changing the settings of the time window (see Preferences) or check other categories.";
 "MainScreen_Asset_Focus_Hours" = "hours.";
 "MainScreen_Asset_Focus_Minutes" = "minutes.";
-"MainScreen_Asset_Focus_ShowLaterContent_Button" = "Look for content further ahead";
+"MainScreen_Asset_Focus_ShowLaterContent_Button" = "Look further ahead";
 "MainScreen_Asset_Focus_Asset_Ended_Text" = "Whoops, it seems you've missed this one";
 "MainScreen_Asset_Focus_LoadingTitle" = "Data loading, please wait...";
 "MainScreen_Asset_Focus_LoadingSubTitle" = " ";
@@ -86,7 +86,7 @@
 "PreferencesScreen_ContentTime_SubTitle" = "Anything that has started or will start within:";
 "PreferencesScreen_ContentTime_30min_Text" = "30 min";
 "PreferencesScreen_ContentTime_60min_Text" = "1 hour";
-"PreferencesScreen_ContentTime_90min_Text" = "1,5 hours";
+"PreferencesScreen_ContentTime_90min_Text" = "1.5 hours";
 "PreferencesScreen_ContentTime_Footer" = "*The time window is linked to the start time of the programmes only.";
 "PreferencesScreen_Close_Button" = "Done";
 
