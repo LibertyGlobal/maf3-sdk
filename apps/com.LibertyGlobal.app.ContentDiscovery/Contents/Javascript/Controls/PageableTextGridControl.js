@@ -53,9 +53,11 @@ var PageableTextGridControl = new MAF.Class({
 					vOffset: 0,
 					hOffset: 0,
 					fontFamily: 'UPCDigital-Regular',
+					color: '#FFFFFF',
 					fontSize: 27,
 					width: this.width,
 					height: this.height - 80,
+					opacity: 0.59,
 					wrap: true
 				}
 			}).appendTo(this);
