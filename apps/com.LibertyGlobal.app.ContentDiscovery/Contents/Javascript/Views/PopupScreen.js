@@ -15,12 +15,11 @@ var PopupScreen = new MAF.Class({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
-
 		view.elements.popup = new MAF.element.Container({
 			styles: {
 				height: 'inherit',
-				width: 'inherit'
+				width: 'inherit',
+				zOrder: 500
 			}
 		}).appendTo(view);
 
@@ -84,11 +83,13 @@ var PopupScreen = new MAF.Class({
 
 	updateView: function() {
 		var view = this;
+		sideBarContainer.moveTo(this);
+		sideBarContainer.collapse();
 		view.showPopup(view, this.persist.popupName, this.persist.redirectPage, this.persist.redirectParams);
 	},
 
 	showPopup: function(view, popupName, redirectPage, redirectParams) {
-		view.controls.sideBarContainer.updateProfilePicture();
+		sideBarContainer.updateProfilePicture();
 		view.elements.preferencesPopup.hide();
 		view.elements.appInfoPopup.hide();
 		view.elements.welcomePopup.hide();
@@ -124,7 +125,6 @@ var PopupScreen = new MAF.Class({
 	destroyView: function() {
 		var view = this;
 		delete view.elements.backgroundImageNormal;
-		delete view.controls.sideBarContainer;
 		delete view.elements.popup;
 		delete view.elements.fullscreenPopup;
 		delete view.elements.fullscreenPopupBackground;

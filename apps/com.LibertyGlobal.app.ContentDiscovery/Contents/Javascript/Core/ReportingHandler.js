@@ -1,21 +1,31 @@
 var ReportingHandler = {
 	counterDetails: 0,
 	counterBio: 0,
+	counterReminders: 0,
 
 	clearCounters: function() {
-		//console.log("clear counters");
 		this.counterDetails = 0;
 		this.counterBio = 0;
+		this.counterReminders = 0;
 	},
 
 	increaseCounterBio: function() {
-		//console.log("Counter bio ++");
 		this.counterBio++;
 	},
 
 	increaseCounterDetails: function() {
-		//console.log("Counter details ++");
 		this.counterDetails++;
+	},
+
+	increaseCounterReminders: function() {
+		this.counterReminders++;
+	},
+
+	decreaseCounterReminders: function() {
+		if(this.counterReminders>0)
+		{
+			this.counterReminders--;
+		}
 	},
 
 	sendProfileReport: function(connectFacebook, connectTwitter, categories, timeWindow) {
@@ -51,7 +61,7 @@ var ReportingHandler = {
 		parameters = parameters.concat("&catSelected=", categoryName);
 		parameters = parameters.concat("&counterDetails=", this.counterDetails);
 		parameters = parameters.concat("&counterBio=", this.counterBio);
-		parameters = parameters.concat("&counterReminders=", ReminderHandler.getReminderCount());
+		parameters = parameters.concat("&counterReminders=", this.counterReminders);
 
 		DataStorageService.postToDataStorage(appModuleName, parameters);
 	},

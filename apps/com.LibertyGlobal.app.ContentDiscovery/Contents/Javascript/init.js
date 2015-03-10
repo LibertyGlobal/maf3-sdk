@@ -22,7 +22,6 @@ include('Javascript/Core/Reminder.js');
 include('Javascript/Core/ReminderHandler.js');
 include('Javascript/Core/ReportingHandler.js');
 
-include('Javascript/Controls/SidebarButtonControl.js');
 include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/SettingsGridControl.js');
 include('Javascript/Controls/SettingsGridCellControl.js');

@@ -42,7 +42,7 @@ var ContentDataRetriever = (function() {
 		var treshold = Config.get('programDurationDisplayThreshold');
 		for (var i = 0; i < assets.length; i++) {
 			var currentProgress = (moment().utc() - moment(assets[i].start)) / (moment(assets[i].end) - moment(assets[i].start));
-			//console.log("item '" + activeAssets[i].video.title + "', " + moment(activeAssets[i].start).format("HH:mm") + ", " +  moment(activeAssets[i].end).format("HH:mm") +
+			//console.log("item '" + assets[i].video.title + "', " + moment(assets[i].start).format("HH:mm") + ", " +  moment(assets[i].end).format("HH:mm") +
 			//", current progress: " + currentProgress +
 			//", skipped: " + (currentProgress >= Config.common.programDurationDisplayThreshold));
 			if (currentProgress < treshold) {
@@ -113,8 +113,7 @@ var ContentDataRetriever = (function() {
 			var currentTime = moment().utc().format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			var currentTimeMin2Hours = moment().utc().subtract('minutes', 120).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.get('extendedContentTimeWindow') : ConfigurationStorageHandler.getContentTimeWindow();
-			delete menuItem.data;
-			menuItem.data = null;
+			
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
 			var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
 

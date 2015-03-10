@@ -38,14 +38,11 @@ var ShareScreen = new MAF.Class({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
-
 		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
 				height: 1080,
 				width: 1680,
-				position: 'relative',
-				display: 'inline-block'
+				hOffset: sideBarContainer.width
 			}
 		}).appendTo(view);
 
@@ -487,6 +484,7 @@ var ShareScreen = new MAF.Class({
 
 	updateView: function() {
 		var view = this;
+		sideBarContainer.moveTo(this);
 		view.elements.Poster.setSource();
 		view.elements.Title.setText("");
 		view.elements.ShareText.setText("");
@@ -512,7 +510,6 @@ var ShareScreen = new MAF.Class({
 		delete view.shareTextArray;
 		delete view.currentItem;
 		delete view.elements.backgroundImageNormal;
-		delete view.controls.sideBarContainer;
 		delete view.elements.rightContainer;
 		delete view.elements.Poster;
 		delete view.elements.PosterContainer;

@@ -44,14 +44,11 @@ var CastScreen = new MAF.Class({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
-
 		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
 				height: 1080,
 				width: 1680,
-				position: 'relative',
-				display: 'inline-block'
+				hOffset: sideBarContainer.width
 			}
 		}).appendTo(view);
 
@@ -276,6 +273,7 @@ var CastScreen = new MAF.Class({
 
 	updateView: function() {
 		var view = this;
+		sideBarContainer.moveTo(this);
 		//view.assetId = this.persist.assetId;
 		this.updateData(view);
 	},
@@ -293,7 +291,6 @@ var CastScreen = new MAF.Class({
 		delete this.elements.coverBarTitle;
 		delete this.elements.coverBar;
 		delete this.controls.horizontalMenu;
-		delete this.controls.sideBarContainer;
 		delete this.controls.backButton;
 	}
 });

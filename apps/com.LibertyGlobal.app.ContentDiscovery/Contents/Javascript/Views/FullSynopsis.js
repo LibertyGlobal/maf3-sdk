@@ -23,14 +23,11 @@ var FullSynopsis = new MAF.Class({
 			source: 'Images/background_main.jpg'
 		}).appendTo(view);
 
-		view.controls.sideBarContainer = new SidebarControl({}).appendTo(view);
-
 		view.elements.rightContainer = new MAF.element.Container({
 			styles: {
 				height: 1080,
 				width: 1680,
-				position: 'relative',
-				display: 'inline-block'
+				hOffset: sideBarContainer.width
 			}
 		}).appendTo(view);
 
@@ -84,6 +81,7 @@ var FullSynopsis = new MAF.Class({
 
 	updateView: function() {
 		var view = this;
+		sideBarContainer.moveTo(this);
 		view.elements.synopsisText.setText("");
 		view.controls.assetDetails.clearData();
 		this.updateData(view);
@@ -92,7 +90,6 @@ var FullSynopsis = new MAF.Class({
 	destroyView: function() {
 		var view = this;
 		delete view.elements.backgroundImageNormal;
-		delete view.controls.sideBarContainer;
 		delete view.elements.rightContainer;
 		delete view.controls.assetDetails;
 		delete view.elements.synopsisText;

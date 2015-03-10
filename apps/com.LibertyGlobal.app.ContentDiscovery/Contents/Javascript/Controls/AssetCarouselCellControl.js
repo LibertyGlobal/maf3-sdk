@@ -5,21 +5,16 @@ var AssetCarouselCellControl = new MAF.Class({
 
 	Protected: {	
 		generateContents: function (){
-			this.PosterContainer = new MAF.element.Container({
-				styles: {
-					height: 304,
-					width: 215,
-					backgroundColor: '#b2bfcb',
-					padding: 2
-				}
-			}).appendTo(this);
 			this.Poster = new MAF.element.Image({
 				aspect: 'crop',
 				styles: {
-					height: 300,
-					width: 211
+					height: 304,
+					width: 215,
+					borderColor: '#b2bfcb',
+					borderStyle: 'solid',
+					borderWidth: 2
 				}
-			}).appendTo(this.PosterContainer);
+			}).appendTo(this);
 
 			this.Title = new MAF.element.Text({
 				styles: {
@@ -70,7 +65,7 @@ var AssetCarouselCellControl = new MAF.Class({
 			{
 				this.Title.setText(data.video.title);
 				this.Poster.setSource(data.video.imageLink.href);
-				this.PosterContainer.show();
+				this.Poster.show();
 				this.StartEnd.setText(moment(data.start).format("HH:mm") + " - " + moment(data.end).format("HH:mm"));
 			
 				var logoUrl = InitializationHandler.getChannelLogoMedium(data.channel.logicalPosition);
@@ -85,7 +80,7 @@ var AssetCarouselCellControl = new MAF.Class({
 		{
 			this.Title.setText('');	
 			this.Poster.setSource('');
-			this.PosterContainer.hide();
+			this.Poster.hide();
 			this.StartEnd.setText('');	
 			this.Channel.setSource('');
 			this.Channel.hide();
@@ -93,7 +88,6 @@ var AssetCarouselCellControl = new MAF.Class({
 	},
 
 	suicide: function () {		
-		delete this.PosterContainer;
 		delete this.Poster;
 		delete this.Title;
 		delete this.StartEnd;

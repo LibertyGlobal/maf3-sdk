@@ -69,6 +69,13 @@ var MenuHandler = {
 		return menuItemConfig;
 	},
 
+	cleanData: function() {
+		for (var i = 0; i < this.menuItems.length; i++) {
+			delete this.menuItems[i].data;
+			this.menuItems[i].data = null;
+		}
+	},
+
 	cleanUp: function() {
 		for (var i = 0; i < this.menuItems.length; i++) {
 			this.menuItems[i].cleanUp();

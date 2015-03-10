@@ -112,15 +112,6 @@ var AssetCarouselControl = new MAF.Class({
 				}
 			}).appendTo(this);
 			this.cells.push(this.asset3Container);
-			this.asset4Container = new AssetCarouselCellControl({
-				styles: {
-					height: 'inherit',
-					width: 215,
-					vOffset: 45,
-					hOffset: 1790
-				}
-			}).appendTo(this);
-			this.cells.push(this.asset4Container);
 		},
 		displayFocussed: function(focussedData, menuItem) {			
 			this.emptyFocusContainer.hide();
@@ -170,7 +161,7 @@ var AssetCarouselControl = new MAF.Class({
 			}
 
 			var pos = 0; // unfocussed cells
-			var maxItems = (this.mainCollection.length >= 5) ? 4 : this.mainCollection.length - 1;
+			var maxItems = (this.mainCollection.length >= 4) ? this.cells.length : this.mainCollection.length - 1;
 			for (i = this.focusIndex; i < this.mainCollection.length && pos < maxItems; i++) {
 				if (i === this.focusIndex) {
 					this.displayFocussed(this.mainCollection[i]);
@@ -343,7 +334,6 @@ var AssetCarouselControl = new MAF.Class({
 		delete this.asset1Container;
 		delete this.asset2Container;
 		delete this.asset3Container;
-		delete this.asset4Container;
 		this.parent();
 	}
 });

@@ -38,7 +38,7 @@ var MainScreen = new MAF.Class({
 				if (event.payload !== undefined) {
 					if (event.payload.keyCode === Config.get('infoButtonKeyCode')) // info button or home button on keyboard
 					{
-						if (this.controls.sideBarContainer.isCollapsed === true) {
+						if (sideBarContainer.isCollapsed === true) {
 							if (this.loading === false) {
 								this.loading = true; // avoid multiple clicks
 								var selectedAsset = this.controls.assetCarousel.mainCollection[this.controls.assetCarousel.focusIndex];
@@ -63,7 +63,7 @@ var MainScreen = new MAF.Class({
 		var view = this;
 		ConfigurationStorageHandler.retrieveProfileSettings();
 		if (ConfigurationStorageHandler.isProfileSet()) {
-			this.controls.sideBarContainer.setProfileName(profile.name);
+			sideBarContainer.setProfileName(profile.name);
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profile.name]));
 			if (FacebookService.isPaired() === true) {
 				FacebookService.getProfilePicture(function(url) {
@@ -127,13 +127,17 @@ var MainScreen = new MAF.Class({
 		}).appendTo(view);
 		view.elements.backgroundImageLive.hide();
 
-		view.controls.sideBarContainer = new SidebarControl({
+		sideBarContainer = new SidebarControl({
+			styles: {
+				vOffset: 0,
+				hOffset: 0
+			},
 			events: {
 				onNavigateRight: function() {
 					view.hideSidebar();
 				},
 				onSelect: function(eventData) {
-					if (view.controls.sideBarContainer.isCollapsed === false) {
+					if (sideBarContainer.isCollapsed === false) {
 						switch (eventData.payload.action) {
 							case "switch":
 								if (ConfigurationStorageHandler.isAppProfileSet()) {
@@ -180,8 +184,8 @@ var MainScreen = new MAF.Class({
 			styles: {
 				height: 1080,
 				width: 1680,
-				position: 'relative',
-				display: 'inline-block'
+				vOffset: 0,
+				hOffset: sideBarContainer.width
 			}
 		}).appendTo(view);
 
@@ -193,6 +197,7 @@ var MainScreen = new MAF.Class({
 			},
 			events: {
 				onMenuChanged: function(eventData) {
+					MenuHandler.cleanData();
 					view.controls.assetCarousel.setLoading();
 					ContentDataRetriever.loadMenuData(eventData.payload.selectedMenuItem, false, view.onMenuItemDataLoaded, view);
 				}
@@ -221,15 +226,17 @@ var MainScreen = new MAF.Class({
 					view.controls.verticalMenu.doNavigate('down');
 				},
 				onAssetSelect: function(eventData) {
-					if (view.controls.sideBarContainer.isCollapsed === true) {
+					if (sideBarContainer.isCollapsed === true) {
 						if (eventData.payload.asset !== undefined && eventData.payload.asset !== null) {
 							if (view.controls.assetCarousel.isLive === true) {
 								ReportingHandler.sendUsageReport(view.controls.verticalMenu.mainCollection[view.controls.verticalMenu.focusIndex].mainMenuLabel, "tuneFromMain");
 								MAF.application.exitToLive();
 							} else {
 								if (ReminderHandler.isReminderSet(eventData.payload.asset.id) === true) {
+									ReportingHandler.decreaseCounterReminders();
 									ReminderHandler.removeReminder(eventData.payload.asset.id);
 								} else {
+									ReportingHandler.increaseCounterReminders();
 									ReminderHandler.setReminder(
 										eventData.payload.asset.id,
 										eventData.payload.asset.start,
@@ -264,15 +271,18 @@ var MainScreen = new MAF.Class({
 				});
 			}
 			if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "preferences") {
+				sideBarContainer.moveTo(this);
 				this.persist.returnFromPopup = null;
 				this.updateProfileSettings(this, profile.name);
 				this.hideSidebar();
 				this.reloadMenu(this, true);
 			} else if (this.persist.returnFromPopup !== undefined && this.persist.returnFromPopup === "appInfo") {
+				sideBarContainer.moveTo(this);
 				this.persist.returnFromPopup = null;
 				this.hideSidebar();
 			} else {
-				this.reloadMenu(this, false);
+				sideBarContainer.moveTo(this);
+				this.reloadMenu(this, false);				
 			}
 		}
 	},
@@ -294,17 +304,17 @@ var MainScreen = new MAF.Class({
 	},
 
 	updateProfileSettings: function(view, profileName) {
-		this.controls.sideBarContainer.setProfileName(profileName);
+		sideBarContainer.setProfileName(profileName);
 		if (profileName !== "" && profileName !== undefined) {
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Profile_Text", [profileName]));
 		} else {
 			MenuHandler.updateTextForItem("recommendations", $_("MenuItem_Recommendations_Preference_Text"), $_("MenuItem_Recommendations_MainMenu_Text"));
 		}
-		this.controls.sideBarContainer.updateProfilePicture();
+		sideBarContainer.updateProfilePicture();
 	},
 
 	showBackground: function(view, isLive) {
-		if (isLive === true && view.controls.sideBarContainer.isCollapsed === true) {
+		if (isLive === true && sideBarContainer.isCollapsed === true) {
 			view.elements.backgroundImageLive.show();
 			view.elements.backgroundImageNormal.hide();
 		} else {
@@ -315,27 +325,32 @@ var MainScreen = new MAF.Class({
 
 	showSidebar: function() {
 		var view = this;
-		view.elements.rightContainer.freeze();
+		sideBarContainer.expand();
+		sideBarContainer.setFocus();
 		view.controls.verticalMenu.disable();
 		view.controls.assetCarousel.disable();
-		view.elements.rightContainer.width = 1340;
+		view.elements.rightContainer.setStyles({
+			width: 1340,
+			hOffset: sideBarContainer.width
+		});
 		view.elements.backgroundImageLive.hide();
 		view.elements.backgroundImageNormal.show();
-		view.controls.sideBarContainer.expand();
-		view.controls.sideBarContainer.setFocus();
+		
 	},
 
 	hideSidebar: function() {
 		var view = this;
-		view.elements.rightContainer.thaw();
 		view.controls.verticalMenu.enable();
 		view.controls.assetCarousel.enable();
-		view.controls.sideBarContainer.collapse();
+		sideBarContainer.collapse();
 		if (view.controls.assetCarousel.isLive === true) {
 			view.elements.backgroundImageLive.show();
 			view.elements.backgroundImageNormal.hide();
 		}
-		view.elements.rightContainer.width = 1680;
+		view.elements.rightContainer.setStyles({
+			width: 1680,
+			hOffset: sideBarContainer.width
+		});
 		view.controls.assetCarousel.setFocus();
 	},
 
@@ -351,7 +366,7 @@ var MainScreen = new MAF.Class({
 		view.fnOnDialogCancelled = null;
 		InitializationHandler.cleanUp();
 		MenuHandler.cleanUp();
-		delete view.controls.sideBarContainer;
+		sideBarContainer = null;
 		delete view.elements.rightContainer;
 		delete view.controls.verticalMenu;
 		delete view.controls.assetCarousel;

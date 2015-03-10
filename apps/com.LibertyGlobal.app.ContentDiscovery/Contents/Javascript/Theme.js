@@ -5,7 +5,25 @@ Theme.Fonts.add('UPCDigital-Bold', 'Fonts/UPCDigital-Bold');
 Theme.Fonts.add('UPCDigital-Regular', 'Fonts/UPCDigital-Regular');
 
 Theme.set({
-	view: { styles: {
+	view: {
+		styles: {}
+	},
+	'SidebarButtonHighlight': {
+		styles: {
+			backgroundImage: 'Images/sidebar_button_high_expanded.png',
+			fontSize: 32,
+			opacity: 1.00,
+			fontFamily: 'InterstatePro-Light',
+			color: '#FFFFFF'
+		}
+	},
+	'SidebarButtonNormal': {
+		styles: {
+			backgroundImage: '',
+			fontSize: 32,
+			opacity: 0.32,
+			fontFamily: 'InterstatePro-Light',
+			color: '#FFFFFF'
 		}
 	}
 });

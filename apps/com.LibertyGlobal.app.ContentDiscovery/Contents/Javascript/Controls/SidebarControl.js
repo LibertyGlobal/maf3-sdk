@@ -100,115 +100,147 @@ var SidebarControl = new MAF.Class({
 				}
 			}).appendTo(this.expandedContainer);
 
-			this.switchProfileButton = new SidebarButtonControl({
-				buttonText: $_('Sidebar_SwitchProfileButton'),
-				events: {
-					onNavigate: function(event) {
-						switch (event.payload.direction) {
-							case 'up':
-								event.preventDefault();
-								event.stopPropagation();
-								break;
-							case 'down':
-								sidebarControl.focussedButton = "edit";
-								sidebarControl.editProfileButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
+			this.switchProfileButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('Sidebar_SwitchProfileButton'),
+						styles: {
+							anchorStyle: 'leftMiddle',
+							width: 346,
+							height: 79,
+							marginLeft: 25
 						}
-					}
-				},
+					})
+				],
 				styles: {
-					marginBottom: 10,
-					vOffset: 85,
+					vOffset: 195,
 					hOffset: 100,
-					position: 'relative',
-					display: 'inline-block'
+					width: 346,
+					height: 79
+				},
+				events: {
+					onAppend: function() {
+						this.element.addClass('SidebarButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('SidebarButtonHighlight');
+						this.element.removeClass('SidebarButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('SidebarButtonNormal');
+						this.element.removeClass('SidebarButtonHighlight');
+					},
+					onSelect: function() {
+						sidebarControl.focussedButton = "switch";
+					}
 				}
 			}).appendTo(this.expandedContainer);
 
-			this.editProfileButton = new SidebarButtonControl({
-				buttonText: $_('Sidebar_EditProfileButton'),
-				events: {
-					onNavigate: function(event) {
-						switch (event.payload.direction) {
-							case 'up':
-								sidebarControl.focussedButton = "switch";
-								sidebarControl.switchProfileButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
-							case 'down':
-								sidebarControl.focussedButton = "about";
-								sidebarControl.aboutAppButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
+			this.editProfileButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('Sidebar_EditProfileButton'),
+						styles: {
+							anchorStyle: 'leftMiddle',
+							width: 346,
+							height: 79,
+							marginLeft: 25
 						}
-					}
-				},
+					})
+				],
 				styles: {
-					marginBottom: 10,
-					vOffset: 85,
+					vOffset: 284,
 					hOffset: 100,
-					position: 'relative',
-					display: 'inline-block'
+					width: 346,
+					height: 79
+				},
+				events: {
+					onAppend: function() {
+						this.element.addClass('SidebarButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('SidebarButtonHighlight');
+						this.element.removeClass('SidebarButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('SidebarButtonNormal');
+						this.element.removeClass('SidebarButtonHighlight');
+					},
+					onSelect: function() {
+						sidebarControl.focussedButton = "edit";
+					}
 				}
 			}).appendTo(this.expandedContainer);
 
-			this.aboutAppButton = new SidebarButtonControl({
-				buttonText: $_('Sidebar_AboutAppButton'),
-				events: {
-					onNavigate: function(event) {
-						switch (event.payload.direction) {
-							case 'up':
-								sidebarControl.focussedButton = "edit";
-								sidebarControl.editProfileButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
-							case 'down':
-								sidebarControl.focussedButton = "exit";
-								sidebarControl.exitButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
+			this.aboutAppButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('Sidebar_AboutAppButton'),
+						styles: {
+							anchorStyle: 'leftMiddle',
+							width: 346,
+							height: 79,
+							marginLeft: 25
 						}
-					}
-				},
+					})
+				],
 				styles: {
-					marginBottom: 10,
-					vOffset: 85,
+					vOffset: 373,
 					hOffset: 100,
-					position: 'relative',
-					display: 'inline-block'
+					width: 346,
+					height: 79
+				},
+				events: {
+					onAppend: function() {
+						this.element.addClass('SidebarButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('SidebarButtonHighlight');
+						this.element.removeClass('SidebarButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('SidebarButtonNormal');
+						this.element.removeClass('SidebarButtonHighlight');
+					},
+					onSelect: function() {
+						sidebarControl.focussedButton = "about";
+					}
 				}
 			}).appendTo(this.expandedContainer);
 
-			this.exitButton = new SidebarButtonControl({
-				buttonText: $_('Sidebar_ExitButton'),
-				events: {
-					onNavigate: function(event) {
-						switch (event.payload.direction) {
-							case 'up':
-								sidebarControl.focussedButton = "about";
-								sidebarControl.aboutAppButton.setFocus();
-								event.preventDefault();
-								event.stopPropagation();
-								break;
-							case 'down':
-								event.preventDefault();
-								event.stopPropagation();
-								break;
+			this.exitButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('Sidebar_ExitButton'),
+						styles: {
+							anchorStyle: 'leftMiddle',
+							width: 346,
+							height: 79,
+							marginLeft: 25
 						}
-					}
-				},
+					})
+				],
 				styles: {
-					marginBottom: 10,
-					vOffset: 85,
+					vOffset: 462,
 					hOffset: 100,
-					position: 'relative',
-					display: 'inline-block'
+					width: 346,
+					height: 79
+				},
+				events: {
+					onAppend: function() {
+						this.element.addClass('SidebarButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('SidebarButtonHighlight');
+						this.element.removeClass('SidebarButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('SidebarButtonNormal');
+						this.element.removeClass('SidebarButtonHighlight');
+					},
+					onSelect: function() {
+						sidebarControl.focussedButton = "exit";
+					}
 				}
 			}).appendTo(this.expandedContainer);
 		}
@@ -249,10 +281,6 @@ var SidebarControl = new MAF.Class({
 			backgroundImage: "Images/sidebar_overlay_expanded.png"
 		});
 		this.collapsedContainer.hide();
-		this.switchProfileButton.clearFocus();
-		this.editProfileButton.clearFocus();
-		this.aboutAppButton.clearFocus();
-		this.exitButton.clearFocus();
 		this.expandedContainer.show();
 		this.setFocus();
 	},
@@ -274,7 +302,7 @@ var SidebarControl = new MAF.Class({
 
 	setFocus: function() {
 		this.focussedButton = "switch";
-		this.switchProfileButton.setFocus();
+		this.switchProfileButton.focus();
 	},
 
 	suicide: function() {

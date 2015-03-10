@@ -5,23 +5,18 @@ var AssetDetailControl = new MAF.Class({
 
 	Protected: {
 		generateContents: function() {
-			this.PosterContainer = new MAF.element.Container({
+			this.Poster = new MAF.element.Image({
+				aspect: 'auto',
 				styles: {
 					vOffset: 90,
 					height: 374,
 					width: 260,
-					backgroundColor: '#b2bfcb',
-					padding: 1
+					borderColor: '#b2bfcb',
+					borderStyle: 'solid',
+					borderWidth: 1
 				}
 			}).appendTo(this);
-			this.Poster = new MAF.element.Image({
-				aspect: 'auto',
-				styles: {
-					height: 372,
-					width: 258
-				}
-			}).appendTo(this.PosterContainer);
-			this.PosterContainer.hide();
+			this.Poster.hide();
 
 			this.Title = new MAF.element.Text({
 				styles: {
@@ -322,7 +317,7 @@ var AssetDetailControl = new MAF.Class({
 				}
 
 				this.Poster.setSource(data.video.imageLink.href);
-				this.PosterContainer.show();
+				this.Poster.show();
 
 				this.Synopsis.setText(data.video.shortSynopsis);
 
@@ -338,7 +333,7 @@ var AssetDetailControl = new MAF.Class({
 	},
 
 	clearData: function() {
-		this.PosterContainer.hide();
+		this.Poster.hide();
 		this.ImdbContainer.hide();
 		this.Channel.hide();
 		this.Prop1Text.setText('');
@@ -359,7 +354,6 @@ var AssetDetailControl = new MAF.Class({
 
 	suicide: function() {	
 		delete this.Poster;	
-		delete this.PosterContainer;
 		delete this.ImdbContainer;
 		delete this.ImdbLogo;
 		delete this.ImdbRating;
