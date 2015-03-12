@@ -51,6 +51,18 @@ var MenuHandler = {
 		return visibleMenuItems;
 	},
 
+	getSelectedMenuItemsQueryCategories: function() {
+		var visibleMenuItems = [];
+		for (var i = 0; i < this.menuItems.length; i++) {
+			if (this.menuItems[i].itemType === "category") {
+				if (ConfigurationStorageHandler.getVisibleMenuItems().indexOf(this.menuItems[i].itemName) > -1) {
+					visibleMenuItems.push(this.menuItems[i].categoryFilters);
+				}
+			} 
+		}
+		return visibleMenuItems;
+	},
+
 	getCurrentMenuItemConfig: function() {
 		var menuItemConfig = [];
 		for (var i = 0; i < this.menuItems.length; i++) {

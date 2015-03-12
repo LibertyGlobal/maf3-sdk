@@ -33,6 +33,7 @@ var ContentDataRetriever = (function() {
 
 		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
+		console.log("Number of items for " + menuItem.itemName + ": " + menuItem.data.length);
 		callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
 	};
 
@@ -115,7 +116,7 @@ var ContentDataRetriever = (function() {
 			menuItem.dataTimeframe = (extendedTimePeriod === true) ? Config.get('extendedContentTimeWindow') : ConfigurationStorageHandler.getContentTimeWindow();
 			
 			var timeWindowEndTime = moment().utc().add('minutes', parseInt(menuItem.dataTimeframe, 10)).format('YYYY-MM-DDTHH:mm:ss') + "Z";
-			var menuConfig = ConfigurationStorageHandler.getVisibleMenuItems();
+			var menuConfig = MenuHandler.getSelectedMenuItemsQueryCategories();
 
 			switch (menuItem.itemType) {
 				case 'category':
@@ -226,6 +227,7 @@ var ContentDataRetriever = (function() {
 						.sort(LGI.Guide.Broadcast.START)
 						.findOne(function(response) {
 								var activeAssets = response;
+								console.log("shuffle items: " + activeAssets.length);
 								parseData(menuItem, activeAssets, null, false, true, true);
 							},
 							errorCallback);
