@@ -282,7 +282,8 @@ var MainScreen = new MAF.Class({
 				this.hideSidebar();
 			} else {
 				sideBarContainer.moveTo(this);
-				this.reloadMenu(this, false);				
+				this.hideSidebar();
+				this.reloadMenu(this, false);
 			}
 		}
 	},

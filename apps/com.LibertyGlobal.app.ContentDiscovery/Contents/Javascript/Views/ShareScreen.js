@@ -291,7 +291,8 @@ var ShareScreen = new MAF.Class({
 		view.elements.popup = new MAF.element.Container({
 			styles: {
 				height: 'inherit',
-				width: 'inherit'
+				width: 'inherit',
+				zOrder: 500
 			}
 		}).appendTo(view);
 
