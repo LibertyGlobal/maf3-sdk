@@ -26,7 +26,6 @@ include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/SettingsGridControl.js');
 include('Javascript/Controls/SettingsGridCellControl.js');
 include('Javascript/Controls/PageableTextGridControl.js');
-include('Javascript/Controls/MenuCarouselCellControl.js');
 include('Javascript/Controls/MenuCarouselControl.js');
 include('Javascript/Controls/HorizontalMenuButtonControl.js');
 include('Javascript/Controls/HorizontalMenuControl.js');

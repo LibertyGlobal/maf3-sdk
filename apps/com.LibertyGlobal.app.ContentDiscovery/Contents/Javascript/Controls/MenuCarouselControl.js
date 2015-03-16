@@ -16,56 +16,80 @@ var MenuCarouselControl = new MAF.Class({
 		},
 
 		generateCells: function() {
-			this.menu1Container = new MenuCarouselCellControl({
+			this.menu1Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.1
 				}
 			}).appendTo(this);
-			this.menu2Container = new MenuCarouselCellControl({
+			this.menu2Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25
 				}
 			}).appendTo(this);
-			this.menu3Container = new MenuCarouselCellControl({
+			this.menu3Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					position: 'relative',
 					display: 'inline-block'
 				}
 			}).appendTo(this);
-			this.menu4Container = new MenuCarouselCellControl({
+			this.menu4Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25
 				}
 			}).appendTo(this);
-			this.menu5Container = new MenuCarouselCellControl({
+			this.menu5Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
 					opacity: 0.25
 				}
 			}).appendTo(this);
-			this.menu6Container = new MenuCarouselCellControl({
+			this.menu6Container = new MAF.element.Text({
 				styles: {
-					height: 92,
 					width: 'inherit',
+					color: '#ffffff',
+					fontFamily: 'InterstatePro-ExtraLight',
+					fontSize: 60,
+					paddingTop: 20,
+					height: 92,
 					vOffset: 505,
 					position: 'relative',
 					display: 'inline-block',
@@ -74,12 +98,12 @@ var MenuCarouselControl = new MAF.Class({
 			}).appendTo(this);
 		},
 		updateCells: function() {
-			this.menu3Container.changeData(this.mainCollection[0]);
-			this.menu4Container.changeData((this.mainCollection.length > 1) ? this.mainCollection[1] : null);
-			this.menu5Container.changeData((this.mainCollection.length > 2) ? this.mainCollection[2] : null);
-			this.menu6Container.changeData((this.mainCollection.length > 3) ? this.mainCollection[3] : null);
-			this.menu1Container.changeData((this.mainCollection.length > 5) ? this.mainCollection[this.mainCollection.length - 2] : null);
-			this.menu2Container.changeData((this.mainCollection.length > 4) ? this.mainCollection[this.mainCollection.length - 1] : null);
+			this.menu3Container.setText(this.mainCollection[0].mainMenuLabel);
+			this.menu4Container.setText((this.mainCollection.length > 1) ? this.mainCollection[1].mainMenuLabel : "");
+			this.menu5Container.setText((this.mainCollection.length > 2) ? this.mainCollection[2].mainMenuLabel : "");
+			this.menu6Container.setText((this.mainCollection.length > 3) ? this.mainCollection[3].mainMenuLabel : "");
+			this.menu1Container.setText((this.mainCollection.length > 5) ? this.mainCollection[this.mainCollection.length - 2].mainMenuLabel : "");
+			this.menu2Container.setText((this.mainCollection.length > 4) ? this.mainCollection[this.mainCollection.length - 1].mainMenuLabel : "");
 			this.fire('onMenuChanged', {
 				selectedMenuItem: this.mainCollection[0]
 			});
