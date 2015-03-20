@@ -44,8 +44,20 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 				}
 			}).appendTo(this);
 
-			this.ReloadButton = new ButtonControl({
-				buttonText: $_('MainScreen_Asset_Focus_ShowLaterContent_Button'),
+			this.ReloadButton = new MAF.element.Button({
+				focus: true,
+				content: [
+					new MAF.element.Text({
+						text: $_('MainScreen_Asset_Focus_ShowLaterContent_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 360,
 					hOffset: 35,
@@ -53,10 +65,19 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 					height: 66
 				},
 				events: {
-					onSelect: function(event) {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+					},
+					onSelect: function() {
 						view.fire("onReload", {});
-						event.preventDefault();
-						event.stopPropagation();
 					}
 				}
 			}).appendTo(this);
@@ -85,13 +106,10 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 		switch (emptyType) {
 			case "empty":
 				var emptyText = "";
-				if(menuItemTimeWindow < 60)
-				{
+				if (menuItemTimeWindow < 60) {
 					emptyText = $_('MainScreen_Asset_Focus_NoDataTitle', [menuItemText, menuItemTimeWindow]);
 					emptyText = emptyText + $_('MainScreen_Asset_Focus_Minutes');
-				}
-				else
-				{
+				} else {
 					var period = menuItemTimeWindow / 60;
 					emptyText = $_('MainScreen_Asset_Focus_NoDataTitle', [menuItemText, period]);
 					emptyText = emptyText + $_('MainScreen_Asset_Focus_Hours');
@@ -108,7 +126,7 @@ var AssetCarouselCellEmptyFocusControl = new MAF.Class({
 		}
 	},
 
-	suicide: function() {		
+	suicide: function() {
 		delete this.futureContainer;
 		delete this.Title;
 		delete this.SubTitle;

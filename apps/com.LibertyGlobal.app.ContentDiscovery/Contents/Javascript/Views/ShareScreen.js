@@ -126,15 +126,6 @@ var ShareScreen = new MAF.Class({
 						borderWidth: 3
 					});
 				},
-				onNavigate: function(event) {
-					switch (event.payload.direction) {
-						case 'down':
-							view.controls.horizontalMenu.setFocus();
-							event.preventDefault();
-							event.stopPropagation();
-							break;
-					}
-				},
 				onKeyDown: function(event) {
 					if (event.payload.key === "space") {
 						view.shareTextArray.push(' ');
@@ -144,12 +135,11 @@ var ShareScreen = new MAF.Class({
 						if (view.shareTextArray.length <= 500) {
 							view.shareTextArray.push(event.payload.key);
 						}
-						var twitterButton = view.controls.horizontalMenu.getButton(2);
 						if (view.shareTextArray.length > 140) {
-							twitterButton.setSelected(true);
-							twitterButton.setDisabled(true);
+							view.elements.twitterButton.content[1].source = 'Images/checkbox.png';
+							view.elements.twitterButton.setDisabled(true);
 						} else {
-							twitterButton.setDisabled(false);
+							view.elements.twitterButton.setDisabled(false);
 						}
 						event.preventDefault();
 						event.stopPropagation();
@@ -175,60 +165,255 @@ var ShareScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.rightContainer);
 
-		view.controls.horizontalMenu = new HorizontalMenuControl({
-			button1Text: $_('ShareScreen_ExcludeFacebook_Button'),
-			button1Type: "check",
-			button2Text: $_('ShareScreen_ExcludeTwitter_Button'),
-			button2Type: "check",
-			button3Text: $_('ShareScreen_RemoveCharacter_Button'),
-			button4Text: $_('ShareScreen_ClearAll_Button'),
-			button4Visible: true,
-			buttonWidth: 250,
+		view.elements.buttonBackground = new MAF.element.Container({
 			styles: {
+				backgroundImage: "Images/horizontal_menu_background.png",
 				height: 72,
 				width: 1002,
 				vOffset: 560,
 				hOffset: 332
-			},
-			events: {
-				onNavigate: function(event) {
-					switch (event.payload.direction) {
-						case 'down':
-							view.controls.shareButton.setFocus();
-							event.preventDefault();
-							event.stopPropagation();
-							break;
-					}
-				},
-				onButtonSelect: function(eventData) {
-					switch (eventData.payload.action) {
-						case 1:
-							if (FacebookService.isPaired() !== true) {
-								view.controls.horizontalMenu.getButton(eventData.payload.action).setSelected(false);
-								FacebookService.pair(view.facebookPaired, view);
-							}
-							break;
-						case 2:
-							if (TwitterService.isPaired() !== true) {
-								view.controls.horizontalMenu.getButton(eventData.payload.action).setSelected(false);
-								TwitterService.pair(view.twitterPaired, view);
-							}
-							break;
-						case 3:
-							view.shareTextArray.pop();
-							view.elements.ShareText.setText(view.encodeText(view.shareTextArray.join('')));
-							break;
-						case 4:
-							view.shareTextArray = [];
-							view.elements.ShareText.setText("");
-							break;
-					}
-				}
 			}
 		}).appendTo(this.elements.rightContainer);
 
-		view.controls.backButton = new ButtonControl({
-			buttonText: $_('ShareScreen_Back_Button'),
+		view.elements.facebookButton = new MAF.element.Button({
+			focus: true,
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_ExcludeFacebook_Button'),
+					anchorStyle: 'leftMiddle',
+					styles: {
+						width: 250,
+						height: 66,
+						hAlign: 'left',
+						vAlign: 'center',
+						marginLeft: 69
+					}
+				}), new MAF.element.Image({
+					source: "Images/checkbox.png",
+					hideWhileLoading: true,
+					styles: {
+						width: 49,
+						height: 49,
+						hOffset: 15,
+						vOffset: 9
+					}
+				}),
+				new MAF.element.Container({
+					styles: {
+						width: 250,
+						height: 66,
+						borderWidth: 3,
+						borderColor: '#FFFFFF'
+					}
+				})
+			],
+			styles: {
+				width: 250,
+				height: 66,
+				vOffset: 3,
+				hOffset: 0
+			},
+			events: {
+				onAppend: function() {
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.element.addClass('SubmenuButtonNormal');
+					this.content[2].setStyle("borderStyle", "none");
+				},
+				onFocus: function() {
+					this.element.addClass('SubmenuButtonHighlight');
+					this.element.removeClass('SubmenuButtonNormal');
+					this.content[2].setStyle("borderStyle", "solid");
+				},
+				onBlur: function() {
+					this.element.addClass('SubmenuButtonNormal');
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.content[2].setStyle("borderStyle", "none");
+				},
+				onSelect: function() {
+					this.content[1].source = (this.content[1].source === 'Images/checkbox.png') ? 'Images/checkbox_selected.png' : 'Images/checkbox.png';
+					if (FacebookService.isPaired() !== true) {
+						this.content[1].source = 'Images/checkbox.png';
+						FacebookService.pair(view.facebookPaired, view);
+					}
+				}
+			}
+		}).appendTo(view.elements.buttonBackground);
+
+		view.elements.twitterButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_ExcludeTwitter_Button'),
+					anchorStyle: 'leftMiddle',
+					styles: {
+						width: 250,
+						height: 66,
+						hAlign: 'left',
+						vAlign: 'center',
+						marginLeft: 69
+					}
+				}), new MAF.element.Image({
+					source: "Images/checkbox.png",
+					hideWhileLoading: true,
+					styles: {
+						width: 49,
+						height: 49,
+						hOffset: 15,
+						vOffset: 9
+					}
+				}), new MAF.element.Container({
+					styles: {
+						width: 250,
+						height: 66,
+						borderWidth: 3,
+						borderColor: '#FFFFFF'
+					}
+				})
+			],
+			styles: {
+				width: 250,
+				height: 66,
+				vOffset: 3,
+				hOffset: 251
+			},
+			events: {
+				onAppend: function() {
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.element.addClass('SubmenuButtonNormal');
+					this.content[2].setStyle("borderStyle", "none");
+				},
+				onFocus: function() {
+					this.element.addClass('SubmenuButtonHighlight');
+					this.element.removeClass('SubmenuButtonNormal');
+					this.content[2].setStyle("borderStyle", "solid");
+				},
+				onBlur: function() {
+					this.element.addClass('SubmenuButtonNormal');
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.content[2].setStyle("borderStyle", "none");
+				},
+				onSelect: function() {
+					this.content[1].source = (this.content[1].source === 'Images/checkbox.png') ? 'Images/checkbox_selected.png' : 'Images/checkbox.png';
+					if (TwitterService.isPaired() !== true) {
+						this.content[1].source = 'Images/checkbox.png';
+						TwitterService.pair(view.twitterPaired, view);
+					}
+				}
+			}
+		}).appendTo(view.elements.buttonBackground);
+
+		view.elements.deleteButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_RemoveCharacter_Button'),
+					anchorStyle: 'leftMiddle',
+					styles: {
+						width: 250,
+						height: 66,
+						hAlign: 'left',
+						vAlign: 'center',
+						marginLeft: 25
+					}
+				}), new MAF.element.Container({
+					styles: {
+						width: 250,
+						height: 66,
+						borderWidth: 3,
+						borderColor: '#FFFFFF'
+					}
+				})
+			],
+			styles: {
+				width: 250,
+				height: 66,
+				vOffset: 3,
+				hOffset: 501
+			},
+			events: {
+				onAppend: function() {
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.element.addClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "none");
+				},
+				onFocus: function() {
+					this.element.addClass('SubmenuButtonHighlight');
+					this.element.removeClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "solid");
+				},
+				onBlur: function() {
+					this.element.addClass('SubmenuButtonNormal');
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.content[1].setStyle("borderStyle", "none");
+				},
+				onSelect: function() {
+					view.shareTextArray.pop();
+					view.elements.ShareText.setText(view.encodeText(view.shareTextArray.join('')));
+				}
+			}
+		}).appendTo(view.elements.buttonBackground);
+
+		view.elements.clearAllButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_ClearAll_Button'),
+					anchorStyle: 'leftMiddle',
+					styles: {
+						width: 250,
+						height: 66,
+						hAlign: 'left',
+						vAlign: 'center',
+						marginLeft: 25
+					}
+				}), new MAF.element.Container({
+					styles: {
+						width: 250,
+						height: 66,
+						borderWidth: 3,
+						borderColor: '#FFFFFF'
+					}
+				})
+			],
+			styles: {
+				width: 250,
+				height: 66,
+				vOffset: 3,
+				hOffset: 751
+			},
+			events: {
+				onAppend: function() {
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.element.addClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "none");
+				},
+				onFocus: function() {
+					this.element.addClass('SubmenuButtonHighlight');
+					this.element.removeClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "solid");
+				},
+				onBlur: function() {
+					this.element.addClass('SubmenuButtonNormal');
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.content[1].setStyle("borderStyle", "none");
+				},
+				onSelect: function() {
+					view.shareTextArray = [];
+					view.elements.ShareText.setText("");
+				}
+			}
+		}).appendTo(view.elements.buttonBackground);
+
+		view.controls.backButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_Back_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 680,
 				hOffset: 552,
@@ -236,20 +421,16 @@ var ShareScreen = new MAF.Class({
 				height: 66
 			},
 			events: {
-				onNavigate: function(eventData) {
-					switch (eventData.payload.direction) {
-						case "left":
-						case "up":
-							view.controls.horizontalMenu.setFocus();
-							break;
-						case "right":
-							view.controls.shareButton.setFocus();
-							break;
-						case "down":
-							break;
-					}
-					eventData.preventDefault();
-					eventData.stopPropagation();
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
 				},
 				onSelect: function() {
 					MAF.application.loadView('view-MainScreen');
@@ -257,8 +438,20 @@ var ShareScreen = new MAF.Class({
 			}
 		}).appendTo(this.elements.rightContainer);
 
-		view.controls.shareButton = new ButtonControl({
-			buttonText: $_('ShareScreen_Send_Button'),
+		view.controls.shareButton = new MAF.element.Button({
+			focus: true,
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_Send_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 680,
 				hOffset: 955,
@@ -266,27 +459,22 @@ var ShareScreen = new MAF.Class({
 				height: 66
 			},
 			events: {
-				onNavigate: function(eventData) {
-					switch (eventData.payload.direction) {
-						case "left":
-							view.controls.backButton.setFocus();
-							break;
-						case "up":
-							view.controls.horizontalMenu.setFocus();
-							break;
-						case "right":
-						case "down":
-							break;
-					}
-					eventData.preventDefault();
-					eventData.stopPropagation();
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
 				},
 				onSelect: function() {
-					view.shareToSocial(view, view.controls.horizontalMenu.getButton(1).isSelected(), view.controls.horizontalMenu.getButton(2).isSelected());
+					view.shareToSocial(view, (view.elements.facebookButton.content[1].source === 'Images/checkbox_selected.png'), (view.elements.twitterButton.content[1].source === 'Images/checkbox_selected.png'));
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
-		view.controls.shareButton.setFocus();
 
 		view.elements.popup = new MAF.element.Container({
 			styles: {
@@ -331,8 +519,19 @@ var ShareScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
 
-		view.controls.popupButton1 = new ButtonControl({
-			buttonText: $_('ShareScreen_Fail_Cancel_Button'),
+		view.controls.popupButton1 = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_Fail_Cancel_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 756,
 				hOffset: 839,
@@ -340,15 +539,38 @@ var ShareScreen = new MAF.Class({
 				height: 66
 			},
 			events: {
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
+				},
 				onSelect: function() {
 					view.elements.popup.hide();
-					view.controls.shareButton.setFocus();
+					view.controls.shareButton.focus();
 				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
 
-		view.controls.popupButton2 = new ButtonControl({
-			buttonText: $_('ShareScreen_Fail_Retry_Button'),
+		view.controls.popupButton2 = new MAF.element.Button({
+			focus: true,
+			content: [
+				new MAF.element.Text({
+					text: $_('ShareScreen_Fail_Retry_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 756,
 				hOffset: 1239,
@@ -356,15 +578,26 @@ var ShareScreen = new MAF.Class({
 				height: 66
 			},
 			events: {
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
+				},
 				onSelect: function() {
 					if (view.controls.popupButton2.config.buttonText === $_('ShareScreen_Fail_Retry_Button')) {
 						view.elements.popup.hide();
 						view.shareToSocial(view, (view.facebookPosted === true && view.facebookResult === false), (view.twitterPosted === true && view.twitterResult === false));
 					} else {
 						view.elements.popup.hide();
-						MAF.application.previousView();						
+						MAF.application.previousView();
 					}
-					view.controls.shareButton.setFocus();
+					view.controls.shareButton.focus();
 				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
@@ -373,17 +606,18 @@ var ShareScreen = new MAF.Class({
 
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
-			callbackParams.controls.horizontalMenu.getButton(1).setSelected(true);
+			view.elements.facebookButton.content[1].source = 'Images/checkbox_selected.png';
 		}
 	},
 
 	twitterPaired: function(result, callbackParams) {
 		if (result.screen_name !== undefined) {
-			callbackParams.controls.horizontalMenu.getButton(2).setSelected(true);
+			view.elements.twitterButton.content[1].source = 'Images/checkbox_selected.png';
 		}
 	},
 
 	shareToSocial: function(view, shareFacebook, shareTwitter) {
+		console.log("shareToSocial: " + shareFacebook + ", " + shareTwitter);
 		view.facebookPosted = false;
 		view.facebookResultReceived = false;
 		view.facebookResult = false;
@@ -465,7 +699,7 @@ var ShareScreen = new MAF.Class({
 
 	updatePopupView: function(view, requestFailed) {
 		view.elements.popup.show();
-		view.controls.popupButton2.setFocus();
+		view.controls.popupButton2.focus();
 		if (requestFailed === true) {
 			view.controls.popupButton1.show();
 			view.controls.popupButton1.setButtonText($_('ShareScreen_Fail_Cancel_Button'));
@@ -489,16 +723,14 @@ var ShareScreen = new MAF.Class({
 		view.elements.Poster.setSource();
 		view.elements.Title.setText("");
 		view.elements.ShareText.setText("");
-		var facebookButton = view.controls.horizontalMenu.getButton(1);
-		var twitterButton = view.controls.horizontalMenu.getButton(2);
-		facebookButton.setSelected(false);
-		twitterButton.setSelected(false);
+		view.elements.facebookButton.content[1].source = 'Images/checkbox.png';
+		view.elements.twitterButton.content[1].source = 'Images/checkbox.png';
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
-				twitterButton.setSelected(true);
+				view.elements.twitterButton.content[1].source = 'Images/checkbox_selected.png';
 			}
 			if (FacebookService.isPaired() === true) {
-				facebookButton.setSelected(true);
+				view.elements.facebookButton.content[1].source = 'Images/checkbox_selected.png';
 			}
 		}
 		view.shareTextArray = [];
@@ -520,7 +752,11 @@ var ShareScreen = new MAF.Class({
 		delete view.elements.ShareText;
 		delete view.elements.FacebookImage;
 		delete view.elements.TwitterImage;
-		delete view.controls.horizontalMenu;
+		delete view.elements.buttonBackground;
+		delete view.elements.facebookButton;
+		delete view.elements.twitterButton;
+		delete view.elements.deleteButton;
+		delete view.elements.clearAllButton;
 		delete view.controls.backButton;
 		delete view.controls.shareButton;
 		delete view.elements.popup;

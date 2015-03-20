@@ -35,8 +35,20 @@ var AppInfoPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.backButton = new ButtonControl({
-				buttonText: $_('AppInfoScreen_Back_Button'),
+			view.backButton = new MAF.element.Button({
+				focus: true,
+				content: [
+					new MAF.element.Text({
+						text: $_('AppInfoScreen_Back_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 756,
 					hOffset: 1239,
@@ -44,6 +56,17 @@ var AppInfoPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+					},
 					onSelect: function() {
 						view.fire('onAppInfoClosed', {});
 					}

@@ -43,10 +43,10 @@ var PreferencesPopup = new MAF.Class({
 				events: {
 					onNavigateDownRight: function(eventData) {
 						if (FacebookService.isPaired() !== true) {
-							view.facebookButton.setFocus();
+							view.facebookButton.focus();
 						} else {
 							if (TwitterService.isPaired() !== true) {
-								view.twitterButton.setFocus();
+								view.twitterButton.focus();
 							} else {
 								view.ContentTimesGrid.focus();
 							}
@@ -55,8 +55,19 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.facebookButton = new ButtonControl({
-				buttonText: $_('PreferencesScreen_ConnectFacebook_Button'),
+			view.facebookButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('PreferencesScreen_ConnectFacebook_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 468,
 					hOffset: 70,
@@ -64,6 +75,20 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+						console.log("facebookButton: onAppend");
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+						console.log("facebookButton: onFocus");
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+						console.log("facebookButton: onBlur");
+					},
 					onNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "down":
@@ -71,7 +96,7 @@ var PreferencesPopup = new MAF.Class({
 								break;
 							case "right":
 								if (TwitterService.isPaired() !== true) {
-									view.twitterButton.setFocus();
+									view.twitterButton.focus();
 								} else {
 									view.ContentTimesGrid.focus();
 								}
@@ -93,8 +118,19 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.twitterButton = new ButtonControl({
-				buttonText: $_('PreferencesScreen_ConnectTwitter_Button'),
+			view.twitterButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('PreferencesScreen_ConnectTwitter_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 468,
 					hOffset: 570,
@@ -102,11 +138,25 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+						console.log("facebookButton: onAppend");
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+						console.log("facebookButton: onFocus");
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+						console.log("facebookButton: onBlur");
+					},
 					onNavigate: function(eventData) {
 						switch (eventData.payload.direction) {
 							case "left":
 								if (FacebookService.isPaired() !== true) {
-									view.facebookButton.setFocus();
+									view.facebookButton.focus();
 								} else {
 									view.MenuItemsGrid.focusCell(4);
 									view.MenuItemsGrid.focus();
@@ -169,17 +219,17 @@ var PreferencesPopup = new MAF.Class({
 				events: {
 					onNavigateUpLeft: function(eventData) {
 						if (FacebookService.isPaired() !== true) {
-							view.facebookButton.setFocus();
+							view.facebookButton.focus();
 						} else {
 							if (TwitterService.isPaired() !== true) {
-								view.twitterButton.setFocus();
+								view.twitterButton.focus();
 							} else {
 								view.MenuItemsGrid.focus();
 							}
 						}
 					},
 					onNavigateDownRight: function(eventData) {
-						view.doneButton.setFocus();
+						view.doneButton.focus();
 					}
 				}
 			}).appendTo(view);
@@ -196,8 +246,19 @@ var PreferencesPopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.doneButton = new ButtonControl({
-				buttonText: $_('PreferencesScreen_Close_Button'),
+			view.doneButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('PreferencesScreen_Close_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 756,
 					hOffset: 1239,
@@ -205,18 +266,16 @@ var PreferencesPopup = new MAF.Class({
 					height: 66
 				},
 				events: {
-					onNavigate: function(eventData) {
-						switch (eventData.payload.direction) {
-							case "left":
-							case "right":
-							case "down":
-								break;
-							case "up":
-								view.ContentTimesGrid.focus();
-								break;
-						}
-						eventData.preventDefault();
-						eventData.stopPropagation();
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
 					},
 					onSelect: function() {
 						var menuItems = [];
@@ -289,14 +348,14 @@ var PreferencesPopup = new MAF.Class({
 		this.twitterButton.show();
 		if (ConfigurationStorageHandler.isSelected() === true) {
 			if (TwitterService.isPaired() === true) {
-				this.twitterButton.setDisabled(true);
+				this.disableButton(this.twitterButton, true);
 			} else {
-				this.twitterButton.setDisabled(false);
+				this.disableButton(this.twitterButton, false);
 			}
 			if (FacebookService.isPaired() === true) {
-				this.facebookButton.setDisabled(true);
+				this.disableButton(this.facebookButton, true);
 			} else {
-				this.facebookButton.setDisabled(false);
+				this.disableButton(this.facebookButton, false);
 			}
 		}
 
@@ -310,12 +369,25 @@ var PreferencesPopup = new MAF.Class({
 	},
 
 	setFocus: function() {
-		this.doneButton.setFocus();
+		this.doneButton.focus();
+	},
+
+	disableButton: function(button, disabled) {
+		if (disabled === true) {
+			button.setDisabled(disabled);
+			button.element.removeClass('GeneralButtonNormal');
+			button.element.removeClass('GeneralButtonHighlight');
+			button.element.addClass("GeneralButtonDisabled");
+		} else {
+			button.setDisabled(disabled);
+			button.element.removeClass("GeneralButtonDisabled");
+			button.element.addClass('GeneralButtonNormal');
+		}
 	},
 
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
-			callbackParams.view.facebookButton.setDisabled(true);
+			this.disableButton(callbackParams.view.facebookButton, true);
 			callbackParams.view.setFocus();
 			FacebookService.getProfilePicture(function(url) {
 				ConfigurationStorageHandler.updateProfileImage(url);
@@ -325,7 +397,8 @@ var PreferencesPopup = new MAF.Class({
 
 	twitterPaired: function(result, callbackParams) {
 		if (result.screen_name !== undefined) {
-			callbackParams.view.twitterButton.setDisabled(true);
+			this.disableButton(callbackParams.view.twitterButton, true);
+		} else {
 			callbackParams.view.setFocus();
 		}
 	},

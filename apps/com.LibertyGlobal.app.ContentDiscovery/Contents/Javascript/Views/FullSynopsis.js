@@ -51,8 +51,20 @@ var FullSynopsis = new MAF.Class({
 			}
 		}).appendTo(this.elements.rightContainer);
 
-		view.controls.backButton = new ButtonControl({
-			buttonText: $_('FullSynopsisScreen_Back_Button'),
+		view.controls.backButton = new MAF.element.Button({
+			focus: true,
+			content: [
+				new MAF.element.Text({
+					text: $_('FullSynopsisScreen_Back_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 915,
 				hOffset: 340,
@@ -60,6 +72,17 @@ var FullSynopsis = new MAF.Class({
 				height: 66
 			},
 			events: {
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
+				},
 				onNavigate: function(eventData) {
 					switch (eventData.payload.direction) {
 						case "left":
@@ -76,7 +99,6 @@ var FullSynopsis = new MAF.Class({
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
-		view.controls.backButton.focus();
 	},
 
 	updateView: function() {

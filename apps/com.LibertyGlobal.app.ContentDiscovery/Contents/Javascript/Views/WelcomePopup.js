@@ -35,8 +35,19 @@ var WelcomePopup = new MAF.Class({
 				}
 			}).appendTo(view);
 
-			view.setProfileButton = new ButtonControl({
-				buttonText: $_('WelcomeScreen_SetProfile_Button'),
+			view.setProfileButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('WelcomeScreen_SetProfile_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 756,
 					hOffset: 849,
@@ -44,14 +55,36 @@ var WelcomePopup = new MAF.Class({
 					height: 66
 				},
 				events: {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+					},
 					onSelect: function() {
 						MAF.HostEventManager.send("changeProfile");
 					}
 				}
 			}).appendTo(this);
 
-			view.closeButton = new ButtonControl({
-				buttonText: $_('WelcomeScreen_Skip_Button'),
+			view.closeButton = new MAF.element.Button({
+				content: [
+					new MAF.element.Text({
+						text: $_('WelcomeScreen_Skip_Button'),
+						anchorStyle: 'center',
+						styles: {
+							width: 379,
+							height: 66,
+							hAlign: 'center',
+							vAlign: 'center'
+						}
+					})
+				],
 				styles: {
 					vOffset: 756,
 					hOffset: 1239,
@@ -59,6 +92,17 @@ var WelcomePopup = new MAF.Class({
 					height: 66
 				},
 				events: {
+					onAppend: function() {
+						this.element.addClass('GeneralButtonNormal');
+					},
+					onFocus: function() {
+						this.element.addClass('GeneralButtonHighlight');
+						this.element.removeClass('GeneralButtonNormal');
+					},
+					onBlur: function() {
+						this.element.addClass('GeneralButtonNormal');
+						this.element.removeClass('GeneralButtonHighlight');
+					},
 					onSelect: function() {
 						view.fire('onWelcomeClosed', {});
 					}
@@ -88,7 +132,7 @@ var WelcomePopup = new MAF.Class({
 	},
 
 	onProfileUnloaded: function(event) {
-		
+
 	},
 
 	initialize: function() {
@@ -104,7 +148,7 @@ var WelcomePopup = new MAF.Class({
 		this.closeButton.focus();
 	},
 
-	suicide: function() {		
+	suicide: function() {
 		this.fnOnProfileLoaded.unsubscribeFrom(MAF.application, 'onLoadProfile');
 		this.fnOnProfileLoaded = null;
 		this.fnOnProfileUnloaded.unsubscribeFrom(MAF.application, 'onUnloadProfile');

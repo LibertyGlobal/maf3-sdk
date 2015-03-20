@@ -33,8 +33,7 @@ var CastScreen = new MAF.Class({
 		view.elements.Prop2Value.setText("Vincenza, Italy");
 		view.elements.Biography.setText("Amy Lou Adams was born in Italy, to American parents Kathryn (Hicken) and Richard Kent Adams, while her father was a U.S. serviceman. She was raised in a Mormon family of seven children in Castle Rock, Colorado, and has English, as well as Danish, German, and Norwegian, ancestry. Adams sang in the school choir at Douglas County High School and was an apprentice dancer at a local dance company, with the ambition of becoming a ballerina. However, she worked as a greeter at The Gap and as a Hooters hostess to support herself before finding work as a dancer at Boulder's Dinner Theatre and Country Dinner Playhouse in such productions as Brigadoon and A Chorus Line. It was there that she was spotted by a Minneapolis dinner-theater director who asked her to move to Chanhassen, Minnesota for more regional dinner theater work.");
 
-		view.controls.horizontalMenu.show();
-		view.controls.horizontalMenu.setFocus();
+		view.elements.fullBiographyButton.focus();
 	},
 
 	// Create your view template
@@ -155,36 +154,53 @@ var CastScreen = new MAF.Class({
 			}
 		}).appendTo(this.elements.rightContainer);
 
-		view.controls.horizontalMenu = new HorizontalMenuControl({
-			width: 1000,
-			button1Visible: true,
-			button2Visible: false,
-			button3Visible: false,
-			showBackground: false,
-			button1Text: $_('CastInfoScreen_FullBiography_Button'),
+		view.elements.fullBiographyButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('CastInfoScreen_FullBiography_Button'),
+					anchorStyle: 'leftMiddle',
+					styles: {
+						width: 333,
+						height: 66,
+						hAlign: 'left',
+						vAlign: 'center',
+						marginLeft: 25
+					}
+				}), new MAF.element.Container({
+					styles: {
+						width: 333,
+						height: 66,
+						borderWidth: 3,
+						borderColor: '#FFFFFF'
+					}
+				})
+			],
 			styles: {
+				width: 333,
+				height: 66,
 				vOffset: 476,
 				hOffset: 340
 			},
 			events: {
-				onNavigate: function(event) {
-					switch (event.payload.direction) {
-						case 'down':
-						case 'right':
-							view.controls.backButton.setFocus();
-							event.preventDefault();
-							event.stopPropagation();
-							break;
-					}
+				onAppend: function() {
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.element.addClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "none");
 				},
-				onButtonSelect: function(eventData) {
-					switch (eventData.payload.action) {
-						case 1:
-							MAF.application.loadView('view-FullBiography', {
-								"cast": view.cast
-							});
-							break;
-					}
+				onFocus: function() {
+					this.element.addClass('SubmenuButtonHighlight');
+					this.element.removeClass('SubmenuButtonNormal');
+					this.content[1].setStyle("borderStyle", "solid");
+				},
+				onBlur: function() {
+					this.element.addClass('SubmenuButtonNormal');
+					this.element.removeClass('SubmenuButtonHighlight');
+					this.content[1].setStyle("borderStyle", "none");
+				},
+				onSelect: function() {
+					MAF.application.loadView('view-FullBiography', {
+						"cast": view.cast
+					});
 				}
 			}
 		}).appendTo(this.elements.rightContainer);
@@ -242,8 +258,19 @@ var CastScreen = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 		view.elements.coverBar.hide();
 
-		view.controls.backButton = new ButtonControl({
-			buttonText: $_('CastInfoScreen_Back_Button'),
+		view.controls.backButton = new MAF.element.Button({
+			content: [
+				new MAF.element.Text({
+					text: $_('CastInfoScreen_Back_Button'),
+					anchorStyle: 'center',
+					styles: {
+						width: 379,
+						height: 66,
+						hAlign: 'center',
+						vAlign: 'center'
+					}
+				})
+			],
 			styles: {
 				vOffset: 960,
 				hOffset: 48,
@@ -251,18 +278,16 @@ var CastScreen = new MAF.Class({
 				height: 66
 			},
 			events: {
-				onNavigate: function(eventData) {
-					switch (eventData.payload.direction) {
-						case "left":
-						case "up":
-							view.controls.horizontalMenu.setFocus();
-							break;
-						case "right":
-						case "down":
-							break;
-					}
-					eventData.preventDefault();
-					eventData.stopPropagation();
+				onAppend: function() {
+					this.element.addClass('GeneralButtonNormal');
+				},
+				onFocus: function() {
+					this.element.addClass('GeneralButtonHighlight');
+					this.element.removeClass('GeneralButtonNormal');
+				},
+				onBlur: function() {
+					this.element.addClass('GeneralButtonNormal');
+					this.element.removeClass('GeneralButtonHighlight');
 				},
 				onSelect: function() {
 					MAF.application.loadView('view-MainScreen');
@@ -290,7 +315,7 @@ var CastScreen = new MAF.Class({
 		delete this.elements.Biography;
 		delete this.elements.coverBarTitle;
 		delete this.elements.coverBar;
-		delete this.controls.horizontalMenu;
+		delete view.elements.fullBiographyButton;
 		delete this.controls.backButton;
 	}
 });

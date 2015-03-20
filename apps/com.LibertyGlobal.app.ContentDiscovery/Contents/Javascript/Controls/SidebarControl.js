@@ -120,6 +120,7 @@ var SidebarControl = new MAF.Class({
 				},
 				events: {
 					onAppend: function() {
+						this.element.removeClass('SidebarButtonHighlight');
 						this.element.addClass('SidebarButtonNormal');
 					},
 					onFocus: function() {
@@ -156,6 +157,7 @@ var SidebarControl = new MAF.Class({
 				},
 				events: {
 					onAppend: function() {
+						this.element.removeClass('SidebarButtonHighlight');
 						this.element.addClass('SidebarButtonNormal');
 					},
 					onFocus: function() {
@@ -192,6 +194,7 @@ var SidebarControl = new MAF.Class({
 				},
 				events: {
 					onAppend: function() {
+						this.element.removeClass('SidebarButtonHighlight');
 						this.element.addClass('SidebarButtonNormal');
 					},
 					onFocus: function() {
@@ -228,6 +231,7 @@ var SidebarControl = new MAF.Class({
 				},
 				events: {
 					onAppend: function() {
+						this.element.removeClass('SidebarButtonHighlight');
 						this.element.addClass('SidebarButtonNormal');
 					},
 					onFocus: function() {

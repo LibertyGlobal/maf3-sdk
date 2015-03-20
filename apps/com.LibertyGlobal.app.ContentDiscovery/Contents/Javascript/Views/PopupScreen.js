@@ -41,7 +41,7 @@ var PopupScreen = new MAF.Class({
 			}
 		}).appendTo(view.elements.popup);
 
-		view.elements.preferencesPopup = new PreferencesPopup({
+		preferencesPopup = new PreferencesPopup({
 			styles: {
 				height: 'inherit',
 				width: 'inherit'
@@ -52,9 +52,9 @@ var PopupScreen = new MAF.Class({
 				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
-		view.elements.preferencesPopup.hide();
+		preferencesPopup.hide();
 
-		view.elements.appInfoPopup = new AppInfoPopup({
+		appInfoPopup = new AppInfoPopup({
 			styles: {
 				height: 'inherit',
 				width: 'inherit'
@@ -65,9 +65,9 @@ var PopupScreen = new MAF.Class({
 				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
-		view.elements.appInfoPopup.hide();
+		appInfoPopup.hide();
 
-		view.elements.welcomePopup = new WelcomePopup({
+		welcomePopup = new WelcomePopup({
 			styles: {
 				height: 'inherit',
 				width: 'inherit'
@@ -78,45 +78,48 @@ var PopupScreen = new MAF.Class({
 				}
 			}
 		}).appendTo(view.elements.fullscreenPopupBackground);
-		view.elements.welcomePopup.hide();
+		welcomePopup.hide();
 	},
 
 	updateView: function() {
-		var view = this;
+		var view = this;	
 		sideBarContainer.moveTo(this);
-		sideBarContainer.collapse();
+		sideBarContainer.collapse();	
+		preferencesPopup.moveTo(this.elements.fullscreenPopupBackground);
+		welcomePopup.moveTo(this.elements.fullscreenPopupBackground);
+		appInfoPopup.moveTo(this.elements.fullscreenPopupBackground);
 		view.showPopup(view, this.persist.popupName, this.persist.redirectPage, this.persist.redirectParams);
 	},
 
 	showPopup: function(view, popupName, redirectPage, redirectParams) {
 		sideBarContainer.updateProfilePicture();
-		view.elements.preferencesPopup.hide();
-		view.elements.appInfoPopup.hide();
-		view.elements.welcomePopup.hide();
+		preferencesPopup.hide();
+		appInfoPopup.hide();
+		welcomePopup.hide();
 		view.elements.popup.show();
 		view.redirectPage = redirectPage;
 		view.redirectParams = redirectParams;
 		switch (popupName) {
 			case "preferences":
-				view.elements.preferencesPopup.show();
-				view.elements.preferencesPopup.bindData();
-				view.elements.preferencesPopup.setFocus();
+				preferencesPopup.show();
+				preferencesPopup.bindData();
+				preferencesPopup.setFocus();
 				break;
 			case "appInfo":
-				view.elements.appInfoPopup.show();
-				view.elements.appInfoPopup.bindData();
-				view.elements.appInfoPopup.setFocus();
+				appInfoPopup.show();
+				appInfoPopup.bindData();
+				appInfoPopup.setFocus();
 				break;
 			case "welcome":
-				view.elements.welcomePopup.show();
-				view.elements.welcomePopup.bindData();
-				view.elements.welcomePopup.setFocus();
+				welcomePopup.show();
+				welcomePopup.bindData();
+				welcomePopup.setFocus();
 				break;
 		}
 	},
 
 	closePopup: function(view) {
-		view.elements.preferencesPopup.hide();
+		preferencesPopup.hide();
 		view.elements.popup.hide();
 
 		MAF.application.loadView(view.redirectPage, view.redirectParams);
@@ -128,9 +131,7 @@ var PopupScreen = new MAF.Class({
 		delete view.elements.popup;
 		delete view.elements.fullscreenPopup;
 		delete view.elements.fullscreenPopupBackground;
-		delete view.elements.preferencesPopup;
-		delete view.elements.appInfoPopup;
-		delete view.elements.welcomePopup;
+		preferencesPopup = appInfoPopup = welcomePopup = null;
 		delete view.redirectPage;
 		delete view.redirectParams;
 	}
