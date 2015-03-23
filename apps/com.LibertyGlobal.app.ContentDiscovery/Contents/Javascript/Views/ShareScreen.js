@@ -422,6 +422,7 @@ var ShareScreen = new MAF.Class({
 			},
 			events: {
 				onAppend: function() {
+					this.element.removeClass('GeneralButtonHighlight');
 					this.element.addClass('GeneralButtonNormal');
 				},
 				onFocus: function() {
@@ -460,6 +461,7 @@ var ShareScreen = new MAF.Class({
 			},
 			events: {
 				onAppend: function() {
+					this.element.removeClass('GeneralButtonHighlight');
 					this.element.addClass('GeneralButtonNormal');
 				},
 				onFocus: function() {
@@ -590,7 +592,7 @@ var ShareScreen = new MAF.Class({
 					this.element.removeClass('GeneralButtonHighlight');
 				},
 				onSelect: function() {
-					if (view.controls.popupButton2.config.buttonText === $_('ShareScreen_Fail_Retry_Button')) {
+					if (view.controls.popupButton2.content[0].data === $_('ShareScreen_Fail_Retry_Button')) {
 						view.elements.popup.hide();
 						view.shareToSocial(view, (view.facebookPosted === true && view.facebookResult === false), (view.twitterPosted === true && view.twitterResult === false));
 					} else {
@@ -702,12 +704,12 @@ var ShareScreen = new MAF.Class({
 		view.controls.popupButton2.focus();
 		if (requestFailed === true) {
 			view.controls.popupButton1.show();
-			view.controls.popupButton1.setButtonText($_('ShareScreen_Fail_Cancel_Button'));
-			view.controls.popupButton2.setButtonText($_('ShareScreen_Fail_Retry_Button'));
+			view.controls.popupButton1.content[0].setText($_('ShareScreen_Fail_Cancel_Button'));
+			view.controls.popupButton2.content[0].setText($_('ShareScreen_Fail_Retry_Button'));
 
 		} else {
 			view.controls.popupButton1.hide();
-			view.controls.popupButton2.setButtonText($_('ShareScreen_Success_Ok_Button'));
+			view.controls.popupButton2.content[0].setText($_('ShareScreen_Success_Ok_Button'));
 		}
 	},
 
