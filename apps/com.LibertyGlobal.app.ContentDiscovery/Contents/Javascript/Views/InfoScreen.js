@@ -35,17 +35,15 @@ var InfoScreen = new MAF.Class({
 						}
 					}
 
-					view.elements.ReminderImage.hide();
+					view.elements.reminderSetImage.setSource("");
 					if (view.isLive) {
 						view.elements.viewReminderButton.content[0].setText($_('InfoScreen_Button_View_Now_Text'));
 					} else {
 						if (ReminderHandler.isReminderSet(view.asset.id) === true) {
-
 							view.elements.viewReminderButton.content[0].setText($_('InfoScreen_Button_Remove_Reminder_Text'));
-							view.elements.ReminderImage.show();
+							view.elements.reminderSetImage.setSource("Images/UPC_Picto_Reminder.png");
 						} else {
 							view.elements.viewReminderButton.content[0].setText($_('InfoScreen_Button_Set_Reminder_Text'));
-							view.elements.ReminderImage.hide();
 						}
 					}
 					view.elements.viewReminderButton.focus();
@@ -141,7 +139,7 @@ var InfoScreen = new MAF.Class({
 							ReportingHandler.decreaseCounterReminders();
 							ReminderHandler.removeReminder(view.asset.id);
 							view.elements.viewReminderButton.content[0].setText($_('InfoScreen_Button_Set_Reminder_Text'));
-							view.elements.ReminderImage.hide();
+							view.elements.reminderSetImage.setSource("");
 						} else {
 							ReportingHandler.increaseCounterReminders();
 							ReminderHandler.setReminder(
@@ -151,7 +149,7 @@ var InfoScreen = new MAF.Class({
 								view.asset.channel.name,
 								view.asset.channel.logicalPosition);
 							view.elements.viewReminderButton.content[0].setText($_('InfoScreen_Button_Remove_Reminder_Text'));
-							view.elements.ReminderImage.show();
+							view.elements.reminderSetImage.setSource("Images/UPC_Picto_Reminder.png");
 						}
 					}
 				}
@@ -369,8 +367,8 @@ var InfoScreen = new MAF.Class({
 		}).appendTo(this.elements.rightContainer);
 		view.elements.coverBar.hide();
 
-		view.elements.ReminderImage = new MAF.element.Image({
-			source: 'Images/UPC_Picto_Reminder.png',
+		view.elements.reminderSetImage = new MAF.element.Image({
+			source: '',
 			styles: {
 				vOffset: 181,
 				hOffset: 700,
@@ -378,14 +376,13 @@ var InfoScreen = new MAF.Class({
 				width: 30
 			}
 		}).appendTo(this.elements.rightContainer);
-		view.elements.ReminderImage.hide();
 	},
 
 	updateView: function() {
 		var view = this;
 		sideBarContainer.moveTo(this);
 		view.controls.assetDetails.clearData();
-		view.elements.ReminderImage.hide();
+		view.elements.reminderSetImage.setSource("");
 		view.assetId = this.persist.assetId;
 		this.updateData(view);
 	},
@@ -408,7 +405,7 @@ var InfoScreen = new MAF.Class({
 		delete this.asset;
 		delete this.elements.coverBar;
 		delete this.controls.assetDetails;
-		delete this.elements.ReminderImage;
+		delete this.elements.reminderSetImage;
 		delete this.elements.buttonBackground;
 		delete this.elements.viewReminderButton;
 		delete this.elements.shareButton;

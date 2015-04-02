@@ -131,6 +131,19 @@ var SidebarControl = new MAF.Class({
 						this.element.addClass('SidebarButtonNormal');
 						this.element.removeClass('SidebarButtonHighlight');
 					},
+					onNavigate: function(event) {
+						switch (event.payload.direction) {
+							case "down":
+								sidebarControl.editProfileButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+							case "up":
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+						}
+					},
 					onSelect: function() {
 						sidebarControl.focussedButton = "switch";
 					}
@@ -167,6 +180,20 @@ var SidebarControl = new MAF.Class({
 					onBlur: function() {
 						this.element.addClass('SidebarButtonNormal');
 						this.element.removeClass('SidebarButtonHighlight');
+					},
+					onNavigate: function(event) {
+						switch (event.payload.direction) {
+							case "down":
+								sidebarControl.aboutAppButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+							case "up":
+								sidebarControl.switchProfileButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+						}
 					},
 					onSelect: function() {
 						sidebarControl.focussedButton = "edit";
@@ -205,6 +232,20 @@ var SidebarControl = new MAF.Class({
 						this.element.addClass('SidebarButtonNormal');
 						this.element.removeClass('SidebarButtonHighlight');
 					},
+					onNavigate: function(event) {
+						switch (event.payload.direction) {
+							case "down":
+								sidebarControl.exitButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+							case "up":
+								sidebarControl.editProfileButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+						}
+					},
 					onSelect: function() {
 						sidebarControl.focussedButton = "about";
 					}
@@ -242,6 +283,19 @@ var SidebarControl = new MAF.Class({
 						this.element.addClass('SidebarButtonNormal');
 						this.element.removeClass('SidebarButtonHighlight');
 					},
+					onNavigate: function(event) {
+						switch (event.payload.direction) {
+							case "up":
+								sidebarControl.aboutAppButton.focus();
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+							case "down":
+								event.preventDefault();
+								event.stopPropagation();
+								break;
+						}
+					},
 					onSelect: function() {
 						sidebarControl.focussedButton = "exit";
 					}
@@ -251,8 +305,7 @@ var SidebarControl = new MAF.Class({
 	},
 
 	config: {
-		render: true,
-		focus: false
+		render: true
 	},
 
 	initialize: function() {

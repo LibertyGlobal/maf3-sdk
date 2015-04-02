@@ -387,7 +387,7 @@ var PreferencesPopup = new MAF.Class({
 
 	facebookPaired: function(result, callbackParams) {
 		if (result.first_name !== undefined) {
-			this.disableButton(callbackParams.view.facebookButton, true);
+			callbackParams.view.disableButton(callbackParams.view.facebookButton, true);
 			callbackParams.view.setFocus();
 			FacebookService.getProfilePicture(function(url) {
 				ConfigurationStorageHandler.updateProfileImage(url);
@@ -397,7 +397,7 @@ var PreferencesPopup = new MAF.Class({
 
 	twitterPaired: function(result, callbackParams) {
 		if (result.screen_name !== undefined) {
-			this.disableButton(callbackParams.view.twitterButton, true);
+			callbackParams.view.disableButton(callbackParams.view.twitterButton, true);
 		} else {
 			callbackParams.view.setFocus();
 		}

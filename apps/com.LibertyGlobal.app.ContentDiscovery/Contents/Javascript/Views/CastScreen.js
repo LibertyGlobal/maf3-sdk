@@ -229,6 +229,7 @@ var CastScreen = new MAF.Class({
 			},
 			cellCreator: function() {
 				var cell = new MAF.element.GridCell({
+					focus: false,
 					height: 380,
 					width: 250
 				});
@@ -315,7 +316,7 @@ var CastScreen = new MAF.Class({
 		delete this.elements.Biography;
 		delete this.elements.coverBarTitle;
 		delete this.elements.coverBar;
-		delete view.elements.fullBiographyButton;
+		delete this.elements.fullBiographyButton;
 		delete this.controls.backButton;
 	}
 });

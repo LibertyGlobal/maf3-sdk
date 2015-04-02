@@ -31,10 +31,8 @@ var ContentDataRetriever = (function() {
 			});
 		}
 
-		menuItem.data = allAssets;
 		menuItem.dataLoading = false;
-		console.log("Number of items for " + menuItem.itemName + ": " + menuItem.data.length);
-		callbackAfterLoaded(menuItem, callbackAfterLoadedParams);
+		callbackAfterLoaded(menuItem, allAssets, callbackAfterLoadedParams);
 	};
 
 	var removeAlmostEnded = function(assets)

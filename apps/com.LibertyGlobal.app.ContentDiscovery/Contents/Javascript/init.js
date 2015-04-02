@@ -26,13 +26,7 @@ include('Javascript/Controls/SidebarControl.js');
 include('Javascript/Controls/SettingsGridControl.js');
 include('Javascript/Controls/SettingsGridCellControl.js');
 include('Javascript/Controls/PageableTextGridControl.js');
-include('Javascript/Controls/MenuCarouselControl.js');
 include('Javascript/Controls/AssetDetailControl.js');
-include('Javascript/Controls/AssetCarouselCellControl.js');
-include('Javascript/Controls/AssetCarouselCellEmptyFocusControl.js');
-include('Javascript/Controls/AssetCarouselCellCurrentFocusControl.js');
-include('Javascript/Controls/AssetCarouselCellFutureFocusControl.js');
-include('Javascript/Controls/AssetCarouselControl.js');
 
 include('Javascript/Views/AppInfoPopup.js');
 include('Javascript/Views/CastScreen.js');

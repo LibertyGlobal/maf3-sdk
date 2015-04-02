@@ -8,6 +8,7 @@ var TwitterService = (function() {
 		},
 
 		pair: function(callback, callbackParams) {
+			//Twitter.api('me', 'get', {}, function(result) {
 			Twitter.api('me', function(result) {
 				callback(result, callbackParams);
 			});
