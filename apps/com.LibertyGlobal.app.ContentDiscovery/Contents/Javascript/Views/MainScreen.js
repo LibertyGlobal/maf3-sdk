@@ -115,7 +115,7 @@ var MainScreen = new MAF.Class({
 			view.setFocus(view, view.currentAssets[0]);
 			view.elements.assetCarousel.changeDataset(view.currentAssets.slice(1), true);
 			(view.currentMenu[2].autoNavigate === true) ? view.startAutoNavigate(view): view.stopAutoNavigate(view);
-			view.elements.leftArrow.show();
+			view.elements.leftArrow.hide();
 			if (view.currentAssets.length > 0) {
 				view.elements.rightArrow.show();
 				view.elements.assetCarousel.show();
@@ -785,7 +785,7 @@ var MainScreen = new MAF.Class({
 
 	navigateRight: function(view) {
 		(view.currentAssetIndex < (view.currentAssets.length - 1)) ? view.currentAssetIndex++: view.currentAssetIndex = 0;
-		(view.currentAssetIndex === 0) ? view.elements.leftArrow.show(): view.elements.leftArrow.hide();
+		(view.currentAssetIndex > 0) ? view.elements.leftArrow.show(): view.elements.leftArrow.hide();
 		view.currentAssets.push(view.currentAssets.shift());
 		view.setFocus(view, view.currentAssets[0]);
 		view.elements.assetCarousel.changeDataset(view.currentAssets.slice(1), true);
@@ -795,7 +795,7 @@ var MainScreen = new MAF.Class({
 		if (view.currentAssetIndex > 0) {
 			view.currentAssets.unshift(view.currentAssets.pop());
 			view.currentAssetIndex--;
-			(view.currentAssetIndex === 0) ? view.elements.leftArrow.show(): view.elements.leftArrow.hide();
+			(view.currentAssetIndex > 0) ? view.elements.leftArrow.show(): view.elements.leftArrow.hide();
 			view.setFocus(view, view.currentAssets[0]);
 			view.elements.assetCarousel.changeDataset(view.currentAssets.slice(1), true);
 		} else {
